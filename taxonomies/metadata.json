@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2025-09-23T14:09:48.111905",
-  "taxonomies_count": 1,
+  "updated_at": "2025-09-23T14:36:04.202409",
+  "taxonomies_count": 2,
   "taxonomies": {
     "treew-skos": {
       "id": "treew-skos",
@@ -19,6 +19,61 @@
       "file_size_mb": 0.77,
       "schema_version": "1.0",
       "concepts_count": 0
+    },
+    "electronics-taxonomy": {
+      "id": "electronics-taxonomy",
+      "name": "Electronics Product Taxonomy",
+      "description": "Taxonomía SKOS para productos electrónicos y tecnología",
+      "version": "1.0.0",
+      "provider": "Demo System",
+      "language": "es",
+      "domain": "electronics",
+      "created_at": "2025-09-23T14:36:04.202152",
+      "updated_at": "2025-09-23T14:36:04.202160",
+      "is_active": true,
+      "is_default": false,
+      "file_hash": "sha256:d9499d86ed018525e8a421b50d625284bdef66875ed2c06f5af675e50296e0c1",
+      "file_size_mb": 0.01,
+      "schema_version": "1.0",
+      "validation": {
+        "quality_score": 0.95,
+        "compliance_level": "excellent",
+        "validated_at": "2025-09-23T14:36:04.202249",
+        "requirements_met": {
+          "skos_compliant": true,
+          "has_hierarchy": true,
+          "has_labels": true,
+          "quality_threshold": true
+        },
+        "enrichment_features": [
+          "✨ Definiciones: 100.0% de conceptos",
+          "🏷️ Etiquetas alternativas: 100.0% de conceptos",
+          "🔢 Notaciones: 100.0% de conceptos"
+        ],
+        "recommendations": [
+          "💡 Agregar relaciones semánticas (skos:related) entre conceptos relacionados",
+          "💡 Considerar mayor profundidad jerárquica para clasificación más precisa"
+        ]
+      },
+      "skos_statistics": {
+        "total_concepts": 20,
+        "total_schemes": 1,
+        "total_triples": 210,
+        "hierarchical_relations": 36,
+        "semantic_relations": 0,
+        "concepts_with_definitions": 20,
+        "concepts_with_altlabels": 20,
+        "concepts_with_notations": 20,
+        "multilingual_concepts": 0,
+        "external_mappings": 0,
+        "max_hierarchy_depth": 2,
+        "root_concepts": 2,
+        "orphaned_concepts": 0
+      },
+      "concepts_count": 1,
+      "processing_time_seconds": 0.01,
+      "concepts_processed": 1,
+      "concepts_imported": 1
     }
   }
 }

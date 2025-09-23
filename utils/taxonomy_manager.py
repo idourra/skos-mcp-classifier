@@ -195,17 +195,18 @@ class TaxonomyManager:
         return full_metadata
     
     def _process_taxonomy_to_sqlite(self, jsonld_file: Path, db_path: Path) -> Dict[str, Any]:
-        """Procesar archivo JSONLD y crear base de datos SQLite"""
-        # TODO: Implementar procesamiento completo de JSONLD a SQLite
-        # Por ahora, crear estructura básica
-        
+        """Procesar archivo JSONLD y crear base de datos SQLite"""        
         start_time = datetime.now()
+        
+        # Parsear el archivo JSONLD
+        g = Graph()
+        g.parse(str(jsonld_file), format='json-ld')
         
         # Crear estructura de base de datos básica
         with sqlite3.connect(str(db_path)) as conn:
             cursor = conn.cursor()
             
-            # Crear tablas básicas (similar a la estructura actual)
+            # Crear tablas básicas
             cursor.execute('''
                 CREATE TABLE IF NOT EXISTS concepts (
                     uri TEXT PRIMARY KEY,
@@ -224,18 +225,56 @@ class TaxonomyManager:
                 )
             ''')
             
-            # TODO: Parsear JSONLD y poblar tablas
-            # Por ahora, insertar datos de ejemplo
-            sample_concepts = [
-                ('http://example.com/concept/1', 'Concepto de Ejemplo', 'Definición de ejemplo', '001', 1),
-            ]
+            # Obtener todos los conceptos SKOS
+            skos_concepts = list(g.subjects(RDF.type, SKOS.Concept))
             
+            # Procesar conceptos
+            concepts_data = []
+            for concept in skos_concepts:
+                pref_label = g.value(concept, SKOS.prefLabel)
+                definition = g.value(concept, SKOS.definition)
+                notation = g.value(concept, SKOS.notation)
+                
+                concepts_data.append((
+                    str(concept),
+                    str(pref_label) if pref_label else '',
+                    str(definition) if definition else '',
+                    str(notation) if notation else '',
+                    1  # nivel por defecto
+                ))
+            
+            # Insertar conceptos
             cursor.executemany(
                 'INSERT OR REPLACE INTO concepts (uri, prefLabel, definition, notation, level) VALUES (?, ?, ?, ?, ?)',
-                sample_concepts
+                concepts_data
             )
             
+            # Procesar relaciones jerárquicas
+            relationships_data = []
+            
+            # Relaciones broader/narrower
+            for subj, obj in g.subject_objects(SKOS.broader):
+                relationships_data.append((str(subj), 'broader', str(obj)))
+                
+            for subj, obj in g.subject_objects(SKOS.narrower):
+                relationships_data.append((str(subj), 'narrower', str(obj)))
+                
+            for subj, obj in g.subject_objects(SKOS.related):
+                relationships_data.append((str(subj), 'related', str(obj)))
+            
+            # Insertar relaciones
+            if relationships_data:
+                cursor.executemany(
+                    'INSERT INTO relationships (subject, predicate, object) VALUES (?, ?, ?)',
+                    relationships_data
+                )
+            
+            # Crear índices para rendimiento
+            cursor.execute('CREATE INDEX IF NOT EXISTS idx_concepts_pref ON concepts(prefLabel)')
+            cursor.execute('CREATE INDEX IF NOT EXISTS idx_relationships_subj ON relationships(subject)')
+            
             concepts_count = cursor.execute('SELECT COUNT(*) FROM concepts').fetchone()[0]
+            relationships_count = cursor.execute('SELECT COUNT(*) FROM relationships').fetchone()[0]
             
             conn.commit()
         
@@ -243,6 +282,7 @@ class TaxonomyManager:
         
         return {
             "concepts_count": concepts_count,
+            "relationships_count": relationships_count,
             "processing_time_seconds": round(processing_time, 2),
             "concepts_processed": concepts_count,
             "concepts_imported": concepts_count
