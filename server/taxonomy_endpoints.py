@@ -53,6 +53,18 @@ class TaxonomyListResponse(BaseModel):
     active_count: int
     default_taxonomy: Optional[str]
 
+class TaxonomyValidationResponse(BaseModel):
+    """Respuesta de validación de taxonomía"""
+    valid: bool
+    quality_score: float
+    compliance_level: str
+    requirements_met: Dict[str, bool]
+    statistics: Dict[str, Any]
+    enrichment_features: List[str]
+    recommendations: List[str]
+    warnings: List[str]
+    errors: List[str]
+
 class TaxonomyUploadResponse(BaseModel):
     """Respuesta de upload de taxonomía"""
     success: bool
@@ -61,15 +73,80 @@ class TaxonomyUploadResponse(BaseModel):
     stats: Dict[str, Any]
     validation: Dict[str, Any] = {"skos_valid": True, "warnings": [], "errors": []}
 
+@taxonomy_router.post("/validate", response_model=TaxonomyValidationResponse)
+async def validate_taxonomy_file(
+    file: UploadFile = File(..., description="Archivo SKOS para validar")
+):
+    """
+    Validar un archivo SKOS sin subirlo al sistema
+    
+    Permite verificar si una taxonomía cumple los requisitos mínimos:
+    • SKOS compliant (conceptos, esquemas, jerarquías)  
+    • Mínimo 20 conceptos con etiquetas
+    • Estructura jerárquica coherente
+    • Calidad mínima 60% para clasificación efectiva
+    
+    Útil para verificar archivos antes del upload definitivo.
+    """
+    try:
+        # Validar archivo según extensión
+        allowed_extensions = ('.jsonld', '.json', '.rdf', '.xml', '.ttl')
+        if not file.filename.endswith(allowed_extensions):
+            raise HTTPException(
+                status_code=400, 
+                detail=f"Formato no soportado. Use: {', '.join(allowed_extensions)}"
+            )
+        
+        # Validar tamaño del archivo
+        content = await file.read()
+        if len(content) > 100 * 1024 * 1024:  # 100MB máximo
+            raise HTTPException(status_code=413, detail="Archivo muy grande (máximo 100MB)")
+        
+        # Guardar archivo temporal
+        with tempfile.NamedTemporaryFile(delete=False, suffix=Path(file.filename).suffix) as temp_file:
+            temp_file.write(content)
+            temp_file_path = Path(temp_file.name)
+        
+        try:
+            # VALIDACIÓN SKOS ESTRICTA
+            logger.info(f"Validando archivo: {file.filename}")
+            validation_result = taxonomy_manager.validate_skos_file(str(temp_file_path))
+            
+            return TaxonomyValidationResponse(
+                valid=validation_result["valid"],
+                quality_score=validation_result.get("quality_score", 0.0),
+                compliance_level=validation_result.get("compliance_level", "none"),
+                requirements_met=validation_result.get("requirements_met", {}),
+                statistics=validation_result.get("statistics", {}),
+                enrichment_features=validation_result.get("enrichment_features", []),
+                recommendations=validation_result.get("recommendations", []),
+                warnings=validation_result.get("warnings", []),
+                errors=validation_result.get("errors", [])
+            )
+            
+        finally:
+            # Limpiar archivo temporal
+            temp_file_path.unlink(missing_ok=True)
+            
+    except Exception as e:
+        logger.error(f"Error validando archivo: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error validando archivo: {str(e)}")
+
 @taxonomy_router.post("/upload", response_model=TaxonomyUploadResponse)
 async def upload_taxonomy(
     file: UploadFile = File(..., description="Archivo SKOS en formato JSON-LD"),
     metadata: str = Query(..., description="Metadatos de la taxonomía en JSON")
 ):
     """
-    Subir nueva taxonomía SKOS al sistema
+    Subir nueva taxonomía SKOS al sistema con validación estricta
     
-    - **file**: Archivo JSON-LD con taxonomía SKOS normalizada
+    REQUISITOS MÍNIMOS para aceptar la taxonomía:
+    • SKOS compliant (conceptos, esquemas, jerarquías)
+    • Mínimo 20 conceptos con etiquetas
+    • Estructura jerárquica coherente  
+    • Calidad mínima 60% para clasificación efectiva
+    
+    - **file**: Archivo SKOS (.jsonld, .rdf, .xml, .ttl)
     - **metadata**: JSON con metadatos (id, name, description, etc.)
     """
     try:
@@ -80,50 +157,85 @@ async def upload_taxonomy(
         except (json.JSONDecodeError, ValueError) as e:
             raise HTTPException(status_code=400, detail=f"Metadatos inválidos: {str(e)}")
         
-        # Validar archivo
-        if not file.filename.endswith(('.jsonld', '.json')):
-            raise HTTPException(status_code=400, detail="El archivo debe ser JSON-LD (.jsonld o .json)")
+        # Validar archivo según extensión
+        allowed_extensions = ('.jsonld', '.json', '.rdf', '.xml', '.ttl')
+        if not file.filename.endswith(allowed_extensions):
+            raise HTTPException(
+                status_code=400, 
+                detail=f"Formato no soportado. Use: {', '.join(allowed_extensions)}"
+            )
         
         # Validar que no exista la taxonomía
         if taxonomy_manager.get_taxonomy_metadata(taxonomy_metadata.id):
             raise HTTPException(status_code=409, detail=f"Taxonomía '{taxonomy_metadata.id}' ya existe")
         
+        # Validar tamaño del archivo
+        content = await file.read()
+        if len(content) > 100 * 1024 * 1024:  # 100MB máximo
+            raise HTTPException(status_code=413, detail="Archivo muy grande (máximo 100MB)")
+        
         # Guardar archivo temporal
-        with tempfile.NamedTemporaryFile(delete=False, suffix='.jsonld') as temp_file:
-            content = await file.read()
+        with tempfile.NamedTemporaryFile(delete=False, suffix=Path(file.filename).suffix) as temp_file:
             temp_file.write(content)
             temp_file_path = Path(temp_file.name)
         
         try:
-            # Validar formato SKOS básico
-            validation_result = _validate_skos_file(temp_file_path)
+            # VALIDACIÓN SKOS ESTRICTA
+            logger.info(f"Validando taxonomía '{taxonomy_metadata.id}'...")
             
-            if not validation_result["skos_valid"]:
-                return TaxonomyUploadResponse(
-                    success=False,
-                    taxonomy_id=taxonomy_metadata.id,
-                    message="Archivo SKOS inválido",
-                    stats={},
-                    validation=validation_result
-                )
-            
-            # Registrar taxonomía
+            # Registrar la taxonomía (incluye validación automática)
             result_metadata = taxonomy_manager.register_taxonomy(
                 taxonomy_metadata.id,
                 temp_file_path,
                 taxonomy_metadata.dict()
             )
             
+            # Extraer información de validación
+            validation_info = result_metadata.get("validation", {})
+            skos_stats = result_metadata.get("skos_statistics", {})
+            
+            logger.info(f"✅ Taxonomía '{taxonomy_metadata.id}' registrada exitosamente")
+            
             return TaxonomyUploadResponse(
                 success=True,
                 taxonomy_id=taxonomy_metadata.id,
-                message="Taxonomía procesada exitosamente",
+                message=f"Taxonomía registrada exitosamente. Calidad: {validation_info.get('quality_score', 0):.1%}",
                 stats={
                     "concepts_processed": result_metadata.get("concepts_processed", 0),
                     "concepts_imported": result_metadata.get("concepts_imported", 0),
-                    "processing_time_seconds": result_metadata.get("processing_time_seconds", 0)
+                    "processing_time_seconds": result_metadata.get("processing_time_seconds", 0),
+                    "total_concepts": skos_stats.get("total_concepts", 0),
+                    "hierarchical_relations": skos_stats.get("hierarchical_relations", 0),
+                    "concepts_with_definitions": skos_stats.get("concepts_with_definitions", 0)
                 },
-                validation=validation_result
+                validation={
+                    "skos_valid": True,
+                    "quality_score": validation_info.get("quality_score", 0),
+                    "compliance_level": validation_info.get("compliance_level", "unknown"),
+                    "enrichment_features": validation_info.get("enrichment_features", []),
+                    "recommendations": validation_info.get("recommendations", []),
+                    "warnings": [],
+                    "errors": []
+                }
+            )
+            
+        except ValueError as ve:
+            # Error de validación SKOS
+            logger.warning(f"Taxonomía '{taxonomy_metadata.id}' rechazada: {str(ve)}")
+            return TaxonomyUploadResponse(
+                success=False,
+                taxonomy_id=taxonomy_metadata.id,
+                message="Taxonomía no cumple los requisitos mínimos",
+                stats={},
+                validation={
+                    "skos_valid": False,
+                    "quality_score": 0,
+                    "compliance_level": "insufficient",
+                    "enrichment_features": [],
+                    "recommendations": [],
+                    "warnings": [],
+                    "errors": [str(ve)]
+                }
             )
             
         finally:

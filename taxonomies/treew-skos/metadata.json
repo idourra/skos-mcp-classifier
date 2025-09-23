@@ -1,0 +1,17 @@
+{
+  "id": "treew-skos",
+  "name": "TreeW SKOS Food Taxonomy",
+  "description": "Taxonomía SKOS para productos alimentarios - TreeW",
+  "version": "1.0.0",
+  "provider": "TreeW",
+  "language": "es",
+  "domain": "food",
+  "created_at": "2025-09-23T14:09:48.111395",
+  "updated_at": "2025-09-23T14:09:48.111408",
+  "is_active": true,
+  "is_default": true,
+  "file_hash": "sha256:45d5d8d1a30144b00a434d6eb19b0ca8a9574adcf69bee20ef498ae5797a7735",
+  "file_size_mb": 0.77,
+  "schema_version": "1.0",
+  "concepts_count": 0
+}
