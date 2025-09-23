@@ -88,9 +88,24 @@ exports/*
 # Logs
 *.log
 
+# Process IDs
+*.pid
+.api_pid
+.mcp_pid
+
 # Temporary files
 *.tmp
 *.temp
+
+# Test results and analysis files
+resultados_clasificacion_*.json
+extract_results*.py
+monitor_job.py
+verify_results.py
+
+# Documentation temporary files
+*_REPORT.md
+PR_DESCRIPTION.md
 
 # API keys (keep .env.example but not .env)
 .env
