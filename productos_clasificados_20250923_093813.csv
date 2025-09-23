@@ -1,4 +1,0 @@
-product_id,product_description,skos_category,skos_notation,skos_uri,confidence_score,classification_timestamp,status
-PROD-001,yogur griego natural,Yogur y sustitutos,111206,https://treew.io/taxonomy/concept/111206,1.0,2025-09-23T09:38:21.036821,success
-PROD-002,cerveza IPA artesanal,Cervezas,240101,https://treew.io/taxonomy/concept/240101,1.0,2025-09-23T09:38:26.515095,success
-PROD-003,queso parmesano rallado,Quesos,111203,https://treew.io/taxonomy/concept/111203,1.0,2025-09-23T09:38:32.002424,success
