@@ -80,6 +80,11 @@ products_classified*.xlsx
 catalog_classified*.json
 classification_results*.json
 
+# Export files (now managed in exports/ folder)
+exports/*
+!exports/.gitignore
+!exports/README.md
+
 # Logs
 *.log
 
