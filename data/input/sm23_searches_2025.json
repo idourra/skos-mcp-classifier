@@ -1,0 +1,4004 @@
+{
+  "products":[
+  {
+    "product_id": "1",
+    "text": "pollo"
+  },
+  {
+    "product_id": "2",
+    "text": "aceite"
+  },
+  {
+    "product_id": "3",
+    "text": "arroz"
+  },
+  {
+    "product_id": "4",
+    "text": "leche"
+  },
+  {
+    "product_id": "5",
+    "text": "cafe"
+  },
+  {
+    "product_id": "6",
+    "text": "galletas"
+  },
+  {
+    "product_id": "7",
+    "text": "queso"
+  },
+  {
+    "product_id": "8",
+    "text": "yogurt"
+  },
+  {
+    "product_id": "9",
+    "text": "refresco"
+  },
+  {
+    "product_id": "10",
+    "text": "leche en polvo"
+  },
+  {
+    "product_id": "11",
+    "text": "detergente"
+  },
+  {
+    "product_id": "12",
+    "text": "frijoles"
+  },
+  {
+    "product_id": "13",
+    "text": "picadillo"
+  },
+  {
+    "product_id": "14",
+    "text": "huevos"
+  },
+  {
+    "product_id": "15",
+    "text": "jugos"
+  },
+  {
+    "product_id": "16",
+    "text": "cerdo"
+  },
+  {
+    "product_id": "17",
+    "text": "carne"
+  },
+  {
+    "product_id": "18",
+    "text": "huevo"
+  },
+  {
+    "product_id": "19",
+    "text": "mayonesa"
+  },
+  {
+    "product_id": "20",
+    "text": "azucar"
+  },
+  {
+    "product_id": "21",
+    "text": "helado"
+  },
+  {
+    "product_id": "22",
+    "text": "malta"
+  },
+  {
+    "product_id": "23",
+    "text": "carne de res"
+  },
+  {
+    "product_id": "24",
+    "text": "pan"
+  },
+  {
+    "product_id": "25",
+    "text": "jamon"
+  },
+  {
+    "product_id": "26",
+    "text": "café"
+  },
+  {
+    "product_id": "27",
+    "text": "chocolate"
+  },
+  {
+    "product_id": "28",
+    "text": "cerveza"
+  },
+  {
+    "product_id": "29",
+    "text": "salchichas"
+  },
+  {
+    "product_id": "30",
+    "text": "mantequilla"
+  },
+  {
+    "product_id": "31",
+    "text": "jabon"
+  },
+  {
+    "product_id": "32",
+    "text": "pescado"
+  },
+  {
+    "product_id": "33",
+    "text": "jugo"
+  },
+  {
+    "product_id": "34",
+    "text": "gelatina"
+  },
+  {
+    "product_id": "35",
+    "text": "agua"
+  },
+  {
+    "product_id": "36",
+    "text": "carnes"
+  },
+  {
+    "product_id": "37",
+    "text": "caja de pollo"
+  },
+  {
+    "product_id": "38",
+    "text": "salchicha"
+  },
+  {
+    "product_id": "39",
+    "text": "leche condensada"
+  },
+  {
+    "product_id": "40",
+    "text": "refrescos"
+  },
+  {
+    "product_id": "41",
+    "text": "carne de cerdo"
+  },
+  {
+    "product_id": "42",
+    "text": "cake"
+  },
+  {
+    "product_id": "43",
+    "text": "res"
+  },
+  {
+    "product_id": "44",
+    "text": "azúcar"
+  },
+  {
+    "product_id": "45",
+    "text": "sal"
+  },
+  {
+    "product_id": "46",
+    "text": "pasta de tomate"
+  },
+  {
+    "product_id": "47",
+    "text": "yogur"
+  },
+  {
+    "product_id": "48",
+    "text": "jabón"
+  },
+  {
+    "product_id": "49",
+    "text": "caramelos"
+  },
+  {
+    "product_id": "50",
+    "text": "queso crema"
+  },
+  {
+    "product_id": "51",
+    "text": "desodorante"
+  },
+  {
+    "product_id": "52",
+    "text": "galletas dulces"
+  },
+  {
+    "product_id": "53",
+    "text": "galleta"
+  },
+  {
+    "product_id": "54",
+    "text": "jamón"
+  },
+  {
+    "product_id": "55",
+    "text": "papas"
+  },
+  {
+    "product_id": "56",
+    "text": "chorizo"
+  },
+  {
+    "product_id": "57",
+    "text": "ventilador recargable"
+  },
+  {
+    "product_id": "58",
+    "text": "helados"
+  },
+  {
+    "product_id": "59",
+    "text": "atun"
+  },
+  {
+    "product_id": "60",
+    "text": "picadillo de res"
+  },
+  {
+    "product_id": "61",
+    "text": "pintura"
+  },
+  {
+    "product_id": "62",
+    "text": "ventilador"
+  },
+  {
+    "product_id": "63",
+    "text": "champu"
+  },
+  {
+    "product_id": "64",
+    "text": "pasta"
+  },
+  {
+    "product_id": "65",
+    "text": "dulces"
+  },
+  {
+    "product_id": "66",
+    "text": "espaguetis"
+  },
+  {
+    "product_id": "67",
+    "text": "queso gouda"
+  },
+  {
+    "product_id": "68",
+    "text": "cemento"
+  },
+  {
+    "product_id": "69",
+    "text": "pasta dental"
+  },
+  {
+    "product_id": "70",
+    "text": "frutas"
+  },
+  {
+    "product_id": "71",
+    "text": "hamburguesa"
+  },
+  {
+    "product_id": "72",
+    "text": "galletas de soda"
+  },
+  {
+    "product_id": "73",
+    "text": "chocolate en polvo"
+  },
+  {
+    "product_id": "74",
+    "text": "croquetas"
+  },
+  {
+    "product_id": "75",
+    "text": "refrigerador"
+  },
+  {
+    "product_id": "76",
+    "text": "viandas"
+  },
+  {
+    "product_id": "77",
+    "text": "combos"
+  },
+  {
+    "product_id": "78",
+    "text": "ajo"
+  },
+  {
+    "product_id": "79",
+    "text": "detergente en polvo"
+  },
+  {
+    "product_id": "80",
+    "text": "tomate"
+  },
+  {
+    "product_id": "81",
+    "text": "harina"
+  },
+  {
+    "product_id": "82",
+    "text": "ron"
+  },
+  {
+    "product_id": "83",
+    "text": "pechuga"
+  },
+  {
+    "product_id": "84",
+    "text": "frijoles negros"
+  },
+  {
+    "product_id": "85",
+    "text": "pastas"
+  },
+  {
+    "product_id": "86",
+    "text": "champú"
+  },
+  {
+    "product_id": "87",
+    "text": "medicamentos"
+  },
+  {
+    "product_id": "88",
+    "text": "cajas de pollo"
+  },
+  {
+    "product_id": "89",
+    "text": "pechuga de pollo"
+  },
+  {
+    "product_id": "90",
+    "text": "puerco"
+  },
+  {
+    "product_id": "91",
+    "text": "papel sanitario"
+  },
+  {
+    "product_id": "92",
+    "text": "maltas"
+  },
+  {
+    "product_id": "93",
+    "text": "fideos"
+  },
+  {
+    "product_id": "94",
+    "text": "leche entera"
+  },
+  {
+    "product_id": "95",
+    "text": "perfume"
+  },
+  {
+    "product_id": "96",
+    "text": "acondicionador"
+  },
+  {
+    "product_id": "97",
+    "text": "cervezas"
+  },
+  {
+    "product_id": "98",
+    "text": "farmacia"
+  },
+  {
+    "product_id": "99",
+    "text": "yeya"
+  },
+  {
+    "product_id": "100",
+    "text": "quesos"
+  },
+  {
+    "product_id": "101",
+    "text": "frijol"
+  },
+  {
+    "product_id": "102",
+    "text": "avena"
+  },
+  {
+    "product_id": "103",
+    "text": "picadillo de pollo"
+  },
+  {
+    "product_id": "104",
+    "text": "bodegones"
+  },
+  {
+    "product_id": "105",
+    "text": "lavadora"
+  },
+  {
+    "product_id": "106",
+    "text": "garbanzos"
+  },
+  {
+    "product_id": "107",
+    "text": "mortadella"
+  },
+  {
+    "product_id": "108",
+    "text": "jabón de baño"
+  },
+  {
+    "product_id": "109",
+    "text": "caramelo"
+  },
+  {
+    "product_id": "110",
+    "text": "alimentos"
+  },
+  {
+    "product_id": "111",
+    "text": "jabones"
+  },
+  {
+    "product_id": "112",
+    "text": "pure de tomate"
+  },
+  {
+    "product_id": "113",
+    "text": "aceite vegetal"
+  },
+  {
+    "product_id": "114",
+    "text": "hamburguesas"
+  },
+  {
+    "product_id": "115",
+    "text": "jugo_yeya"
+  },
+  {
+    "product_id": "116",
+    "text": "carne de puerco"
+  },
+  {
+    "product_id": "117",
+    "text": "lentejas"
+  },
+  {
+    "product_id": "118",
+    "text": "comino"
+  },
+  {
+    "product_id": "119",
+    "text": "vegetales"
+  },
+  {
+    "product_id": "120",
+    "text": "shampoo"
+  },
+  {
+    "product_id": "121",
+    "text": "losas"
+  },
+  {
+    "product_id": "122",
+    "text": "cebolla"
+  },
+  {
+    "product_id": "123",
+    "text": "colonia"
+  },
+  {
+    "product_id": "124",
+    "text": "maicena"
+  },
+  {
+    "product_id": "125",
+    "text": "lomo de cerdo"
+  },
+  {
+    "product_id": "126",
+    "text": "electrodomésticos"
+  },
+  {
+    "product_id": "127",
+    "text": "galletas_banner"
+  },
+  {
+    "product_id": "128",
+    "text": "banner_sazonyeya"
+  },
+  {
+    "product_id": "129",
+    "text": "ventiladores"
+  },
+  {
+    "product_id": "130",
+    "text": "yeya_mar"
+  },
+  {
+    "product_id": "131",
+    "text": "vinagre"
+  },
+  {
+    "product_id": "132",
+    "text": "espagueti"
+  },
+  {
+    "product_id": "133",
+    "text": "embutidos"
+  },
+  {
+    "product_id": "134",
+    "text": "pure"
+  },
+  {
+    "product_id": "135",
+    "text": "puré de tomate"
+  },
+  {
+    "product_id": "136",
+    "text": "galletas de sal"
+  },
+  {
+    "product_id": "137",
+    "text": "sazon"
+  },
+  {
+    "product_id": "138",
+    "text": "carne res"
+  },
+  {
+    "product_id": "139",
+    "text": "cocina"
+  },
+  {
+    "product_id": "140",
+    "text": "galletas saladas"
+  },
+  {
+    "product_id": "141",
+    "text": "leche evaporada"
+  },
+  {
+    "product_id": "142",
+    "text": "higado"
+  },
+  {
+    "product_id": "143",
+    "text": "kake"
+  },
+  {
+    "product_id": "144",
+    "text": "leche polvo"
+  },
+  {
+    "product_id": "145",
+    "text": "banner_harina"
+  },
+  {
+    "product_id": "146",
+    "text": "jamonada"
+  },
+  {
+    "product_id": "147",
+    "text": "coditos"
+  },
+  {
+    "product_id": "148",
+    "text": "chocolates"
+  },
+  {
+    "product_id": "149",
+    "text": "papa"
+  },
+  {
+    "product_id": "150",
+    "text": "chicharos"
+  },
+  {
+    "product_id": "151",
+    "text": "manzana"
+  },
+  {
+    "product_id": "152",
+    "text": "cereal"
+  },
+  {
+    "product_id": "153",
+    "text": "nevera"
+  },
+  {
+    "product_id": "154",
+    "text": "atún"
+  },
+  {
+    "product_id": "155",
+    "text": "ventiladores recargables"
+  },
+  {
+    "product_id": "156",
+    "text": "huevo blanco importado yeya (30 u)"
+  },
+  {
+    "product_id": "157",
+    "text": "vitaminas"
+  },
+  {
+    "product_id": "158",
+    "text": "guayaba"
+  },
+  {
+    "product_id": "159",
+    "text": "aceitunas"
+  },
+  {
+    "product_id": "160",
+    "text": "perrito"
+  },
+  {
+    "product_id": "161",
+    "text": "nutella"
+  },
+  {
+    "product_id": "162",
+    "text": "chicharo"
+  },
+  {
+    "product_id": "163",
+    "text": "combo"
+  },
+  {
+    "product_id": "164",
+    "text": "aceites"
+  },
+  {
+    "product_id": "165",
+    "text": "sardinas"
+  },
+  {
+    "product_id": "166",
+    "text": "televisor"
+  },
+  {
+    "product_id": "167",
+    "text": "perfumes"
+  },
+  {
+    "product_id": "168",
+    "text": "refresco en polvo"
+  },
+  {
+    "product_id": "169",
+    "text": "gel de baño"
+  },
+  {
+    "product_id": "170",
+    "text": "sopa"
+  },
+  {
+    "product_id": "171",
+    "text": "frijoles colorados"
+  },
+  {
+    "product_id": "172",
+    "text": "garbanzo"
+  },
+  {
+    "product_id": "173",
+    "text": "dulce"
+  },
+  {
+    "product_id": "174",
+    "text": "pierna de cerdo"
+  },
+  {
+    "product_id": "175",
+    "text": "carnicos"
+  },
+  {
+    "product_id": "176",
+    "text": "pinturas"
+  },
+  {
+    "product_id": "177",
+    "text": "pasta de dientes"
+  },
+  {
+    "product_id": "178",
+    "text": "galleta de soda"
+  },
+  {
+    "product_id": "179",
+    "text": "leche en polvo entera"
+  },
+  {
+    "product_id": "180",
+    "text": "lavadoras"
+  },
+  {
+    "product_id": "181",
+    "text": "pasta de bocadito"
+  },
+  {
+    "product_id": "182",
+    "text": "lomo"
+  },
+  {
+    "product_id": "183",
+    "text": "refresco instantáneo"
+  },
+  {
+    "product_id": "184",
+    "text": "spaghetti"
+  },
+  {
+    "product_id": "185",
+    "text": "neveras"
+  },
+  {
+    "product_id": "186",
+    "text": "panes"
+  },
+  {
+    "product_id": "187",
+    "text": "caja de cuartos traseros de pollo nat (10 kg / 22 lb)"
+  },
+  {
+    "product_id": "188",
+    "text": "leche entera en polvo"
+  },
+  {
+    "product_id": "189",
+    "text": "jabon de baño"
+  },
+  {
+    "product_id": "190",
+    "text": "salsa de tomate"
+  },
+  {
+    "product_id": "191",
+    "text": "limon"
+  },
+  {
+    "product_id": "192",
+    "text": "malanga"
+  },
+  {
+    "product_id": "193",
+    "text": "galletas dulce"
+  },
+  {
+    "product_id": "194",
+    "text": "natilla"
+  },
+  {
+    "product_id": "195",
+    "text": "condimentos"
+  },
+  {
+    "product_id": "196",
+    "text": "papel higiénico"
+  },
+  {
+    "product_id": "197",
+    "text": "mermelada"
+  },
+  {
+    "product_id": "198",
+    "text": "cafetera"
+  },
+  {
+    "product_id": "199",
+    "text": "molleja"
+  },
+  {
+    "product_id": "200",
+    "text": "muebles"
+  },
+  {
+    "product_id": "201",
+    "text": "colchones"
+  },
+  {
+    "product_id": "202",
+    "text": "pollos"
+  },
+  {
+    "product_id": "203",
+    "text": "confituras"
+  },
+  {
+    "product_id": "204",
+    "text": "chicken"
+  },
+  {
+    "product_id": "205",
+    "text": "granos"
+  },
+  {
+    "product_id": "206",
+    "text": "spaguetis"
+  },
+  {
+    "product_id": "207",
+    "text": "jabón de lavar"
+  },
+  {
+    "product_id": "208",
+    "text": "bodegon"
+  },
+  {
+    "product_id": "209",
+    "text": "arros"
+  },
+  {
+    "product_id": "210",
+    "text": "frijol negro"
+  },
+  {
+    "product_id": "211",
+    "text": "spam"
+  },
+  {
+    "product_id": "212",
+    "text": "crema"
+  },
+  {
+    "product_id": "213",
+    "text": "caja de picadillo"
+  },
+  {
+    "product_id": "214",
+    "text": "inodoro"
+  },
+  {
+    "product_id": "215",
+    "text": "tv"
+  },
+  {
+    "product_id": "216",
+    "text": "goya"
+  },
+  {
+    "product_id": "217",
+    "text": "sorbeto"
+  },
+  {
+    "product_id": "218",
+    "text": "vino"
+  },
+  {
+    "product_id": "219",
+    "text": "compota"
+  },
+  {
+    "product_id": "220",
+    "text": "paracetamol"
+  },
+  {
+    "product_id": "221",
+    "text": "vino seco"
+  },
+  {
+    "product_id": "222",
+    "text": "azúcar blanca"
+  },
+  {
+    "product_id": "223",
+    "text": "crema_nuttime"
+  },
+  {
+    "product_id": "224",
+    "text": "aseo"
+  },
+  {
+    "product_id": "225",
+    "text": "zuko"
+  },
+  {
+    "product_id": "226",
+    "text": "detergentes"
+  },
+  {
+    "product_id": "227",
+    "text": "refresco instantaneo"
+  },
+  {
+    "product_id": "228",
+    "text": "banner_yogurtyokey"
+  },
+  {
+    "product_id": "229",
+    "text": "ketchup"
+  },
+  {
+    "product_id": "230",
+    "text": "carne cerdo"
+  },
+  {
+    "product_id": "231",
+    "text": "galletas soda"
+  },
+  {
+    "product_id": "232",
+    "text": "cereales"
+  },
+  {
+    "product_id": "233",
+    "text": "harina de trigo"
+  },
+  {
+    "product_id": "234",
+    "text": "jabon de lavar"
+  },
+  {
+    "product_id": "235",
+    "text": "caja de cuartos traseros de pollo aurora (10 kg / 22 lb)"
+  },
+  {
+    "product_id": "236",
+    "text": "carnero"
+  },
+  {
+    "product_id": "237",
+    "text": "sorbetos"
+  },
+  {
+    "product_id": "238",
+    "text": "olla"
+  },
+  {
+    "product_id": "239",
+    "text": "vainilla"
+  },
+  {
+    "product_id": "240",
+    "text": "pasta de diente"
+  },
+  {
+    "product_id": "241",
+    "text": "bombones"
+  },
+  {
+    "product_id": "242",
+    "text": "electrodomesticos"
+  },
+  {
+    "product_id": "243",
+    "text": "muslo de pollo"
+  },
+  {
+    "product_id": "244",
+    "text": "sardina"
+  },
+  {
+    "product_id": "245",
+    "text": "perritos"
+  },
+  {
+    "product_id": "246",
+    "text": "saco de arroz"
+  },
+  {
+    "product_id": "247",
+    "text": "bicicleta"
+  },
+  {
+    "product_id": "248",
+    "text": "00000001"
+  },
+  {
+    "product_id": "249",
+    "text": "sopas"
+  },
+  {
+    "product_id": "250",
+    "text": "javon"
+  },
+  {
+    "product_id": "251",
+    "text": "papel"
+  },
+  {
+    "product_id": "252",
+    "text": "pañales"
+  },
+  {
+    "product_id": "253",
+    "text": "galleticas"
+  },
+  {
+    "product_id": "254",
+    "text": "mortadela"
+  },
+  {
+    "product_id": "255",
+    "text": "azucar blanca"
+  },
+  {
+    "product_id": "256",
+    "text": "aseite"
+  },
+  {
+    "product_id": "257",
+    "text": "platos"
+  },
+  {
+    "product_id": "258",
+    "text": "ollas"
+  },
+  {
+    "product_id": "259",
+    "text": "tinte"
+  },
+  {
+    "product_id": "260",
+    "text": "colchon"
+  },
+  {
+    "product_id": "261",
+    "text": "ferretería"
+  },
+  {
+    "product_id": "262",
+    "text": "sazón"
+  },
+  {
+    "product_id": "263",
+    "text": "aire acondicionado"
+  },
+  {
+    "product_id": "264",
+    "text": "split"
+  },
+  {
+    "product_id": "265",
+    "text": "sazones"
+  },
+  {
+    "product_id": "266",
+    "text": "planta eléctrica"
+  },
+  {
+    "product_id": "267",
+    "text": "celular"
+  },
+  {
+    "product_id": "268",
+    "text": "ropa"
+  },
+  {
+    "product_id": "269",
+    "text": "yogourt"
+  },
+  {
+    "product_id": "270",
+    "text": "olla reina"
+  },
+  {
+    "product_id": "271",
+    "text": "gelatinas"
+  },
+  {
+    "product_id": "272",
+    "text": "ecoflow"
+  },
+  {
+    "product_id": "273",
+    "text": "galletas maria"
+  },
+  {
+    "product_id": "274",
+    "text": "caja pollo"
+  },
+  {
+    "product_id": "275",
+    "text": "pasta tomate"
+  },
+  {
+    "product_id": "276",
+    "text": "cafe la llave"
+  },
+  {
+    "product_id": "277",
+    "text": "rice"
+  },
+  {
+    "product_id": "278",
+    "text": "aceite de oliva"
+  },
+  {
+    "product_id": "279",
+    "text": "bebidas"
+  },
+  {
+    "product_id": "280",
+    "text": "fideo"
+  },
+  {
+    "product_id": "281",
+    "text": "queso blanco"
+  },
+  {
+    "product_id": "282",
+    "text": "papas fritas"
+  },
+  {
+    "product_id": "283",
+    "text": "chupa chupa"
+  },
+  {
+    "product_id": "284",
+    "text": "generador"
+  },
+  {
+    "product_id": "285",
+    "text": "picadillo res"
+  },
+  {
+    "product_id": "286",
+    "text": "café la llave"
+  },
+  {
+    "product_id": "287",
+    "text": "pastel"
+  },
+  {
+    "product_id": "288",
+    "text": "galletas dulces y sorbetos"
+  },
+  {
+    "product_id": "289",
+    "text": "yogures"
+  },
+  {
+    "product_id": "290",
+    "text": "batidora"
+  },
+  {
+    "product_id": "291",
+    "text": "leche en polvo mu (1 kg / 2.2 lb)"
+  },
+  {
+    "product_id": "292",
+    "text": "refresco zuco"
+  },
+  {
+    "product_id": "293",
+    "text": "compotas"
+  },
+  {
+    "product_id": "294",
+    "text": "juguetes"
+  },
+  {
+    "product_id": "295",
+    "text": "televisores"
+  },
+  {
+    "product_id": "296",
+    "text": "manzanas"
+  },
+  {
+    "product_id": "297",
+    "text": "cerveza cristal"
+  },
+  {
+    "product_id": "298",
+    "text": "lampara"
+  },
+  {
+    "product_id": "299",
+    "text": "maiz"
+  },
+  {
+    "product_id": "300",
+    "text": "refresco gaseado"
+  },
+  {
+    "product_id": "301",
+    "text": "leche y sustitutos"
+  },
+  {
+    "product_id": "302",
+    "text": "nutela"
+  },
+  {
+    "product_id": "303",
+    "text": "vitamina c"
+  },
+  {
+    "product_id": "304",
+    "text": "lampara recargable"
+  },
+  {
+    "product_id": "305",
+    "text": "hígado"
+  },
+  {
+    "product_id": "306",
+    "text": "aceituna"
+  },
+  {
+    "product_id": "307",
+    "text": "leche entera en polvo yeya (1 kg / 2.2 lb)"
+  },
+  {
+    "product_id": "308",
+    "text": "celulares"
+  },
+  {
+    "product_id": "309",
+    "text": "croqueta"
+  },
+  {
+    "product_id": "310",
+    "text": "aceites y grasas"
+  },
+  {
+    "product_id": "311",
+    "text": "malta bucanero"
+  },
+  {
+    "product_id": "312",
+    "text": "pollo entero"
+  },
+  {
+    "product_id": "313",
+    "text": "globos"
+  },
+  {
+    "product_id": "314",
+    "text": "lámpara recargable"
+  },
+  {
+    "product_id": "315",
+    "text": "galletas saladas y aperitivos"
+  },
+  {
+    "product_id": "316",
+    "text": "baño"
+  },
+  {
+    "product_id": "317",
+    "text": "cocinas"
+  },
+  {
+    "product_id": "318",
+    "text": "culeros"
+  },
+  {
+    "product_id": "319",
+    "text": "camarones"
+  },
+  {
+    "product_id": "320",
+    "text": "carne enlatada"
+  },
+  {
+    "product_id": "321",
+    "text": "carne en lata"
+  },
+  {
+    "product_id": "322",
+    "text": "papas prefritas"
+  },
+  {
+    "product_id": "323",
+    "text": "milk"
+  },
+  {
+    "product_id": "324",
+    "text": "bicicletas"
+  },
+  {
+    "product_id": "325",
+    "text": "cakes"
+  },
+  {
+    "product_id": "326",
+    "text": "codito"
+  },
+  {
+    "product_id": "327",
+    "text": "lavavajillas"
+  },
+  {
+    "product_id": "328",
+    "text": "enlatados_yeya"
+  },
+  {
+    "product_id": "329",
+    "text": "fruta"
+  },
+  {
+    "product_id": "330",
+    "text": "coca cola"
+  },
+  {
+    "product_id": "331",
+    "text": "platano"
+  },
+  {
+    "product_id": "332",
+    "text": "talco"
+  },
+  {
+    "product_id": "333",
+    "text": "muslos de pollo"
+  },
+  {
+    "product_id": "334",
+    "text": "lacteos"
+  },
+  {
+    "product_id": "335",
+    "text": "galleta dulce"
+  },
+  {
+    "product_id": "336",
+    "text": "te"
+  },
+  {
+    "product_id": "337",
+    "text": "refrigeradores"
+  },
+  {
+    "product_id": "338",
+    "text": "chorizos"
+  },
+  {
+    "product_id": "339",
+    "text": "paquete de pollo"
+  },
+  {
+    "product_id": "340",
+    "text": "bistec de res"
+  },
+  {
+    "product_id": "341",
+    "text": "enalapril"
+  },
+  {
+    "product_id": "342",
+    "text": "galletitas"
+  },
+  {
+    "product_id": "343",
+    "text": "medicamento"
+  },
+  {
+    "product_id": "344",
+    "text": "pollo caja"
+  },
+  {
+    "product_id": "345",
+    "text": "aceite de girasol"
+  },
+  {
+    "product_id": "346",
+    "text": "olla arrocera"
+  },
+  {
+    "product_id": "347",
+    "text": "pescados"
+  },
+  {
+    "product_id": "348",
+    "text": "flores"
+  },
+  {
+    "product_id": "349",
+    "text": "bebe"
+  },
+  {
+    "product_id": "350",
+    "text": "detergente liquido"
+  },
+  {
+    "product_id": "351",
+    "text": "planta electrica"
+  },
+  {
+    "product_id": "352",
+    "text": "toallas"
+  },
+  {
+    "product_id": "353",
+    "text": "materiales de construcción"
+  },
+  {
+    "product_id": "354",
+    "text": "refresco zuko"
+  },
+  {
+    "product_id": "355",
+    "text": "jamones"
+  },
+  {
+    "product_id": "356",
+    "text": "bateria"
+  },
+  {
+    "product_id": "357",
+    "text": "tomate frito"
+  },
+  {
+    "product_id": "358",
+    "text": "comida"
+  },
+  {
+    "product_id": "359",
+    "text": "galleta soda"
+  },
+  {
+    "product_id": "360",
+    "text": "arina"
+  },
+  {
+    "product_id": "361",
+    "text": "bodegón"
+  },
+  {
+    "product_id": "362",
+    "text": "yogurt_yeya"
+  },
+  {
+    "product_id": "363",
+    "text": "bomba de agua"
+  },
+  {
+    "product_id": "364",
+    "text": "conservas"
+  },
+  {
+    "product_id": "365",
+    "text": "coffee"
+  },
+  {
+    "product_id": "366",
+    "text": "detergente polvo"
+  },
+  {
+    "product_id": "367",
+    "text": "salchichas de pollo y cerdo golden maple (340 g / 12 oz)"
+  },
+  {
+    "product_id": "368",
+    "text": "vima"
+  },
+  {
+    "product_id": "369",
+    "text": "café espresso la llave (284 g / 10 oz)"
+  },
+  {
+    "product_id": "370",
+    "text": "natillas"
+  },
+  {
+    "product_id": "371",
+    "text": "picadillos"
+  },
+  {
+    "product_id": "372",
+    "text": "leche en polvo lecherita (1 kg / 2.2 lb)"
+  },
+  {
+    "product_id": "373",
+    "text": "ferreteria"
+  },
+  {
+    "product_id": "374",
+    "text": "salchichas de pollo"
+  },
+  {
+    "product_id": "375",
+    "text": "agua mineral"
+  },
+  {
+    "product_id": "376",
+    "text": "salsa"
+  },
+  {
+    "product_id": "377",
+    "text": "oil"
+  },
+  {
+    "product_id": "378",
+    "text": "vianda"
+  },
+  {
+    "product_id": "379",
+    "text": "bicarbonato"
+  },
+  {
+    "product_id": "380",
+    "text": "chancletas"
+  },
+  {
+    "product_id": "381",
+    "text": "escoba"
+  },
+  {
+    "product_id": "382",
+    "text": "microondas"
+  },
+  {
+    "product_id": "383",
+    "text": "lamparas"
+  },
+  {
+    "product_id": "384",
+    "text": "recargable"
+  },
+  {
+    "product_id": "385",
+    "text": "caja de cuartos traseros de pollo tyson (15 kg / 33 lb)"
+  },
+  {
+    "product_id": "386",
+    "text": "levadura"
+  },
+  {
+    "product_id": "387",
+    "text": "hígado de pollo"
+  },
+  {
+    "product_id": "388",
+    "text": "mochila"
+  },
+  {
+    "product_id": "389",
+    "text": "cola"
+  },
+  {
+    "product_id": "390",
+    "text": "refresco cola"
+  },
+  {
+    "product_id": "391",
+    "text": "velas"
+  },
+  {
+    "product_id": "392",
+    "text": "vitamina"
+  },
+  {
+    "product_id": "393",
+    "text": "promo yeya"
+  },
+  {
+    "product_id": "394",
+    "text": "panel solar"
+  },
+  {
+    "product_id": "395",
+    "text": "papel higienico"
+  },
+  {
+    "product_id": "396",
+    "text": "zuco"
+  },
+  {
+    "product_id": "397",
+    "text": "cárnicos"
+  },
+  {
+    "product_id": "398",
+    "text": "lomo ahumado"
+  },
+  {
+    "product_id": "399",
+    "text": "yogurt natural"
+  },
+  {
+    "product_id": "400",
+    "text": "pasta de bocaditos"
+  },
+  {
+    "product_id": "401",
+    "text": "colchón"
+  },
+  {
+    "product_id": "402",
+    "text": "mollejas"
+  },
+  {
+    "product_id": "403",
+    "text": "motos"
+  },
+  {
+    "product_id": "404",
+    "text": "jugo de manzana"
+  },
+  {
+    "product_id": "405",
+    "text": "aspirina"
+  },
+  {
+    "product_id": "406",
+    "text": "bacon"
+  },
+  {
+    "product_id": "407",
+    "text": "latas de carne"
+  },
+  {
+    "product_id": "408",
+    "text": "pork"
+  },
+  {
+    "product_id": "409",
+    "text": "pintura de aceite"
+  },
+  {
+    "product_id": "410",
+    "text": "vasos"
+  },
+  {
+    "product_id": "411",
+    "text": "harina de maiz"
+  },
+  {
+    "product_id": "412",
+    "text": "ibuprofeno"
+  },
+  {
+    "product_id": "413",
+    "text": "nectar"
+  },
+  {
+    "product_id": "414",
+    "text": "repelente"
+  },
+  {
+    "product_id": "415",
+    "text": "galletas de chocolate"
+  },
+  {
+    "product_id": "416",
+    "text": "salchichas de pollo frangosul (340 g / 12 oz)"
+  },
+  {
+    "product_id": "417",
+    "text": "lenteja"
+  },
+  {
+    "product_id": "418",
+    "text": "arroz blanco de grano largo tailandés yeya (5 kg / 11 lb)"
+  },
+  {
+    "product_id": "419",
+    "text": "frijol colorado"
+  },
+  {
+    "product_id": "420",
+    "text": "aceite girasol"
+  },
+  {
+    "product_id": "421",
+    "text": "pure tomate"
+  },
+  {
+    "product_id": "422",
+    "text": "frutos secos"
+  },
+  {
+    "product_id": "423",
+    "text": "queso_yeya"
+  },
+  {
+    "product_id": "424",
+    "text": "embutido"
+  },
+  {
+    "product_id": "425",
+    "text": "eggs"
+  },
+  {
+    "product_id": "426",
+    "text": "bistec de cerdo"
+  },
+  {
+    "product_id": "427",
+    "text": "limpieza"
+  },
+  {
+    "product_id": "428",
+    "text": "enlatados"
+  },
+  {
+    "product_id": "429",
+    "text": "carne puerco"
+  },
+  {
+    "product_id": "430",
+    "text": "frijoles negro"
+  },
+  {
+    "product_id": "431",
+    "text": "cervesa"
+  },
+  {
+    "product_id": "432",
+    "text": "chocolate polvo"
+  },
+  {
+    "product_id": "433",
+    "text": "fresa"
+  },
+  {
+    "product_id": "434",
+    "text": "frazada de piso"
+  },
+  {
+    "product_id": "435",
+    "text": "cuartos de pollo"
+  },
+  {
+    "product_id": "436",
+    "text": "refrigeradores y neveras"
+  },
+  {
+    "product_id": "437",
+    "text": "batería"
+  },
+  {
+    "product_id": "438",
+    "text": "cheese"
+  },
+  {
+    "product_id": "439",
+    "text": "picadillo y hamburguesas"
+  },
+  {
+    "product_id": "440",
+    "text": "puré"
+  },
+  {
+    "product_id": "441",
+    "text": "soda"
+  },
+  {
+    "product_id": "442",
+    "text": "pintura blanca"
+  },
+  {
+    "product_id": "443",
+    "text": "deterjente"
+  },
+  {
+    "product_id": "444",
+    "text": "generador eléctrico"
+  },
+  {
+    "product_id": "445",
+    "text": "piscina"
+  },
+  {
+    "product_id": "446",
+    "text": "zapatos"
+  },
+  {
+    "product_id": "447",
+    "text": "detergente líquido"
+  },
+  {
+    "product_id": "448",
+    "text": "carbon"
+  },
+  {
+    "product_id": "449",
+    "text": "teléfono"
+  },
+  {
+    "product_id": "450",
+    "text": "sazón goya"
+  },
+  {
+    "product_id": "451",
+    "text": "lavamanos"
+  },
+  {
+    "product_id": "452",
+    "text": "carnico"
+  },
+  {
+    "product_id": "453",
+    "text": "higado de pollo"
+  },
+  {
+    "product_id": "454",
+    "text": "cocina de gas"
+  },
+  {
+    "product_id": "455",
+    "text": "intimas"
+  },
+  {
+    "product_id": "456",
+    "text": "pizza"
+  },
+  {
+    "product_id": "457",
+    "text": "freidora de aire"
+  },
+  {
+    "product_id": "458",
+    "text": "jabones y gel de baño"
+  },
+  {
+    "product_id": "459",
+    "text": "miel"
+  },
+  {
+    "product_id": "460",
+    "text": "boniato"
+  },
+  {
+    "product_id": "461",
+    "text": "sazón completo"
+  },
+  {
+    "product_id": "462",
+    "text": "gel"
+  },
+  {
+    "product_id": "463",
+    "text": "detergente de lavar"
+  },
+  {
+    "product_id": "464",
+    "text": "barra de guayaba"
+  },
+  {
+    "product_id": "465",
+    "text": "ducha"
+  },
+  {
+    "product_id": "466",
+    "text": "key"
+  },
+  {
+    "product_id": "467",
+    "text": "bistec"
+  },
+  {
+    "product_id": "468",
+    "text": "desodorantes"
+  },
+  {
+    "product_id": "469",
+    "text": "tinte de pelo"
+  },
+  {
+    "product_id": "470",
+    "text": "jabón de tocador de rosa yeya (300 g / 10.58 oz)"
+  },
+  {
+    "product_id": "471",
+    "text": "caldo de pollo"
+  },
+  {
+    "product_id": "472",
+    "text": "detergente de fregar"
+  },
+  {
+    "product_id": "473",
+    "text": "tostadas"
+  },
+  {
+    "product_id": "474",
+    "text": "paneles solares"
+  },
+  {
+    "product_id": "475",
+    "text": "chícharos"
+  },
+  {
+    "product_id": "476",
+    "text": "café tostado y molido extra fuerte santa bárbara (250 g / 8.8 oz)"
+  },
+  {
+    "product_id": "477",
+    "text": "jugo de mango"
+  },
+  {
+    "product_id": "478",
+    "text": "cookies"
+  },
+  {
+    "product_id": "479",
+    "text": "arroz blanco"
+  },
+  {
+    "product_id": "480",
+    "text": "medicinas"
+  },
+  {
+    "product_id": "481",
+    "text": "galletas de soda dondé (800 g / 1.76 lb)"
+  },
+  {
+    "product_id": "482",
+    "text": "piña"
+  },
+  {
+    "product_id": "483",
+    "text": "detergent"
+  },
+  {
+    "product_id": "484",
+    "text": "arina de trigo"
+  },
+  {
+    "product_id": "485",
+    "text": "moto"
+  },
+  {
+    "product_id": "486",
+    "text": "pamper"
+  },
+  {
+    "product_id": "487",
+    "text": "beef"
+  },
+  {
+    "product_id": "488",
+    "text": "cama"
+  },
+  {
+    "product_id": "489",
+    "text": "aceite oliva"
+  },
+  {
+    "product_id": "490",
+    "text": "helados y batidos"
+  },
+  {
+    "product_id": "491",
+    "text": "detergente en polvo con aroma a lavanda yeya (1 kg / 2.2 lb)"
+  },
+  {
+    "product_id": "492",
+    "text": "refresco de cola"
+  },
+  {
+    "product_id": "493",
+    "text": "galleta de sal"
+  },
+  {
+    "product_id": "494",
+    "text": "dulce de guayaba"
+  },
+  {
+    "product_id": "495",
+    "text": "herramientas"
+  },
+  {
+    "product_id": "496",
+    "text": "sazon goya"
+  },
+  {
+    "product_id": "497",
+    "text": "pandora"
+  },
+  {
+    "product_id": "498",
+    "text": "beans"
+  },
+  {
+    "product_id": "499",
+    "text": "agua natural"
+  },
+  {
+    "product_id": "500",
+    "text": "yogurt probiotico"
+  },
+  {
+    "product_id": "501",
+    "text": "colonias"
+  },
+  {
+    "product_id": "502",
+    "text": "toallitas humedas"
+  },
+  {
+    "product_id": "503",
+    "text": "puertas"
+  },
+  {
+    "product_id": "504",
+    "text": "paquetes de pollo"
+  },
+  {
+    "product_id": "505",
+    "text": "plantas eléctricas"
+  },
+  {
+    "product_id": "506",
+    "text": "leche empolvo"
+  },
+  {
+    "product_id": "507",
+    "text": "jabón de tocador"
+  },
+  {
+    "product_id": "508",
+    "text": "whisky"
+  },
+  {
+    "product_id": "509",
+    "text": "frazada"
+  },
+  {
+    "product_id": "510",
+    "text": "salchichas de pollo quality chicken (3 kg / 6.61 lb)"
+  },
+  {
+    "product_id": "511",
+    "text": "mostaza"
+  },
+  {
+    "product_id": "512",
+    "text": "perro caliente"
+  },
+  {
+    "product_id": "513",
+    "text": "frijoles blancos"
+  },
+  {
+    "product_id": "514",
+    "text": "perro"
+  },
+  {
+    "product_id": "515",
+    "text": "mayonesa y otras salsas"
+  },
+  {
+    "product_id": "516",
+    "text": "tuna"
+  },
+  {
+    "product_id": "517",
+    "text": "mango"
+  },
+  {
+    "product_id": "518",
+    "text": "papitas"
+  },
+  {
+    "product_id": "519",
+    "text": "refresco polvo"
+  },
+  {
+    "product_id": "520",
+    "text": "detergente en polvo con aroma a limón yeya (500 g / 1.1 lb)"
+  },
+  {
+    "product_id": "521",
+    "text": "spaguetti"
+  },
+  {
+    "product_id": "522",
+    "text": "huevo criollo importado yeya (30 u)"
+  },
+  {
+    "product_id": "523",
+    "text": "baterias"
+  },
+  {
+    "product_id": "524",
+    "text": "sabanas"
+  },
+  {
+    "product_id": "525",
+    "text": "lácteos, huevos y helados"
+  },
+  {
+    "product_id": "526",
+    "text": "pechuga de pollo sin hueso y sin piel seara (2 kg / 4.41 lb)"
+  },
+  {
+    "product_id": "527",
+    "text": "carne molida"
+  },
+  {
+    "product_id": "528",
+    "text": "frijoles colorado"
+  },
+  {
+    "product_id": "529",
+    "text": "salchichas de pollo congeladas bello (3 kg / 6.6 lb)"
+  },
+  {
+    "product_id": "530",
+    "text": "mentol"
+  },
+  {
+    "product_id": "531",
+    "text": "protector de voltaje"
+  },
+  {
+    "product_id": "532",
+    "text": "spaguettis"
+  },
+  {
+    "product_id": "533",
+    "text": "tasa de baño"
+  },
+  {
+    "product_id": "534",
+    "text": "azulejos"
+  },
+  {
+    "product_id": "535",
+    "text": "telefono"
+  },
+  {
+    "product_id": "536",
+    "text": "refresco de pomo"
+  },
+  {
+    "product_id": "537",
+    "text": "jamón barra bravo (2 kg / 4.4 lb)"
+  },
+  {
+    "product_id": "538",
+    "text": "limones"
+  },
+  {
+    "product_id": "539",
+    "text": "cocina electrica"
+  },
+  {
+    "product_id": "540",
+    "text": "refresco instantáneo sabor plátano yeya (10 g)"
+  },
+  {
+    "product_id": "541",
+    "text": "limón"
+  },
+  {
+    "product_id": "542",
+    "text": "macarrones"
+  },
+  {
+    "product_id": "543",
+    "text": "aire acondicionados y ventiladores"
+  },
+  {
+    "product_id": "544",
+    "text": "jabon de tocador"
+  },
+  {
+    "product_id": "545",
+    "text": "pan suave"
+  },
+  {
+    "product_id": "546",
+    "text": "linterna"
+  },
+  {
+    "product_id": "547",
+    "text": "sazon completo"
+  },
+  {
+    "product_id": "548",
+    "text": "chorizos, morcillas y salchichas"
+  },
+  {
+    "product_id": "549",
+    "text": "caja de picadillo de pollo"
+  },
+  {
+    "product_id": "550",
+    "text": "juego de baño"
+  },
+  {
+    "product_id": "551",
+    "text": "condimento"
+  },
+  {
+    "product_id": "552",
+    "text": "picadillo de pavo"
+  },
+  {
+    "product_id": "553",
+    "text": "potajin"
+  },
+  {
+    "product_id": "554",
+    "text": "patas de cerdo"
+  },
+  {
+    "product_id": "555",
+    "text": "fresas"
+  },
+  {
+    "product_id": "556",
+    "text": "leche descremada"
+  },
+  {
+    "product_id": "557",
+    "text": "molleja de pollo"
+  },
+  {
+    "product_id": "558",
+    "text": "jugo de pera"
+  },
+  {
+    "product_id": "559",
+    "text": "arrocera"
+  },
+  {
+    "product_id": "560",
+    "text": "televisión"
+  },
+  {
+    "product_id": "561",
+    "text": "tinte negro"
+  },
+  {
+    "product_id": "562",
+    "text": "carnes y embutidos"
+  },
+  {
+    "product_id": "563",
+    "text": "cemento blanco"
+  },
+  {
+    "product_id": "564",
+    "text": "picadillo pollo"
+  },
+  {
+    "product_id": "565",
+    "text": "lámpara"
+  },
+  {
+    "product_id": "566",
+    "text": "medicina"
+  },
+  {
+    "product_id": "567",
+    "text": "queso de crema"
+  },
+  {
+    "product_id": "568",
+    "text": "bola de res"
+  },
+  {
+    "product_id": "569",
+    "text": "suavizante"
+  },
+  {
+    "product_id": "570",
+    "text": "ventiladores recargable"
+  },
+  {
+    "product_id": "571",
+    "text": "puré tomate"
+  },
+  {
+    "product_id": "572",
+    "text": "cocina eléctrica"
+  },
+  {
+    "product_id": "573",
+    "text": "lácteos"
+  },
+  {
+    "product_id": "574",
+    "text": "leches"
+  },
+  {
+    "product_id": "575",
+    "text": "arroz blanco tailandés radhika rice (9.07 kg / 20 lb)"
+  },
+  {
+    "product_id": "576",
+    "text": "espaguetis nova (454 g / 1 lb)"
+  },
+  {
+    "product_id": "577",
+    "text": "sugar"
+  },
+  {
+    "product_id": "578",
+    "text": "sasones"
+  },
+  {
+    "product_id": "579",
+    "text": "manteca de cerdo"
+  },
+  {
+    "product_id": "580",
+    "text": "beer"
+  },
+  {
+    "product_id": "581",
+    "text": "pasta de guayaba"
+  },
+  {
+    "product_id": "582",
+    "text": "ahumado"
+  },
+  {
+    "product_id": "583",
+    "text": "huevo blanco importado yeya + salchicha de pollo golden maple + café espresso la llave + leche entera en polvo yeya +pollo entero eviscerado sin menudos granja tres arroyos"
+  },
+  {
+    "product_id": "584",
+    "text": "azúcar blanca granulada yeya (1 kg / 2.2 lb)"
+  },
+  {
+    "product_id": "585",
+    "text": "mantequillas y margarinas"
+  },
+  {
+    "product_id": "586",
+    "text": "salchichas de pollo bello (340 g / 12 oz)"
+  },
+  {
+    "product_id": "587",
+    "text": "carnes de res"
+  },
+  {
+    "product_id": "588",
+    "text": "merluza"
+  },
+  {
+    "product_id": "589",
+    "text": "pure de papa"
+  },
+  {
+    "product_id": "590",
+    "text": "spagueti"
+  },
+  {
+    "product_id": "591",
+    "text": "aji"
+  },
+  {
+    "product_id": "592",
+    "text": "jugos naturales"
+  },
+  {
+    "product_id": "593",
+    "text": "losa"
+  },
+  {
+    "product_id": "594",
+    "text": "grasa de cerdo"
+  },
+  {
+    "product_id": "595",
+    "text": "tenis"
+  },
+  {
+    "product_id": "596",
+    "text": "puerta"
+  },
+  {
+    "product_id": "597",
+    "text": "gomitas"
+  },
+  {
+    "product_id": "598",
+    "text": "olla de presión"
+  },
+  {
+    "product_id": "599",
+    "text": "leche entera en polvo macro food (1 kg / 2.2 lb)"
+  },
+  {
+    "product_id": "600",
+    "text": "freidora"
+  },
+  {
+    "product_id": "601",
+    "text": "calabaza"
+  },
+  {
+    "product_id": "602",
+    "text": "telefonos"
+  },
+  {
+    "product_id": "603",
+    "text": "naranja"
+  },
+  {
+    "product_id": "604",
+    "text": "toalla"
+  },
+  {
+    "product_id": "605",
+    "text": "hígado de pollo congelado nat (450 g / 15.87 oz)"
+  },
+  {
+    "product_id": "606",
+    "text": "caldo"
+  },
+  {
+    "product_id": "607",
+    "text": "maizena"
+  },
+  {
+    "product_id": "608",
+    "text": "leche entera en polvo yeya (500 g / 1.1 lb)"
+  },
+  {
+    "product_id": "609",
+    "text": "motos electricas"
+  },
+  {
+    "product_id": "610",
+    "text": "jabon de bano"
+  },
+  {
+    "product_id": "611",
+    "text": "mayoneza"
+  },
+  {
+    "product_id": "612",
+    "text": "camas"
+  },
+  {
+    "product_id": "613",
+    "text": "gouda"
+  },
+  {
+    "product_id": "614",
+    "text": "manteca"
+  },
+  {
+    "product_id": "615",
+    "text": "salchicha de pollo"
+  },
+  {
+    "product_id": "616",
+    "text": "cuartos traseros de pollo"
+  },
+  {
+    "product_id": "617",
+    "text": "cubo"
+  },
+  {
+    "product_id": "618",
+    "text": "jamón bravo"
+  },
+  {
+    "product_id": "619",
+    "text": "salsa china"
+  },
+  {
+    "product_id": "620",
+    "text": "water"
+  },
+  {
+    "product_id": "621",
+    "text": "generadores eléctricos"
+  },
+  {
+    "product_id": "622",
+    "text": "pasta bocadito"
+  },
+  {
+    "product_id": "623",
+    "text": "fiambre"
+  },
+  {
+    "product_id": "624",
+    "text": "termo"
+  },
+  {
+    "product_id": "625",
+    "text": "salsa para pasta"
+  },
+  {
+    "product_id": "626",
+    "text": "mochilas"
+  },
+  {
+    "product_id": "627",
+    "text": "refresco de lata"
+  },
+  {
+    "product_id": "628",
+    "text": "salsa para pastas"
+  },
+  {
+    "product_id": "629",
+    "text": "leche en polvo amarilla"
+  },
+  {
+    "product_id": "630",
+    "text": "pasteles"
+  },
+  {
+    "product_id": "631",
+    "text": "champú y acondicionador"
+  },
+  {
+    "product_id": "632",
+    "text": "pechuga pollo"
+  },
+  {
+    "product_id": "633",
+    "text": "bombillos"
+  },
+  {
+    "product_id": "634",
+    "text": "bread"
+  },
+  {
+    "product_id": "635",
+    "text": "pomos de agua"
+  },
+  {
+    "product_id": "636",
+    "text": "langosta"
+  },
+  {
+    "product_id": "637",
+    "text": "helado de chocolate"
+  },
+  {
+    "product_id": "638",
+    "text": "refresco mate"
+  },
+  {
+    "product_id": "639",
+    "text": "planta"
+  },
+  {
+    "product_id": "640",
+    "text": "bolso"
+  },
+  {
+    "product_id": "641",
+    "text": "fregadero"
+  },
+  {
+    "product_id": "642",
+    "text": "horno"
+  },
+  {
+    "product_id": "643",
+    "text": "licuadora"
+  },
+  {
+    "product_id": "644",
+    "text": "mani"
+  },
+  {
+    "product_id": "645",
+    "text": "yogur natural"
+  },
+  {
+    "product_id": "646",
+    "text": "cristal"
+  },
+  {
+    "product_id": "647",
+    "text": "carne de rez"
+  },
+  {
+    "product_id": "648",
+    "text": "cigarros"
+  },
+  {
+    "product_id": "649",
+    "text": "teléfonos móviles"
+  },
+  {
+    "product_id": "650",
+    "text": "jamon bravo"
+  },
+  {
+    "product_id": "651",
+    "text": "frijole"
+  },
+  {
+    "product_id": "652",
+    "text": "caja"
+  },
+  {
+    "product_id": "653",
+    "text": "cebollas"
+  },
+  {
+    "product_id": "654",
+    "text": "bombillo"
+  },
+  {
+    "product_id": "655",
+    "text": "verduras"
+  },
+  {
+    "product_id": "656",
+    "text": "cloro"
+  },
+  {
+    "product_id": "657",
+    "text": "acetaminofen"
+  },
+  {
+    "product_id": "658",
+    "text": "galletas de dulce"
+  },
+  {
+    "product_id": "659",
+    "text": "platanos"
+  },
+  {
+    "product_id": "660",
+    "text": "combos de comida"
+  },
+  {
+    "product_id": "661",
+    "text": "picadillo de cerdo"
+  },
+  {
+    "product_id": "662",
+    "text": "alcohol"
+  },
+  {
+    "product_id": "663",
+    "text": "confitura"
+  },
+  {
+    "product_id": "664",
+    "text": "juice"
+  },
+  {
+    "product_id": "665",
+    "text": "sarten"
+  },
+  {
+    "product_id": "666",
+    "text": "sason"
+  },
+  {
+    "product_id": "667",
+    "text": "aceite de girasol refinado yeya (1 l)"
+  },
+  {
+    "product_id": "668",
+    "text": "solar"
+  },
+  {
+    "product_id": "669",
+    "text": "tylenol"
+  },
+  {
+    "product_id": "670",
+    "text": "leche condesada"
+  },
+  {
+    "product_id": "671",
+    "text": "libretas"
+  },
+  {
+    "product_id": "672",
+    "text": "mariscos"
+  },
+  {
+    "product_id": "673",
+    "text": "platos desechables"
+  },
+  {
+    "product_id": "674",
+    "text": "productos yeya"
+  },
+  {
+    "product_id": "675",
+    "text": "productos de limpieza"
+  },
+  {
+    "product_id": "676",
+    "text": "aceite de soya"
+  },
+  {
+    "product_id": "677",
+    "text": "agua embotellada"
+  },
+  {
+    "product_id": "678",
+    "text": "café instantáneo"
+  },
+  {
+    "product_id": "679",
+    "text": "regalos"
+  },
+  {
+    "product_id": "680",
+    "text": "higado de res"
+  },
+  {
+    "product_id": "681",
+    "text": "yuca"
+  },
+  {
+    "product_id": "682",
+    "text": "quezo"
+  },
+  {
+    "product_id": "683",
+    "text": "canela"
+  },
+  {
+    "product_id": "684",
+    "text": "shampu"
+  },
+  {
+    "product_id": "685",
+    "text": "caja de muslos de pollo sanderson farms (10 kg / 22 lb)"
+  },
+  {
+    "product_id": "686",
+    "text": "omeprazol"
+  },
+  {
+    "product_id": "687",
+    "text": "picadillo de pollo quality chicken (400 g / 14.11 oz)"
+  },
+  {
+    "product_id": "688",
+    "text": "magnesio"
+  },
+  {
+    "product_id": "689",
+    "text": "cumpleaños"
+  },
+  {
+    "product_id": "690",
+    "text": "plantas electricas"
+  },
+  {
+    "product_id": "691",
+    "text": "candado"
+  },
+  {
+    "product_id": "692",
+    "text": "latas"
+  },
+  {
+    "product_id": "693",
+    "text": "toallitas húmedas"
+  },
+  {
+    "product_id": "694",
+    "text": "lamparas recargables"
+  },
+  {
+    "product_id": "695",
+    "text": "vinagre de manzana"
+  },
+  {
+    "product_id": "696",
+    "text": "generador electrico"
+  },
+  {
+    "product_id": "697",
+    "text": "especias"
+  },
+  {
+    "product_id": "698",
+    "text": "tanque de agua"
+  },
+  {
+    "product_id": "699",
+    "text": "galletas maría"
+  },
+  {
+    "product_id": "700",
+    "text": "caffe"
+  },
+  {
+    "product_id": "701",
+    "text": "saborizantes y azúcar"
+  },
+  {
+    "product_id": "702",
+    "text": "manguera"
+  },
+  {
+    "product_id": "703",
+    "text": "pasas"
+  },
+  {
+    "product_id": "704",
+    "text": "skala"
+  },
+  {
+    "product_id": "705",
+    "text": "patatas"
+  },
+  {
+    "product_id": "706",
+    "text": "bebé"
+  },
+  {
+    "product_id": "707",
+    "text": "gofio"
+  },
+  {
+    "product_id": "708",
+    "text": "ahumados"
+  },
+  {
+    "product_id": "709",
+    "text": "cafe instantaneo"
+  },
+  {
+    "product_id": "710",
+    "text": "galletas dulces rellenas de sabores variados minees (10 x 35 g / 1.2 oz)"
+  },
+  {
+    "product_id": "711",
+    "text": "salsas"
+  },
+  {
+    "product_id": "712",
+    "text": "yogurt de fresa"
+  },
+  {
+    "product_id": "713",
+    "text": "azúcar blanca refina super yu (500 g / 1.1 lb)"
+  },
+  {
+    "product_id": "714",
+    "text": "dipirona"
+  },
+  {
+    "product_id": "715",
+    "text": "refresco pomo"
+  },
+  {
+    "product_id": "716",
+    "text": "detergente para fregar"
+  },
+  {
+    "product_id": "717",
+    "text": "comida para perros"
+  },
+  {
+    "product_id": "718",
+    "text": "sazonador"
+  },
+  {
+    "product_id": "719",
+    "text": "puré de papa"
+  },
+  {
+    "product_id": "720",
+    "text": "culeros desechables"
+  },
+  {
+    "product_id": "721",
+    "text": "hígado de res"
+  },
+  {
+    "product_id": "722",
+    "text": "multivitaminas"
+  },
+  {
+    "product_id": "723",
+    "text": "javon de baño"
+  },
+  {
+    "product_id": "724",
+    "text": "olla de presion"
+  },
+  {
+    "product_id": "725",
+    "text": "tintes"
+  },
+  {
+    "product_id": "726",
+    "text": "helado chocolate"
+  },
+  {
+    "product_id": "727",
+    "text": "galleta salada"
+  },
+  {
+    "product_id": "728",
+    "text": "muslos de pollo pilgrim'\''s (2.5 kg / 5.51 lb)"
+  },
+  {
+    "product_id": "729",
+    "text": "soap"
+  },
+  {
+    "product_id": "730",
+    "text": "coco"
+  },
+  {
+    "product_id": "731",
+    "text": "carne de carnero"
+  },
+  {
+    "product_id": "732",
+    "text": "freezer"
+  },
+  {
+    "product_id": "733",
+    "text": "viandas, vegetales y frutas"
+  },
+  {
+    "product_id": "734",
+    "text": "pepsi"
+  },
+  {
+    "product_id": "735",
+    "text": "lomo cerdo"
+  },
+  {
+    "product_id": "736",
+    "text": "jamón rápido bravo (2 kg / 4.4 lb)"
+  },
+  {
+    "product_id": "737",
+    "text": "omega 3"
+  },
+  {
+    "product_id": "738",
+    "text": "ajo en polvo"
+  },
+  {
+    "product_id": "739",
+    "text": "cable"
+  },
+  {
+    "product_id": "740",
+    "text": "pollo ahumado"
+  },
+  {
+    "product_id": "741",
+    "text": "cemento gris"
+  },
+  {
+    "product_id": "742",
+    "text": "queso crema pasteurizado vima foods (200 g / 7 oz)"
+  },
+  {
+    "product_id": "743",
+    "text": "turron"
+  },
+  {
+    "product_id": "744",
+    "text": "detergente en polvo multiusos kala (250 g / 8.82 oz)"
+  },
+  {
+    "product_id": "745",
+    "text": "leche en polbo"
+  },
+  {
+    "product_id": "746",
+    "text": "vinos"
+  },
+  {
+    "product_id": "747",
+    "text": "lámparas recargables"
+  },
+  {
+    "product_id": "748",
+    "text": "crema de peinar"
+  },
+  {
+    "product_id": "749",
+    "text": "ventilador de pared de 16 pulgadas wynwood wyd-vp16"
+  },
+  {
+    "product_id": "750",
+    "text": "tomates"
+  },
+  {
+    "product_id": "751",
+    "text": "medias"
+  },
+  {
+    "product_id": "752",
+    "text": "mayonesas"
+  },
+  {
+    "product_id": "753",
+    "text": "pasta de guayaba en barra yeya (400 g / 14.11 oz)"
+  },
+  {
+    "product_id": "754",
+    "text": "ham"
+  },
+  {
+    "product_id": "755",
+    "text": "dulce guayaba"
+  },
+  {
+    "product_id": "756",
+    "text": "galletas artesanales"
+  },
+  {
+    "product_id": "757",
+    "text": "teléfonos"
+  },
+  {
+    "product_id": "758",
+    "text": "cremas"
+  },
+  {
+    "product_id": "759",
+    "text": "lomo de cerdo sin hueso y sin piel (907 g / 2 lb)"
+  },
+  {
+    "product_id": "760",
+    "text": "cabello"
+  },
+  {
+    "product_id": "761",
+    "text": "alitas de pollo"
+  },
+  {
+    "product_id": "762",
+    "text": "pan rallado"
+  },
+  {
+    "product_id": "763",
+    "text": "néctar"
+  },
+  {
+    "product_id": "764",
+    "text": "pimiento"
+  },
+  {
+    "product_id": "765",
+    "text": "inodoros"
+  },
+  {
+    "product_id": "766",
+    "text": "electrodomestico"
+  },
+  {
+    "product_id": "767",
+    "text": "carne troceada"
+  },
+  {
+    "product_id": "768",
+    "text": "cepillo"
+  },
+  {
+    "product_id": "769",
+    "text": "vitamina e"
+  },
+  {
+    "product_id": "770",
+    "text": "lámparas"
+  },
+  {
+    "product_id": "771",
+    "text": "mollejas de pollo"
+  },
+  {
+    "product_id": "772",
+    "text": "huevo blanco importado yeya   salchicha de pollo golden maple   café espresso la llave   leche entera en polvo yeya  pollo entero eviscerado sin menudos granja tres arroyos"
+  },
+  {
+    "product_id": "773",
+    "text": "ambientador"
+  },
+  {
+    "product_id": "774",
+    "text": "tarta"
+  },
+  {
+    "product_id": "775",
+    "text": "calamar"
+  },
+  {
+    "product_id": "776",
+    "text": "mortadella de pollo"
+  },
+  {
+    "product_id": "777",
+    "text": "arroz grano largo"
+  },
+  {
+    "product_id": "778",
+    "text": "arroz blanco de grano largo tailandés yeya (1 kg / 2.2 lb)"
+  },
+  {
+    "product_id": "779",
+    "text": "cafeteras"
+  },
+  {
+    "product_id": "780",
+    "text": "perfume de hombre"
+  },
+  {
+    "product_id": "781",
+    "text": "leche en polvo entera yeya (800 g / 1.76 lb)"
+  },
+  {
+    "product_id": "782",
+    "text": "costillas"
+  },
+  {
+    "product_id": "783",
+    "text": "perfumería"
+  },
+  {
+    "product_id": "784",
+    "text": "pasta de bocadito tradicional bravo (300 g / 10.6 oz)"
+  },
+  {
+    "product_id": "785",
+    "text": "protector solar"
+  },
+  {
+    "product_id": "786",
+    "text": "plomeria"
+  },
+  {
+    "product_id": "787",
+    "text": "caja de jugo"
+  },
+  {
+    "product_id": "788",
+    "text": "resfresco"
+  },
+  {
+    "product_id": "789",
+    "text": "refrescos en polvo"
+  },
+  {
+    "product_id": "790",
+    "text": "pintura de vinil"
+  },
+  {
+    "product_id": "791",
+    "text": "detergente para lavar"
+  },
+  {
+    "product_id": "792",
+    "text": "hogar"
+  },
+  {
+    "product_id": "793",
+    "text": "galletas chocolate"
+  },
+  {
+    "product_id": "794",
+    "text": "cacao"
+  },
+  {
+    "product_id": "795",
+    "text": "cafetera eléctrica"
+  },
+  {
+    "product_id": "796",
+    "text": "olla a presión multifunción eone hd-50-90d"
+  },
+  {
+    "product_id": "797",
+    "text": "detergente fregar"
+  },
+  {
+    "product_id": "798",
+    "text": "refresco intantaneo"
+  },
+  {
+    "product_id": "799",
+    "text": "mesa"
+  },
+  {
+    "product_id": "800",
+    "text": "camaron"
+  },
+  {
+    "product_id": "801",
+    "text": "vino tinto"
+  },
+  {
+    "product_id": "802",
+    "text": "laurel"
+  },
+  {
+    "product_id": "803",
+    "text": "salsa tomate"
+  },
+  {
+    "product_id": "804",
+    "text": "refresco ciego montero"
+  },
+  {
+    "product_id": "805",
+    "text": "nescafe"
+  },
+  {
+    "product_id": "806",
+    "text": "costillas de cerdo"
+  },
+  {
+    "product_id": "807",
+    "text": "perros"
+  },
+  {
+    "product_id": "808",
+    "text": "refresco piñata"
+  },
+  {
+    "product_id": "809",
+    "text": "detergente yeya"
+  },
+  {
+    "product_id": "810",
+    "text": "jabon tocador"
+  },
+  {
+    "product_id": "811",
+    "text": "galletas sal"
+  },
+  {
+    "product_id": "812",
+    "text": "plátano"
+  },
+  {
+    "product_id": "813",
+    "text": "refresco de limon"
+  },
+  {
+    "product_id": "814",
+    "text": "arina de maiz"
+  },
+  {
+    "product_id": "815",
+    "text": "cocina infrarroja royal rir1500"
+  },
+  {
+    "product_id": "816",
+    "text": "azucar morena"
+  },
+  {
+    "product_id": "817",
+    "text": "pechuga de pollo sin piel y sin hueso nat (2 kg / 4.4 lb)"
+  },
+  {
+    "product_id": "818",
+    "text": "cerveza corona"
+  },
+  {
+    "product_id": "819",
+    "text": "estación de energía"
+  },
+  {
+    "product_id": "820",
+    "text": "leche condensada azucarada nezka (380 g / 13.4 oz)"
+  },
+  {
+    "product_id": "821",
+    "text": "pintura vinil"
+  },
+  {
+    "product_id": "822",
+    "text": "intima"
+  },
+  {
+    "product_id": "823",
+    "text": "patas de pollo"
+  },
+  {
+    "product_id": "824",
+    "text": "caja de muslo de pollo"
+  },
+  {
+    "product_id": "825",
+    "text": "melocoton"
+  },
+  {
+    "product_id": "826",
+    "text": "asucar"
+  },
+  {
+    "product_id": "827",
+    "text": "cafe bustelo"
+  },
+  {
+    "product_id": "828",
+    "text": "leche en polvo parcialmente descremada acondicionada con fibra, minerales y vitaminas nestlé (120 g / 4.23 oz)"
+  },
+  {
+    "product_id": "829",
+    "text": "refrigerador de 8.5 pies cúbicos negro con puertas gris oscuro royal rf85s"
+  },
+  {
+    "product_id": "830",
+    "text": "batidoras"
+  },
+  {
+    "product_id": "831",
+    "text": "pierna de puerco"
+  },
+  {
+    "product_id": "832",
+    "text": "benadrilina"
+  },
+  {
+    "product_id": "833",
+    "text": "albondigas"
+  },
+  {
+    "product_id": "834",
+    "text": "aire"
+  },
+  {
+    "product_id": "835",
+    "text": "filete de pescado"
+  },
+  {
+    "product_id": "836",
+    "text": "caja de malta"
+  },
+  {
+    "product_id": "837",
+    "text": "guantes"
+  },
+  {
+    "product_id": "838",
+    "text": "llave"
+  },
+  {
+    "product_id": "839",
+    "text": "pan de molde"
+  },
+  {
+    "product_id": "840",
+    "text": "aceite de cocina"
+  },
+  {
+    "product_id": "841",
+    "text": "bombillo recargable"
+  },
+  {
+    "product_id": "842",
+    "text": "conserva"
+  },
+  {
+    "product_id": "843",
+    "text": "huevo orgánico fresco yeya (30 u)"
+  },
+  {
+    "product_id": "844",
+    "text": "refresco de naranja"
+  },
+  {
+    "product_id": "845",
+    "text": "caramelos y chiclets"
+  },
+  {
+    "product_id": "846",
+    "text": "motorina"
+  },
+  {
+    "product_id": "847",
+    "text": "carne de res troceada"
+  },
+  {
+    "product_id": "848",
+    "text": "leche amarilla"
+  },
+  {
+    "product_id": "849",
+    "text": "pan yeya"
+  },
+  {
+    "product_id": "850",
+    "text": "protector"
+  },
+  {
+    "product_id": "851",
+    "text": "zumo"
+  },
+  {
+    "product_id": "852",
+    "text": "champu y acondicionador"
+  },
+  {
+    "product_id": "853",
+    "text": "bolsas"
+  },
+  {
+    "product_id": "854",
+    "text": "caja de cerveza"
+  },
+  {
+    "product_id": "855",
+    "text": "turrones"
+  },
+  {
+    "product_id": "856",
+    "text": "generador inverter de gasolina y propano -planta eléctrica- 5000 w pulsar pg5000bisr"
+  },
+  {
+    "product_id": "857",
+    "text": "maquillaje"
+  },
+  {
+    "product_id": "858",
+    "text": "chicle"
+  },
+  {
+    "product_id": "859",
+    "text": "escobas"
+  },
+  {
+    "product_id": "860",
+    "text": "cafetera electrica"
+  },
+  {
+    "product_id": "861",
+    "text": "ventilador plegable recargablede 7\" geek f-100"
+  },
+  {
+    "product_id": "862",
+    "text": "motor de agua"
+  },
+  {
+    "product_id": "863",
+    "text": "sal fina"
+  },
+  {
+    "product_id": "864",
+    "text": "frijol blanco"
+  },
+  {
+    "product_id": "865",
+    "text": "mermeladas"
+  },
+  {
+    "product_id": "866",
+    "text": "galletas integrales"
+  },
+  {
+    "product_id": "867",
+    "text": "espaguetis yeya (400 g / 14.11 oz)"
+  },
+  {
+    "product_id": "868",
+    "text": "leche condensada azucarada yeya (395 g / 14 oz)"
+  },
+  {
+    "product_id": "869",
+    "text": "pollo muslo"
+  },
+  {
+    "product_id": "870",
+    "text": "wisky"
+  },
+  {
+    "product_id": "871",
+    "text": "electrodoméstico"
+  },
+  {
+    "product_id": "872",
+    "text": "picadillo de pollo polskamp (400 g / 14.11 oz)"
+  },
+  {
+    "product_id": "873",
+    "text": "detergente en polvo universal sef (450 g / 15.87 oz)"
+  },
+  {
+    "product_id": "874",
+    "text": "servilletas"
+  },
+  {
+    "product_id": "875",
+    "text": "yogurt probiótico"
+  },
+  {
+    "product_id": "876",
+    "text": "malta bucanero (12 x 355 ml)"
+  },
+  {
+    "product_id": "877",
+    "text": "mantequilla de mani"
+  },
+  {
+    "product_id": "878",
+    "text": "arroz largo"
+  },
+  {
+    "product_id": "879",
+    "text": "jabón baño"
+  },
+  {
+    "product_id": "880",
+    "text": "losas de piso"
+  },
+  {
+    "product_id": "881",
+    "text": "galletitas dulces"
+  },
+  {
+    "product_id": "882",
+    "text": "galletas de soda saltine adoro (454 g / 1 lb)"
+  },
+  {
+    "product_id": "883",
+    "text": "mermelada de mango"
+  },
+  {
+    "product_id": "884",
+    "text": "cemento cola"
+  },
+  {
+    "product_id": "885",
+    "text": "generadores"
+  },
+  {
+    "product_id": "886",
+    "text": "pescado y mariscos"
+  },
+  {
+    "product_id": "887",
+    "text": "impermeabilizante"
+  },
+  {
+    "product_id": "888",
+    "text": "café puro molido yeya (283.5 g / 10 oz)"
+  },
+  {
+    "product_id": "889",
+    "text": "cañada de res"
+  },
+  {
+    "product_id": "890",
+    "text": "jabón tocador"
+  },
+  {
+    "product_id": "891",
+    "text": "papel de baño"
+  },
+  {
+    "product_id": "892",
+    "text": "plato"
+  },
+  {
+    "product_id": "893",
+    "text": "taza de baño"
+  },
+  {
+    "product_id": "894",
+    "text": "pañales desechables"
+  },
+  {
+    "product_id": "895",
+    "text": "meat"
+  },
+  {
+    "product_id": "896",
+    "text": "cajas de pollos"
+  },
+  {
+    "product_id": "897",
+    "text": "camas y colchones"
+  },
+  {
+    "product_id": "898",
+    "text": "chupa"
+  },
+  {
+    "product_id": "899",
+    "text": "refresco instantáneo sabor cola yeya (10 g)"
+  },
+  {
+    "product_id": "900",
+    "text": "aseo personal"
+  },
+  {
+    "product_id": "901",
+    "text": "bolsos"
+  },
+  {
+    "product_id": "902",
+    "text": "dulces y panes"
+  },
+  {
+    "product_id": "903",
+    "text": "especies"
+  },
+  {
+    "product_id": "904",
+    "text": "malta morena (237 ml / 8 oz fl)"
+  },
+  {
+    "product_id": "905",
+    "text": "refrigerator"
+  },
+  {
+    "product_id": "906",
+    "text": "jabón de tocador de manzana yeya (300 g / 10.58 oz)"
+  },
+  {
+    "product_id": "907",
+    "text": "duchas"
+  },
+  {
+    "product_id": "908",
+    "text": "sirope"
+  },
+  {
+    "product_id": "909",
+    "text": "refresco naranja"
+  },
+  {
+    "product_id": "910",
+    "text": "arroz brasileño"
+  },
+  {
+    "product_id": "911",
+    "text": "butter"
+  },
+  {
+    "product_id": "912",
+    "text": "gel de bano"
+  },
+  {
+    "product_id": "913",
+    "text": "filtro de agua"
+  },
+  {
+    "product_id": "914",
+    "text": "ice cream"
+  },
+  {
+    "product_id": "915",
+    "text": "picadillo condimentado con aceitunas bravo (400 g / 14.10 oz)"
+  },
+  {
+    "product_id": "916",
+    "text": "calentador de agua"
+  },
+  {
+    "product_id": "917",
+    "text": "refresco limon"
+  },
+  {
+    "product_id": "918",
+    "text": "detergente en polvo lavado inteligente washo plus (100 g / 3.52 oz)"
+  },
+  {
+    "product_id": "919",
+    "text": "fogon"
+  },
+  {
+    "product_id": "920",
+    "text": "galletas festival"
+  },
+  {
+    "product_id": "921",
+    "text": "jabon lavar"
+  },
+  {
+    "product_id": "922",
+    "text": "queso parmesano"
+  },
+  {
+    "product_id": "923",
+    "text": "turbina"
+  },
+  {
+    "product_id": "924",
+    "text": "maisena"
+  },
+  {
+    "product_id": "925",
+    "text": "gas"
+  },
+  {
+    "product_id": "926",
+    "text": "refresco yeya"
+  },
+  {
+    "product_id": "927",
+    "text": "yogur y sustitutos"
+  },
+  {
+    "product_id": "928",
+    "text": "amburguesa"
+  },
+  {
+    "product_id": "929",
+    "text": "crema para la piel"
+  },
+  {
+    "product_id": "930",
+    "text": "ceramica"
+  },
+  {
+    "product_id": "931",
+    "text": "bolsa"
+  },
+  {
+    "product_id": "932",
+    "text": "bombillos recargables"
+  },
+  {
+    "product_id": "933",
+    "text": "masas de cerdo"
+  },
+  {
+    "product_id": "934",
+    "text": "pechugas de pollo"
+  },
+  {
+    "product_id": "935",
+    "text": "refresco de paquete"
+  },
+  {
+    "product_id": "936",
+    "text": "malta bucanero (355 ml)"
+  },
+  {
+    "product_id": "937",
+    "text": "cortinas"
+  },
+  {
+    "product_id": "938",
+    "text": "cafè"
+  },
+  {
+    "product_id": "939",
+    "text": "desincrustante"
+  },
+  {
+    "product_id": "940",
+    "text": "caja de pechuga de pollo congelada con piel y con hueso nat (10 kg / 22 lb)"
+  },
+  {
+    "product_id": "941",
+    "text": "mantequilla con sal"
+  },
+  {
+    "product_id": "942",
+    "text": "toallitas"
+  },
+  {
+    "product_id": "943",
+    "text": "pomo de agua"
+  },
+  {
+    "product_id": "944",
+    "text": "queso lasqueado"
+  },
+  {
+    "product_id": "945",
+    "text": "sazón con azafrán goya (100 g / 3.52 oz)"
+  },
+  {
+    "product_id": "946",
+    "text": "chupachupa"
+  },
+  {
+    "product_id": "947",
+    "text": "muslo pollo"
+  },
+  {
+    "product_id": "948",
+    "text": "crema corporal"
+  },
+  {
+    "product_id": "949",
+    "text": "espejuelos"
+  },
+  {
+    "product_id": "950",
+    "text": "carne de pollo"
+  },
+  {
+    "product_id": "951",
+    "text": "troncho"
+  },
+  {
+    "product_id": "952",
+    "text": "leche en polvo entera del bosque (1 kg / 2.2 lb)"
+  },
+  {
+    "product_id": "953",
+    "text": "morcilla"
+  },
+  {
+    "product_id": "954",
+    "text": "condensada"
+  },
+  {
+    "product_id": "955",
+    "text": "jugos de manzana"
+  },
+  {
+    "product_id": "956",
+    "text": "jabón de tocador de lavanda yeya (300 g / 10.58 oz)"
+  },
+  {
+    "product_id": "957",
+    "text": "chicharritas"
+  },
+  {
+    "product_id": "958",
+    "text": "mascotas"
+  },
+  {
+    "product_id": "959",
+    "text": "ajos"
+  },
+  {
+    "product_id": "960",
+    "text": "salchichas de pollo nat (340 g / 12 oz)"
+  },
+  {
+    "product_id": "961",
+    "text": "máquina de afeitar"
+  },
+  {
+    "product_id": "962",
+    "text": "toallas humedas"
+  },
+  {
+    "product_id": "963",
+    "text": "arroz saco"
+  },
+  {
+    "product_id": "964",
+    "text": "ventilador de pedestal de 18 pulgadas wynwood wyd-va18"
+  },
+  {
+    "product_id": "965",
+    "text": "frijoles rojos"
+  },
+  {
+    "product_id": "966",
+    "text": "harina de pan"
+  },
+  {
+    "product_id": "967",
+    "text": "frijoles en lata"
+  },
+  {
+    "product_id": "968",
+    "text": "harina de maíz"
+  },
+  {
+    "product_id": "969",
+    "text": "leche en polvo entera capri (1 kg / 2.2 lb)"
+  },
+  {
+    "product_id": "970",
+    "text": "crema de piel"
+  },
+  {
+    "product_id": "971",
+    "text": "pelly"
+  },
+  {
+    "product_id": "972",
+    "text": "pimientos"
+  },
+  {
+    "product_id": "973",
+    "text": "leche en polvo descremada super yu (500 g / 1.1 lb)"
+  },
+  {
+    "product_id": "974",
+    "text": "toma corriente"
+  },
+  {
+    "product_id": "975",
+    "text": "brocha"
+  },
+  {
+    "product_id": "976",
+    "text": "café espresso tostado y molido el cafetazo (284 g / 10 oz)"
+  },
+  {
+    "product_id": "977",
+    "text": "frazada de piso 60 x 80 cm yeya"
+  },
+  {
+    "product_id": "978",
+    "text": "picadillo de res quality beef (500 g / 1.1 lb)"
+  },
+  {
+    "product_id": "979",
+    "text": "mujer"
+  },
+  {
+    "product_id": "980",
+    "text": "pan suave yeya"
+  },
+  {
+    "product_id": "981",
+    "text": "wapa"
+  },
+  {
+    "product_id": "982",
+    "text": "costilla"
+  },
+  {
+    "product_id": "983",
+    "text": "botella"
+  },
+  {
+    "product_id": "984",
+    "text": "leche yeya"
+  },
+  {
+    "product_id": "985",
+    "text": "boliche de res"
+  },
+  {
+    "product_id": "986",
+    "text": "pernil de cerdo"
+  },
+  {
+    "product_id": "987",
+    "text": "frasada de piso"
+  },
+  {
+    "product_id": "988",
+    "text": "refresco suko"
+  },
+  {
+    "product_id": "989",
+    "text": "salt"
+  },
+  {
+    "product_id": "990",
+    "text": "lavadora automática"
+  },
+  {
+    "product_id": "991",
+    "text": "yogurt fresa"
+  },
+  {
+    "product_id": "992",
+    "text": "vitanova"
+  },
+  {
+    "product_id": "993",
+    "text": "panetela"
+  },
+  {
+    "product_id": "994",
+    "text": "salmon"
+  },
+  {
+    "product_id": "995",
+    "text": "bicicleta eléctrica"
+  },
+  {
+    "product_id": "996",
+    "text": "leche entera vima foods (1 l)"
+  },
+  {
+    "product_id": "997",
+    "text": "mayonnaise"
+  },
+  {
+    "product_id": "998",
+    "text": "sopa instantánea"
+  },
+  {
+    "product_id": "999",
+    "text": "zason"
+  },
+  {
+    "product_id": "1000",
+    "text": "chips"
+  }
+]
+}

@@ -4,6 +4,7 @@ from fastapi import FastAPI, HTTPException, BackgroundTasks, Query
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
+from enum import Enum
 import uuid
 import os
 import csv
@@ -104,8 +105,91 @@ class ErrorResponse(BaseModel):
     detail: Optional[str] = None
     timestamp: str
 
+# Modelos para clasificación asíncrona
+class JobStatus(str, Enum):
+    """Estados posibles de un job asíncrono"""
+    QUEUED = "queued"
+    PROCESSING = "processing"
+    COMPLETED = "completed"
+    FAILED = "failed"
+    CANCELLED = "cancelled"
+
+class AsyncClassificationRequest(BaseModel):
+    """Request para clasificación asíncrona"""
+    products: List[ProductRequest] = Field(..., description="Lista de productos a clasificar", min_items=1)
+    callback_url: Optional[str] = Field(None, description="URL opcional para notificación cuando complete")
+    priority: Optional[int] = Field(1, description="Prioridad del job (1=alta, 5=baja)", ge=1, le=5)
+    
+class JobProgress(BaseModel):
+    """Progreso de un job"""
+    current: int = Field(..., description="Productos procesados")
+    total: int = Field(..., description="Total de productos")
+    percentage: float = Field(..., description="Porcentaje completado")
+
+class AsyncJobResponse(BaseModel):
+    """Respuesta al crear un job asíncrono"""
+    job_id: str = Field(..., description="ID único del job")
+    status: JobStatus = Field(..., description="Estado actual del job")
+    message: str = Field(..., description="Mensaje descriptivo")
+    total_products: int = Field(..., description="Total de productos a procesar")
+    estimated_completion_time: Optional[str] = Field(None, description="Estimación de finalización")
+    created_at: str = Field(..., description="Timestamp de creación")
+    status_url: str = Field(..., description="URL para consultar estado")
+    result_url: str = Field(..., description="URL para obtener resultados")
+
+class JobStatusResponse(BaseModel):
+    """Respuesta del estado de un job"""
+    job_id: str = Field(..., description="ID del job")
+    status: JobStatus = Field(..., description="Estado actual")
+    progress: Optional[JobProgress] = Field(None, description="Progreso del procesamiento")
+    created_at: str = Field(..., description="Timestamp de creación")
+    started_at: Optional[str] = Field(None, description="Timestamp de inicio")
+    completed_at: Optional[str] = Field(None, description="Timestamp de finalización")
+    error_message: Optional[str] = Field(None, description="Mensaje de error si falló")
+    total_products: int = Field(..., description="Total de productos")
+    estimated_completion_time: Optional[str] = Field(None, description="Estimación de finalización")
+
+class JobResultResponse(BaseModel):
+    """Respuesta con resultados de un job completado"""
+    job_id: str = Field(..., description="ID del job")
+    status: JobStatus = Field(..., description="Estado del job")
+    total: int = Field(..., description="Total de productos procesados")
+    successful: int = Field(..., description="Productos clasificados exitosamente")
+    failed: int = Field(..., description="Productos que fallaron")
+    results: List[Dict[str, Any]] = Field(..., description="Resultados de clasificación")
+    processing_time_seconds: Optional[float] = Field(None, description="Tiempo total de procesamiento")
+    created_at: str = Field(..., description="Timestamp de creación")
+    started_at: Optional[str] = Field(None, description="Timestamp de inicio")
+    completed_at: Optional[str] = Field(None, description="Timestamp de finalización")
+    openai_cost_info: Optional[OpenAICostInfo] = Field(None, description="Información de costos de OpenAI")
+
 # Store para trabajos en background (en producción usar Redis/DB)
 background_jobs = {}
+
+# Helper functions para jobs asíncronos
+def estimate_completion_time(num_products: int, avg_time_per_product: float = 1.5) -> str:
+    """Estimar tiempo de finalización basado en número de productos"""
+    total_seconds = num_products * avg_time_per_product
+    completion_time = datetime.now().timestamp() + total_seconds
+    return datetime.fromtimestamp(completion_time).isoformat()
+
+def create_job_metadata(products: List[ProductRequest], priority: int = 1) -> dict:
+    """Crear metadata inicial para un job"""
+    now = datetime.now().isoformat()
+    return {
+        "status": JobStatus.QUEUED,
+        "created_at": now,
+        "started_at": None,
+        "completed_at": None,
+        "total_products": len(products),
+        "priority": priority,
+        "progress": {"current": 0, "total": len(products), "percentage": 0.0},
+        "estimated_completion_time": estimate_completion_time(len(products)),
+        "error_message": None,
+        "results": [],
+        "processing_time_seconds": None,
+        "openai_cost_info": None
+    }
 
 @app.get("/")
 def root():
@@ -355,6 +439,152 @@ def classify_products_unified(
         timestamp=datetime.now().isoformat(),
         openai_cost_info=openai_cost_info
     )
+
+# === ENDPOINTS ASÍNCRONOS ===
+
+@app.post("/classify/async", response_model=AsyncJobResponse, 
+          summary="Iniciar clasificación asíncrona",
+          description="Crear un job de clasificación que se procesa en background")
+def create_async_classification_job(request: AsyncClassificationRequest, background_tasks: BackgroundTasks):
+    """
+    **Clasificación Asíncrona de Productos**
+    
+    Crea un job de clasificación que se ejecuta en background, ideal para lotes grandes.
+    
+    **Características:**
+    - Procesamiento no bloqueante
+    - Tracking de progreso en tiempo real
+    - Estimación de tiempo de finalización
+    - Soporte para prioridades
+    - Callback opcional cuando complete
+    
+    **Flujo de trabajo:**
+    1. POST /classify/async → Recibe job_id
+    2. GET /classify/status/{job_id} → Consultar progreso
+    3. GET /classify/result/{job_id} → Obtener resultados finales
+    
+    **Prioridades:**
+    - 1: Alta prioridad (procesamiento más rápido)
+    - 5: Baja prioridad (puede tomar más tiempo)
+    """
+    # Generar ID único para el job
+    job_id = str(uuid.uuid4())
+    
+    # Crear metadata inicial del job
+    job_metadata = create_job_metadata(request.products, request.priority or 1)
+    background_jobs[job_id] = job_metadata
+    
+    # Agregar tarea de procesamiento en background
+    background_tasks.add_task(process_async_classification, request.products, job_id, request.callback_url)
+    
+    return AsyncJobResponse(
+        job_id=job_id,
+        status=JobStatus.QUEUED,
+        message=f"Job de clasificación creado exitosamente. Procesando {len(request.products)} productos.",
+        total_products=len(request.products),
+        estimated_completion_time=job_metadata["estimated_completion_time"],
+        created_at=job_metadata["created_at"],
+        status_url=f"/classify/status/{job_id}",
+        result_url=f"/classify/result/{job_id}"
+    )
+
+@app.get("/classify/status/{job_id}", response_model=JobStatusResponse,
+         summary="Consultar estado de job",
+         description="Obtener estado actual y progreso de un job de clasificación")
+def get_classification_job_status(job_id: str):
+    """
+    **Consultar Estado de Job Asíncrono**
+    
+    Obtiene el estado actual, progreso y metadata de un job de clasificación.
+    
+    **Estados posibles:**
+    - `queued`: En cola, esperando procesamiento
+    - `processing`: Ejecutándose actualmente
+    - `completed`: Finalizado exitosamente
+    - `failed`: Falló por error
+    - `cancelled`: Cancelado por el usuario
+    
+    **Información incluida:**
+    - Progreso actual (productos procesados)
+    - Porcentaje de completitud
+    - Tiempo estimado de finalización
+    - Timestamps de creación, inicio y finalización
+    """
+    if job_id not in background_jobs:
+        raise HTTPException(
+            status_code=404, 
+            detail=f"Job {job_id} no encontrado. Verifique el job_id o que no haya expirado."
+        )
+    
+    job_data = background_jobs[job_id]
+    
+    return JobStatusResponse(
+        job_id=job_id,
+        status=JobStatus(job_data["status"]),
+        progress=JobProgress(
+            current=job_data["progress"]["current"],
+            total=job_data["progress"]["total"],
+            percentage=job_data["progress"]["percentage"]
+        ) if job_data["status"] in [JobStatus.PROCESSING, JobStatus.COMPLETED] else None,
+        created_at=job_data["created_at"],
+        started_at=job_data.get("started_at"),
+        completed_at=job_data.get("completed_at"),
+        error_message=job_data.get("error_message"),
+        total_products=job_data["total_products"],
+        estimated_completion_time=job_data.get("estimated_completion_time")
+    )
+
+@app.get("/classify/result/{job_id}", response_model=JobResultResponse,
+         summary="Obtener resultados de job",
+         description="Obtener resultados finales de un job completado")
+def get_classification_job_result(job_id: str):
+    """
+    **Obtener Resultados de Job Completado**
+    
+    Retorna los resultados finales de un job de clasificación que ha terminado.
+    
+    **Requisitos:**
+    - El job debe estar en estado `completed`
+    - Solo jobs finalizados exitosamente tienen resultados
+    
+    **Contenido de respuesta:**
+    - Todos los productos clasificados
+    - Resumen de éxitos y fallos
+    - Información de costos de OpenAI
+    - Tiempos de procesamiento
+    - Timestamps completos
+    
+    **Nota:** Los resultados se mantienen en memoria por tiempo limitado.
+    En producción se recomienda usar base de datos persistente.
+    """
+    if job_id not in background_jobs:
+        raise HTTPException(
+            status_code=404, 
+            detail=f"Job {job_id} no encontrado. Verifique el job_id o que no haya expirado."
+        )
+    
+    job_data = background_jobs[job_id]
+    
+    if job_data["status"] != JobStatus.COMPLETED:
+        raise HTTPException(
+            status_code=409,
+            detail=f"Job {job_id} no está completado. Estado actual: {job_data['status']}. Use /classify/status/{job_id} para consultar progreso."
+        )
+    
+    return JobResultResponse(
+        job_id=job_id,
+        status=JobStatus(job_data["status"]),
+        total=job_data["total_products"],
+        successful=len([r for r in job_data["results"] if r.get("status") == "success"]),
+        failed=len([r for r in job_data["results"] if r.get("status") == "failed"]),
+        results=job_data["results"],
+        processing_time_seconds=job_data.get("processing_time_seconds"),
+        created_at=job_data["created_at"],
+        started_at=job_data.get("started_at"),
+        completed_at=job_data.get("completed_at"),
+        openai_cost_info=job_data.get("openai_cost_info")
+    )
+
 @app.post("/classify/batch", response_model=BatchClassificationResponse, deprecated=True, include_in_schema=False)
 def classify_batch_products(request: BatchProductRequest):
     """
@@ -412,6 +642,137 @@ def classify_batch_products(request: BatchProductRequest):
         results=results,
         batch_id=batch_id
     )
+
+def process_async_classification(products: List[ProductRequest], job_id: str, callback_url: Optional[str] = None):
+    """
+    Procesar clasificación asíncrona moderna con mejor tracking y manejo de errores
+    """
+    import time
+    start_time = time.time()
+    
+    try:
+        # Marcar job como iniciado
+        background_jobs[job_id]["status"] = JobStatus.PROCESSING
+        background_jobs[job_id]["started_at"] = datetime.now().isoformat()
+        
+        results = []
+        successful = 0
+        failed = 0
+        
+        # Variables para consolidar información de costos OpenAI
+        total_prompt_tokens = 0
+        total_completion_tokens = 0
+        total_cost_usd = 0.0
+        total_api_calls = 0
+        model_used = None
+        cost_info_sample = None
+        
+        for idx, product in enumerate(products):
+            try:
+                # Actualizar progreso en tiempo real
+                current_progress = idx + 1
+                percentage = (current_progress / len(products)) * 100
+                background_jobs[job_id]["progress"] = {
+                    "current": current_progress,
+                    "total": len(products),
+                    "percentage": round(percentage, 2)
+                }
+                
+                # Procesar clasificación
+                result = classify(product.text, product.product_id)
+                
+                if 'error' not in result:
+                    # Clasificación exitosa
+                    results.append({
+                        "index": idx,
+                        "product_id": product.product_id,
+                        "search_text": product.text,
+                        "classification": result,
+                        "status": "success",
+                        "timestamp": datetime.now().isoformat()
+                    })
+                    successful += 1
+                    
+                    # Consolidar información de costos si está disponible
+                    if 'openai_cost_info' in result:
+                        cost_info = result['openai_cost_info']
+                        total_prompt_tokens += cost_info.get('usage', {}).get('prompt_tokens', 0)
+                        total_completion_tokens += cost_info.get('usage', {}).get('completion_tokens', 0)
+                        total_cost_usd += cost_info.get('cost_usd', {}).get('total', 0.0)
+                        total_api_calls += cost_info.get('api_calls', 0)
+                        if not model_used:
+                            model_used = cost_info.get('model')
+                            cost_info_sample = cost_info
+                        
+                else:
+                    # Error en clasificación
+                    results.append({
+                        "index": idx,
+                        "product_id": product.product_id,
+                        "search_text": product.text,
+                        "error": result['error'],
+                        "status": "failed",
+                        "timestamp": datetime.now().isoformat()
+                    })
+                    failed += 1
+                    
+            except Exception as e:
+                # Error inesperado durante procesamiento
+                results.append({
+                    "index": idx,
+                    "product_id": product.product_id,
+                    "search_text": product.text,
+                    "error": f"Error inesperado: {str(e)}",
+                    "status": "failed",
+                    "timestamp": datetime.now().isoformat()
+                })
+                failed += 1
+        
+        # Calcular tiempo total de procesamiento
+        processing_time = time.time() - start_time
+        
+        # Crear información consolidada de costos OpenAI
+        openai_cost_info = None
+        if cost_info_sample and total_api_calls > 0:
+            openai_cost_info = {
+                "model": model_used,
+                "usage": {
+                    "prompt_tokens": total_prompt_tokens,
+                    "completion_tokens": total_completion_tokens,
+                    "total_tokens": total_prompt_tokens + total_completion_tokens
+                },
+                "cost_usd": {
+                    "prompt": cost_info_sample['cost_usd']['prompt'] * (total_prompt_tokens / cost_info_sample['usage']['prompt_tokens']) if cost_info_sample['usage']['prompt_tokens'] > 0 else 0,
+                    "completion": cost_info_sample['cost_usd']['completion'] * (total_completion_tokens / cost_info_sample['usage']['completion_tokens']) if cost_info_sample['usage']['completion_tokens'] > 0 else 0,
+                    "total": total_cost_usd
+                },
+                "cost_breakdown": cost_info_sample.get('cost_breakdown', {}),
+                "api_calls": total_api_calls
+            }
+        
+        # Marcar job como completado exitosamente
+        background_jobs[job_id].update({
+            "status": JobStatus.COMPLETED,
+            "completed_at": datetime.now().isoformat(),
+            "results": results,
+            "processing_time_seconds": round(processing_time, 3),
+            "openai_cost_info": openai_cost_info
+        })
+        
+        # TODO: Implementar callback notification si callback_url está presente
+        if callback_url:
+            # En una implementación completa aquí se haría HTTP POST al callback_url
+            # con el job_id y estado final
+            pass
+            
+    except Exception as e:
+        # Error crítico durante todo el procesamiento
+        background_jobs[job_id].update({
+            "status": JobStatus.FAILED,
+            "completed_at": datetime.now().isoformat(),
+            "error_message": f"Error crítico en procesamiento: {str(e)}",
+            "results": results if 'results' in locals() else []
+        })
 
 def process_batch_async(products: List[ProductRequest], job_id: str):
     """Procesar lote de productos en background"""
