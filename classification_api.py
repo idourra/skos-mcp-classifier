@@ -28,6 +28,18 @@ class ProductRequest(BaseModel):
 class BatchProductRequest(BaseModel):
     products: List[ProductRequest] = Field(..., description="Lista de productos a clasificar")
 
+# Modelos para el endpoint unificado
+class UnifiedProductRequest(BaseModel):
+    products: List[ProductRequest] = Field(..., description="Lista de productos a clasificar (1 o más)", min_items=1)
+    
+class UnifiedClassificationResponse(BaseModel):
+    total: int = Field(..., description="Total de productos procesados")
+    successful: int = Field(..., description="Productos clasificados exitosamente") 
+    failed: int = Field(..., description="Productos que fallaron")
+    results: List[Dict[str, Any]] = Field(..., description="Array con resultados de clasificación")
+    processing_time_seconds: Optional[float] = Field(None, description="Tiempo de procesamiento en segundos")
+    timestamp: str = Field(..., description="Timestamp del procesamiento")
+
 class ExportRequest(BaseModel):
     products: List[ProductRequest] = Field(..., description="Lista de productos para exportar")
     format: str = Field(..., description="Formato de exportación: 'csv' o 'excel'")
@@ -73,16 +85,46 @@ def root():
     """Endpoint raíz con información de la API"""
     return {
         "message": "SKOS Product Classifier API",
-        "version": "1.0.0",
+        "version": "2.0.0",
+        "description": "API REST para clasificación de productos usando taxonomía SKOS",
         "endpoints": {
-            "classify": "/classify",
-            "batch": "/classify/batch", 
-            "async_batch": "/classify/batch/async",
-            "job_status": "/jobs/{job_id}",
-            "export_csv": "/export/csv",
-            "export_excel": "/export/excel",
-            "download": "/download/{filename}",
-            "health": "/health"
+            "primary": {
+                "classify_products": {
+                    "url": "/classify/products",
+                    "method": "POST",
+                    "description": "🎯 Endpoint principal - Clasifica 1 o N productos en una sola llamada",
+                    "example_single": {
+                        "products": [
+                            {"text": "smartphone android", "product_id": "SKU001"}
+                        ]
+                    },
+                    "example_multiple": {
+                        "products": [
+                            {"text": "smartphone android", "product_id": "SKU001"},
+                            {"text": "laptop gaming", "product_id": "SKU002"},
+                            {"text": "auriculares bluetooth", "product_id": "SKU003"}
+                        ]
+                    }
+                }
+            },
+            "legacy": {
+                "classify_single": "/classify [DEPRECATED]",
+                "batch_sync": "/classify/batch [DEPRECATED]", 
+                "batch_async": "/classify/batch/async [DEPRECATED]"
+            },
+            "utilities": {
+                "job_status": "/jobs/{job_id}",
+                "export_csv": "/export/csv",
+                "export_excel": "/export/excel",
+                "download": "/download/{filename}",
+                "health": "/health",
+                "stats": "/stats"
+            }
+        },
+        "migration_guide": {
+            "old_single": "POST /classify → POST /classify/products (con array de 1 elemento)",
+            "old_batch": "POST /classify/batch → POST /classify/products (mismo formato)",
+            "benefit": "Un solo endpoint, respuesta consistente, mejor performance"
         }
     }
 
@@ -91,7 +133,7 @@ def health_check():
     """Health check endpoint"""
     try:
         # Prueba rápida de clasificación
-        test_result = classify("test product")
+        classify("test product")
         return {
             "status": "healthy",
             "mcp_server": "connected",
@@ -104,9 +146,15 @@ def health_check():
             "timestamp": datetime.now().isoformat()
         }
 
-@app.post("/classify", response_model=ClassificationResponse)
+@app.post("/classify", response_model=ClassificationResponse, deprecated=True)
 def classify_single_product(request: ProductRequest):
-    """Clasificar un producto individual"""
+    """
+    [DEPRECATED] Clasificar un producto individual
+    
+    ⚠️ Este endpoint está deprecado. Use /classify/products en su lugar.
+    
+    Mantenido por compatibilidad hacia atrás.
+    """
     try:
         result = classify(request.text, request.product_id)
         
@@ -131,9 +179,96 @@ def classify_single_product(request: ProductRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/classify/batch", response_model=BatchClassificationResponse)
+@app.post("/classify/products", response_model=UnifiedClassificationResponse)
+def classify_products_unified(request: UnifiedProductRequest):
+    """
+    Endpoint unificado para clasificar productos.
+    
+    Acepta un array de productos (1 o más) y devuelve un array con los resultados.
+    - Para clasificar 1 producto: envía array con 1 elemento
+    - Para clasificar N productos: envía array con N elementos
+    
+    Respuesta siempre en formato array con todos los resultados de clasificación.
+    """
+    import time
+    start_time = time.time()
+    
+    # Validar que el array no esté vacío
+    if not request.products:
+        raise HTTPException(
+            status_code=422,
+            detail="Array de productos no puede estar vacío. Debe contener al menos 1 producto."
+        )
+    
+    results = []
+    successful = 0
+    failed = 0
+    
+    for idx, product in enumerate(request.products):
+        try:
+            result = classify(product.text, product.product_id)
+            
+            if 'error' not in result:
+                # Formato unificado de respuesta exitosa
+                classification_result = {
+                    "index": idx,
+                    "product_id": product.product_id,
+                    "search_text": product.text,
+                    "concept_uri": result.get('concept_uri', ''),
+                    "prefLabel": result.get('prefLabel', ''),
+                    "notation": result.get('notation', ''),
+                    "level": result.get('level'),
+                    "confidence": result.get('confidence', 0.0),
+                    "status": "success",
+                    "timestamp": datetime.now().isoformat()
+                }
+                results.append(classification_result)
+                successful += 1
+            else:
+                # Formato unificado de respuesta con error
+                error_result = {
+                    "index": idx,
+                    "product_id": product.product_id,
+                    "search_text": product.text,
+                    "error": result['error'],
+                    "status": "error",
+                    "timestamp": datetime.now().isoformat()
+                }
+                results.append(error_result)
+                failed += 1
+                
+        except Exception as e:
+            # Formato unificado para excepciones
+            exception_result = {
+                "index": idx,
+                "product_id": product.product_id,
+                "search_text": product.text,
+                "error": str(e),
+                "status": "exception",
+                "timestamp": datetime.now().isoformat()
+            }
+            results.append(exception_result)
+            failed += 1
+    
+    processing_time = time.time() - start_time
+    
+    return UnifiedClassificationResponse(
+        total=len(request.products),
+        successful=successful,
+        failed=failed,
+        results=results,
+        processing_time_seconds=round(processing_time, 3),
+        timestamp=datetime.now().isoformat()
+    )
+@app.post("/classify/batch", response_model=BatchClassificationResponse, deprecated=True)
 def classify_batch_products(request: BatchProductRequest):
-    """Clasificar múltiples productos en lote (síncrono)"""
+    """
+    [DEPRECATED] Clasificar múltiples productos en lote (síncrono)
+    
+    ⚠️ Este endpoint está deprecado. Use /classify/products en su lugar.
+    
+    Mantenido por compatibilidad hacia atrás.
+    """
     batch_id = str(uuid.uuid4())
     results = []
     successful = 0
@@ -247,9 +382,15 @@ def process_batch_async(products: List[ProductRequest], job_id: str):
         }
     })
 
-@app.post("/classify/batch/async")
+@app.post("/classify/batch/async", deprecated=True)
 def classify_batch_async(request: BatchProductRequest, background_tasks: BackgroundTasks):
-    """Clasificar múltiples productos en lote (asíncrono)"""
+    """
+    [DEPRECATED] Clasificar múltiples productos en lote (asíncrono)
+    
+    ⚠️ Este endpoint está deprecado. Use /classify/products para clasificación síncrona.
+    
+    Mantenido por compatibilidad hacia atrás.
+    """
     job_id = str(uuid.uuid4())
     
     # Inicializar job
