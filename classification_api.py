@@ -88,43 +88,54 @@ def root():
         "version": "2.0.0",
         "description": "API REST para clasificación de productos usando taxonomía SKOS",
         "endpoints": {
-            "primary": {
+            "classification": {
                 "classify_products": {
                     "url": "/classify/products",
                     "method": "POST",
-                    "description": "🎯 Endpoint principal - Clasifica 1 o N productos en una sola llamada",
+                    "description": "Clasifica 1 o N productos en una sola llamada",
                     "example_single": {
                         "products": [
-                            {"text": "smartphone android", "product_id": "SKU001"}
+                            {"text": "leche descremada", "product_id": "SKU001"}
                         ]
                     },
                     "example_multiple": {
                         "products": [
-                            {"text": "smartphone android", "product_id": "SKU001"},
-                            {"text": "laptop gaming", "product_id": "SKU002"},
-                            {"text": "auriculares bluetooth", "product_id": "SKU003"}
+                            {"text": "arroz blanco", "product_id": "SKU001"},
+                            {"text": "pollo congelado", "product_id": "SKU002"},
+                            {"text": "yogurt natural", "product_id": "SKU003"}
                         ]
                     }
                 }
             },
-            "legacy": {
-                "classify_single": "/classify [DEPRECATED]",
-                "batch_sync": "/classify/batch [DEPRECATED]", 
-                "batch_async": "/classify/batch/async [DEPRECATED]"
+            "export": {
+                "export_csv": {
+                    "url": "/export/csv",
+                    "method": "POST", 
+                    "description": "Exportar productos clasificados a CSV"
+                },
+                "export_excel": {
+                    "url": "/export/excel",
+                    "method": "POST",
+                    "description": "Exportar productos clasificados a Excel"
+                },
+                "download": {
+                    "url": "/download/{filename}",
+                    "method": "GET",
+                    "description": "Descargar archivo exportado"
+                }
             },
-            "utilities": {
-                "job_status": "/jobs/{job_id}",
-                "export_csv": "/export/csv",
-                "export_excel": "/export/excel",
-                "download": "/download/{filename}",
-                "health": "/health",
-                "stats": "/stats"
+            "system": {
+                "health": {
+                    "url": "/health",
+                    "method": "GET",
+                    "description": "Verificar estado del sistema"
+                },
+                "stats": {
+                    "url": "/stats", 
+                    "method": "GET",
+                    "description": "Estadísticas de uso de la API"
+                }
             }
-        },
-        "migration_guide": {
-            "old_single": "POST /classify → POST /classify/products (con array de 1 elemento)",
-            "old_batch": "POST /classify/batch → POST /classify/products (mismo formato)",
-            "benefit": "Un solo endpoint, respuesta consistente, mejor performance"
         }
     }
 
