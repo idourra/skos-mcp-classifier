@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
 # classification_api.py - API REST completa para clasificación SKOS
 from fastapi import FastAPI, HTTPException, BackgroundTasks
-from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
-import json
 import uuid
 import os
-import tempfile
 import csv
 from pathlib import Path
 from datetime import datetime
 from client.classify_standard_api import classify
 from utils.export_config import get_full_export_path, ensure_export_structure, EXPORTS_BASE_DIR
-from utils.openai_cost_calculator import format_cost_info, calculate_openai_cost
 
 app = FastAPI(
     title="SKOS Product Classifier API",

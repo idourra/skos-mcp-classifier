@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from utils.openai_cost_calculator import calculate_openai_cost, extract_usage_from_response, format_cost_info
+from utils.openai_cost_calculator import calculate_openai_cost, format_cost_info
 
 # Load environment variables from .env file
 load_dotenv()
@@ -40,17 +40,17 @@ def classify(text: str, product_id: str = None):
     Args:
         text (str): Product description to classify
         product_id (str, optional): Optional ID/SKU to include in the result
-    
+        
     Returns:
         dict: Classification result including product_id and OpenAI cost information
     """
-    
+
     # Variables for cost tracking
     total_prompt_tokens = 0
     total_completion_tokens = 0
     model_used = "gpt-4o-mini"
     api_calls_count = 0
-    
+
     # Define the functions that OpenAI can call
     functions = [
         {

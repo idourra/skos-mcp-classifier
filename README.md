@@ -1,17 +1,14 @@
-# SKOS MCP Classifier# 🏷️ SKOS MCP Classifier# SKOS MCP Classifier (Treew)
-
-
+# 🏷️ SKOS MCP Classifier
 
 Sistema de clasificación automática de productos usando OpenAI y taxonomías SKOS (Simple Knowledge Organization System) vía Model Context Protocol.
 
+Un clasificador de productos alimentarios basado en taxonomía SKOS que utiliza OpenAI y Model Context Protocol (MCP) para clasificar productos de manera inteligente y precisa.
 
+Repo de ejemplo para exponer una taxonomía **SKOS** como **servidor MCP** y conectarla a **OpenAI** (Responses API / Agents SDK) para clasificación de productos.
 
-## CaracterísticasUn clasificador de productos alimentarios basado en taxonomía SKOS que utiliza OpenAI y Model Context Protocol (MCP) para clasificar productos de manera inteligente y precisa.Repo de ejemplo para exponer una taxonomía **SKOS** como **servidor MCP** y conectarla a **OpenAI** (Responses API / Agents SDK) para clasificación de productos.
-
-
+## Características
 
 - 🤖 Clasificación inteligente usando GPT-4o-mini con function calling
-
 - 🏷️ Taxonomía SKOS integrada para productos alimenticios
 
 - 🔌 Protocolo MCP para integración semántica## 🌟 Características## Estructura
@@ -77,29 +74,17 @@ Sistema de clasificación automática de productos usando OpenAI y taxonomías S
 - Gitmake run
 
 - Python 3.8+
-
-- Git```
-
+- Git
 - Clave API de OpenAI
 
-### Instalación3) Prueba la clasificación con Responses API:
-
-### Instalación
-
-```
+## Instalación
 
 ```bash
-
-# Clonar el repositorio```bashexport OPENAI_API_KEY=...
-
+# Clonar el repositorio
 git clone https://github.com/idourra/skos-mcp-classifier.git
+cd skos-mcp-classifier
 
-cd skos-mcp-classifier# Clonar el repositorio
-
-git clone https://github.com/idourra/skos-mcp-classifier.git
-
-# Instalar dependenciascd skos-mcp-classifier```
-
+# Instalar dependencias
 make install
 
 
@@ -150,11 +135,12 @@ cp .env.example .env  - `POST /tools/get_context`
 
 3. **¡Ya está listo para usar!**
 
-# Edita .env y agrega tu OPENAI_API_KEY  - `POST /tools/validate_notation`
+Edita .env y agrega tu OPENAI_API_KEY
 
 ## Uso Rápido
 
-```- El archivo `server/mcp_tools.json` declara las herramientas MCP.
+- El archivo `server/mcp_tools.json` declara las herramientas MCP
+- `POST /tools/validate_notation`
 
 ### Clasificación Simple
 
@@ -182,17 +168,20 @@ print(f"Confianza: {result['confidence']}%")OPENAI_API_KEY=sk-tu-clave-aqui
 
 2. **Inicia el servidor MCP**:
 
-```python```bash
-
-# Clasificar producto con ID personalizadouvicorn server.main:app --host 0.0.0.0 --port 8080
-
-result = classify("Aceite de oliva extra virgen", product_id="SKU-12345")```
-
+```python
+# Clasificar producto con ID personalizado
+result = classify("Aceite de oliva extra virgen", product_id="SKU-12345")
 print(f"ID: {result['product_id']}")
-
-print(f"Categoría: {result['category']}")3. **¡Ya está listo para usar!**
-
+print(f"Categoría: {result['category']}")
 ```
+
+Para iniciar el servidor MCP:
+
+```bash
+uvicorn server.main:app --host 0.0.0.0 --port 8080
+```
+
+3. **¡Ya está listo para usar!**
 
 ## 📋 Uso
 
@@ -350,9 +339,7 @@ make clean      # Limpiar archivos temporales     -H "Content-Type: application/
 
 ### Procesamiento por Lotes
 
-```
-
-```pythonskos-mcp-classifier/
+```python
 
 productos = [├── client/                          # Cliente de clasificación
 
