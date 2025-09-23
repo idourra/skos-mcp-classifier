@@ -13,6 +13,7 @@ from pathlib import Path
 from datetime import datetime
 from client.classify_standard_api import classify
 from utils.export_config import get_full_export_path, ensure_export_structure, EXPORTS_BASE_DIR
+from utils.openai_cost_calculator import format_cost_info, calculate_openai_cost
 
 app = FastAPI(
     title="SKOS Product Classifier API",
@@ -28,6 +29,30 @@ class ProductRequest(BaseModel):
 class BatchProductRequest(BaseModel):
     products: List[ProductRequest] = Field(..., description="Lista de productos a clasificar")
 
+# Modelos para información de costos OpenAI
+class OpenAIUsage(BaseModel):
+    prompt_tokens: int = Field(..., description="Tokens utilizados en el prompt")
+    completion_tokens: int = Field(..., description="Tokens generados en la respuesta") 
+    total_tokens: int = Field(..., description="Total de tokens utilizados")
+
+class OpenAICostUSD(BaseModel):
+    prompt: float = Field(..., description="Costo del prompt en USD")
+    completion: float = Field(..., description="Costo de la respuesta en USD")
+    total: float = Field(..., description="Costo total en USD")
+
+class OpenAICostBreakdown(BaseModel):
+    base_model_for_pricing: str = Field(..., description="Modelo base usado para el pricing")
+    prompt_cost_per_1m_tokens: float = Field(..., description="Costo por 1M tokens de prompt")
+    completion_cost_per_1m_tokens: float = Field(..., description="Costo por 1M tokens de completion")
+    calculation_timestamp: str = Field(..., description="Timestamp del cálculo")
+
+class OpenAICostInfo(BaseModel):
+    model: str = Field(..., description="Modelo exacto utilizado por OpenAI")
+    usage: OpenAIUsage = Field(..., description="Información de tokens utilizados")
+    cost_usd: OpenAICostUSD = Field(..., description="Costos en USD")
+    cost_breakdown: OpenAICostBreakdown = Field(..., description="Desglose detallado de costos")
+    api_calls: int = Field(..., description="Número de llamadas a la API de OpenAI")
+
 # Modelos para el endpoint unificado
 class UnifiedProductRequest(BaseModel):
     products: List[ProductRequest] = Field(..., description="Lista de productos a clasificar (1 o más)", min_items=1)
@@ -39,6 +64,7 @@ class UnifiedClassificationResponse(BaseModel):
     results: List[Dict[str, Any]] = Field(..., description="Array con resultados de clasificación")
     processing_time_seconds: Optional[float] = Field(None, description="Tiempo de procesamiento en segundos")
     timestamp: str = Field(..., description="Timestamp del procesamiento")
+    openai_cost_info: Optional[OpenAICostInfo] = Field(None, description="Información de costos de OpenAI")
 
 class ExportRequest(BaseModel):
     products: List[ProductRequest] = Field(..., description="Lista de productos para exportar")
@@ -157,7 +183,7 @@ def health_check():
             "timestamp": datetime.now().isoformat()
         }
 
-@app.post("/classify", response_model=ClassificationResponse, deprecated=True)
+@app.post("/classify", response_model=ClassificationResponse, deprecated=True, include_in_schema=False)
 def classify_single_product(request: ProductRequest):
     """
     [DEPRECATED] Clasificar un producto individual
@@ -200,6 +226,7 @@ def classify_products_unified(request: UnifiedProductRequest):
     - Para clasificar N productos: envía array con N elementos
     
     Respuesta siempre en formato array con todos los resultados de clasificación.
+    Incluye información agregada de costos de OpenAI para toda la operación.
     """
     import time
     start_time = time.time()
@@ -215,9 +242,32 @@ def classify_products_unified(request: UnifiedProductRequest):
     successful = 0
     failed = 0
     
+    # Variables para consolidar información de costos
+    total_prompt_tokens = 0
+    total_completion_tokens = 0
+    total_cost_usd = 0.0
+    total_api_calls = 0
+    model_used = None
+    cost_info_sample = None
+    
     for idx, product in enumerate(request.products):
         try:
             result = classify(product.text, product.product_id)
+            
+            # Extraer información de costos si está disponible
+            if 'openai_cost' in result:
+                cost_data = result['openai_cost']
+                if 'usage' in cost_data:
+                    total_prompt_tokens += cost_data['usage'].get('prompt_tokens', 0)
+                    total_completion_tokens += cost_data['usage'].get('completion_tokens', 0)
+                if 'cost_usd' in cost_data:
+                    total_cost_usd += cost_data['cost_usd'].get('total', 0.0)
+                if 'api_calls' in cost_data:
+                    total_api_calls += cost_data['api_calls']
+                if 'model' in cost_data:
+                    model_used = cost_data['model']  # Usar el último modelo
+                if not cost_info_sample:
+                    cost_info_sample = cost_data  # Guardar una muestra para los breakdowns
             
             if 'error' not in result:
                 # Formato unificado de respuesta exitosa
@@ -263,15 +313,40 @@ def classify_products_unified(request: UnifiedProductRequest):
     
     processing_time = time.time() - start_time
     
+    # Crear información consolidada de costos OpenAI
+    openai_cost_info = None
+    if cost_info_sample and model_used:
+        openai_cost_info = OpenAICostInfo(
+            model=model_used,
+            usage=OpenAIUsage(
+                prompt_tokens=total_prompt_tokens,
+                completion_tokens=total_completion_tokens,
+                total_tokens=total_prompt_tokens + total_completion_tokens
+            ),
+            cost_usd=OpenAICostUSD(
+                prompt=round(total_cost_usd * (total_prompt_tokens / (total_prompt_tokens + total_completion_tokens)) if total_prompt_tokens + total_completion_tokens > 0 else 0, 6),
+                completion=round(total_cost_usd * (total_completion_tokens / (total_prompt_tokens + total_completion_tokens)) if total_prompt_tokens + total_completion_tokens > 0 else 0, 6),
+                total=round(total_cost_usd, 6)
+            ),
+            cost_breakdown=OpenAICostBreakdown(
+                base_model_for_pricing=cost_info_sample.get('cost_breakdown', {}).get('base_model_for_pricing', model_used),
+                prompt_cost_per_1m_tokens=cost_info_sample.get('cost_breakdown', {}).get('prompt_cost_per_1m_tokens', 0.0),
+                completion_cost_per_1m_tokens=cost_info_sample.get('cost_breakdown', {}).get('completion_cost_per_1m_tokens', 0.0),
+                calculation_timestamp=datetime.now().isoformat()
+            ),
+            api_calls=total_api_calls
+        )
+    
     return UnifiedClassificationResponse(
         total=len(request.products),
         successful=successful,
         failed=failed,
         results=results,
         processing_time_seconds=round(processing_time, 3),
-        timestamp=datetime.now().isoformat()
+        timestamp=datetime.now().isoformat(),
+        openai_cost_info=openai_cost_info
     )
-@app.post("/classify/batch", response_model=BatchClassificationResponse, deprecated=True)
+@app.post("/classify/batch", response_model=BatchClassificationResponse, deprecated=True, include_in_schema=False)
 def classify_batch_products(request: BatchProductRequest):
     """
     [DEPRECATED] Clasificar múltiples productos en lote (síncrono)
@@ -393,7 +468,7 @@ def process_batch_async(products: List[ProductRequest], job_id: str):
         }
     })
 
-@app.post("/classify/batch/async", deprecated=True)
+@app.post("/classify/batch/async", deprecated=True, include_in_schema=False)
 def classify_batch_async(request: BatchProductRequest, background_tasks: BackgroundTasks):
     """
     [DEPRECATED] Clasificar múltiples productos en lote (asíncrono)

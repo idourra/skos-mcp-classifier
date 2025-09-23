@@ -4,6 +4,9 @@ import requests
 import json
 from dotenv import load_dotenv
 from openai import OpenAI
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from utils.openai_cost_calculator import calculate_openai_cost, extract_usage_from_response, format_cost_info
 
 # Load environment variables from .env file
 load_dotenv()
@@ -39,8 +42,14 @@ def classify(text: str, product_id: str = None):
         product_id (str, optional): Optional ID/SKU to include in the result
     
     Returns:
-        dict: Classification result including product_id if provided
+        dict: Classification result including product_id and OpenAI cost information
     """
+    
+    # Variables for cost tracking
+    total_prompt_tokens = 0
+    total_completion_tokens = 0
+    model_used = "gpt-4o-mini"
+    api_calls_count = 0
     
     # Define the functions that OpenAI can call
     functions = [
@@ -104,11 +113,20 @@ def classify(text: str, product_id: str = None):
     
     # First API call
     response = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model=model_used,
         messages=messages,
         functions=functions,
         function_call="auto"
     )
+    
+    # Track tokens from first call (using real OpenAI response data)
+    api_calls_count += 1
+    if hasattr(response, 'usage') and response.usage:
+        total_prompt_tokens += response.usage.prompt_tokens
+        total_completion_tokens += response.usage.completion_tokens
+        # Update model_used with exact model from response
+        if hasattr(response, 'model'):
+            model_used = response.model
     
     # Process function calls
     while response.choices[0].message.function_call:
@@ -141,14 +159,29 @@ def classify(text: str, product_id: str = None):
         
         # Continue the conversation
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model=model_used,
             messages=messages,
             functions=functions,
             function_call="auto"
         )
+        
+        # Track tokens from continuation calls (using real OpenAI response data)
+        api_calls_count += 1
+        if hasattr(response, 'usage') and response.usage:
+            total_prompt_tokens += response.usage.prompt_tokens
+            total_completion_tokens += response.usage.completion_tokens
     
     # Parse the final response
     final_content = response.choices[0].message.content
+    
+    # Calculate total cost using real token usage from OpenAI
+    cost_info = None
+    if total_prompt_tokens > 0 or total_completion_tokens > 0:
+        try:
+            # Use the exact model name returned by OpenAI for accurate pricing
+            cost_info = calculate_openai_cost(model_used, total_prompt_tokens, total_completion_tokens)
+        except Exception as e:
+            print(f"Warning: Could not calculate cost: {e}")
     
     # Try to extract JSON from the response
     try:
@@ -158,19 +191,32 @@ def classify(text: str, product_id: str = None):
         if start_idx != -1 and end_idx != -1:
             json_str = final_content[start_idx:end_idx]
             result = json.loads(json_str)
+            
             # Add product_id to result if provided
             if product_id:
                 result['product_id'] = product_id
+                
+            # Add cost information if available (using real OpenAI usage data)
+            if cost_info:
+                result['openai_cost'] = format_cost_info(cost_info)
+                result['openai_cost']['api_calls'] = api_calls_count  # Track number of API calls
+                
             return result
         else:
             result = {"error": "No JSON found in response", "raw_response": final_content}
             if product_id:
                 result['product_id'] = product_id
+            if cost_info:
+                result['openai_cost'] = format_cost_info(cost_info)
+                result['openai_cost']['api_calls'] = api_calls_count
             return result
     except json.JSONDecodeError:
         result = {"error": "Invalid JSON in response", "raw_response": final_content}
         if product_id:
             result['product_id'] = product_id
+        if cost_info:
+            result['openai_cost'] = format_cost_info(cost_info)
+            result['openai_cost']['api_calls'] = api_calls_count
         return result
 
 if __name__ == "__main__":
