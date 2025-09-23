@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-# classification_api.py - API REST completa para clasificación SKOS
-from fastapi import FastAPI, HTTPException, BackgroundTasks
+# classification_api.py - API REST completa para clasificación SKOS con múltiples taxonomías
+from fastapi import FastAPI, HTTPException, BackgroundTasks, Query
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
@@ -11,12 +11,16 @@ from pathlib import Path
 from datetime import datetime
 from client.classify_standard_api import classify
 from utils.export_config import get_full_export_path, ensure_export_structure, EXPORTS_BASE_DIR
+from server.taxonomy_endpoints import taxonomy_router
 
 app = FastAPI(
-    title="SKOS Product Classifier API",
-    description="API REST para clasificar productos usando taxonomía SKOS",
-    version="1.0.0"
+    title="Multi-Taxonomy SKOS Product Classifier API",
+    description="API REST para clasificar productos usando múltiples taxonomías SKOS",
+    version="2.0.0"
 )
+
+# Incluir router de taxonomías
+app.include_router(taxonomy_router)
 
 # Modelos Pydantic
 class ProductRequest(BaseModel):
@@ -214,13 +218,21 @@ def classify_single_product(request: ProductRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/classify/products", response_model=UnifiedClassificationResponse)
-def classify_products_unified(request: UnifiedProductRequest):
+def classify_products_unified(
+    request: UnifiedProductRequest,
+    taxonomy: Optional[str] = Query(None, description="ID de taxonomía específica a usar (opcional)")
+):
     """
-    Endpoint unificado para clasificar productos.
+    Endpoint unificado para clasificar productos con soporte multi-taxonomía.
     
     Acepta un array de productos (1 o más) y devuelve un array con los resultados.
     - Para clasificar 1 producto: envía array con 1 elemento
     - Para clasificar N productos: envía array con N elementos
+    
+    **Nuevo**: Soporte para múltiples taxonomías
+    - **taxonomy**: ID de taxonomía específica (opcional)
+    - Si no se especifica, usa la taxonomía por defecto
+    - Las taxonomías disponibles se pueden consultar en /taxonomies
     
     Respuesta siempre en formato array con todos los resultados de clasificación.
     Incluye información agregada de costos de OpenAI para toda la operación.
@@ -249,7 +261,7 @@ def classify_products_unified(request: UnifiedProductRequest):
     
     for idx, product in enumerate(request.products):
         try:
-            result = classify(product.text, product.product_id)
+            result = classify(product.text, product.product_id, taxonomy)
             
             # Extraer información de costos si está disponible
             if 'openai_cost' in result:

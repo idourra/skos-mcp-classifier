@@ -1,20 +1,4 @@
-# client/classify_standard_api.py
-import os
-import requests
-import json
-from dotenv import load_dotenv
-from openai import OpenAI
-import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from utils.openai_cost_calculator import calculate_openai_cost, format_cost_info
-
-# Load environment variables from .env file
-load_dotenv()
-
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-SERVER_URL = os.getenv("MCP_SERVER_URL", "http://localhost:8080")
-
-def search_concepts(query: str, lang: str = "es", k: int = 10, taxonomy_id: str = None):
+# client/classifdef search_concepts(query: str, lang: str = "es", k: int = 10, taxonomy_id: str = None):
     """Search for SKOS concepts using the MCP server"""
     payload = {
         "query": query,
@@ -46,6 +30,39 @@ def get_context(concept_uri: str, taxonomy_id: str = None):
         f"{SERVER_URL}/tools/get_context",
         headers={"Content-Type": "application/json"},
         json=payload
+    )
+    response.raise_for_status()
+    return response.json()mport os
+import requests
+import json
+from dotenv import load_dotenv
+from openai import OpenAI
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from utils.openai_cost_calculator import calculate_openai_cost, format_cost_info
+
+# Load environment variables from .env file
+load_dotenv()
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+SERVER_URL = os.getenv("MCP_SERVER_URL", "http://localhost:8080")
+
+def search_concepts(query: str, lang: str = "es", k: int = 10):
+    """Search for SKOS concepts using the MCP server"""
+    response = requests.post(
+        f"{SERVER_URL}/tools/search_concepts",
+        headers={"Content-Type": "application/json"},
+        json={"query": query, "lang": lang, "k": k}
+    )
+    response.raise_for_status()
+    return response.json()
+
+def get_context(concept_uri: str):
+    """Get detailed context for a SKOS concept"""
+    response = requests.post(
+        f"{SERVER_URL}/tools/get_context",
+        headers={"Content-Type": "application/json"},
+        json={"concept_uri": concept_uri}
     )
     response.raise_for_status()
     return response.json()
