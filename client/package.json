@@ -1,0 +1,9 @@
+{
+  "name": "skos-mcp-client",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@openai/agents": "^0.0.10",
+    "dotenv": "^16.4.5"
+  }
+}
