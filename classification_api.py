@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 # classification_api.py - API REST completa para clasificación SKOS
 from fastapi import FastAPI, HTTPException, BackgroundTasks
+from fastapi.responses import FileResponse, StreamingResponse
 from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any
 import json
 import uuid
+import os
+import tempfile
+import csv
+from pathlib import Path
 from datetime import datetime
 from client.classify_standard_api import classify
+from utils.export_config import get_full_export_path, ensure_export_structure, EXPORTS_BASE_DIR
 
 app = FastAPI(
     title="SKOS Product Classifier API",
@@ -21,6 +27,11 @@ class ProductRequest(BaseModel):
 
 class BatchProductRequest(BaseModel):
     products: List[ProductRequest] = Field(..., description="Lista de productos a clasificar")
+
+class ExportRequest(BaseModel):
+    products: List[ProductRequest] = Field(..., description="Lista de productos para exportar")
+    format: str = Field(..., description="Formato de exportación: 'csv' o 'excel'")
+    filename: Optional[str] = Field(None, description="Nombre del archivo (opcional)")
     
 class ClassificationResponse(BaseModel):
     product_id: Optional[str]
@@ -38,6 +49,16 @@ class BatchClassificationResponse(BaseModel):
     failed: int
     results: List[Dict[str, Any]]
     batch_id: str
+
+class ExportResponse(BaseModel):
+    status: str
+    filename: str
+    download_url: str
+    total_products: int
+    successful: int
+    failed: int
+    file_size_bytes: Optional[int] = None
+    timestamp: str
     
 class ErrorResponse(BaseModel):
     error: str
@@ -58,6 +79,9 @@ def root():
             "batch": "/classify/batch", 
             "async_batch": "/classify/batch/async",
             "job_status": "/jobs/{job_id}",
+            "export_csv": "/export/csv",
+            "export_excel": "/export/excel",
+            "download": "/download/{filename}",
             "health": "/health"
         }
     }
@@ -270,6 +294,347 @@ def get_api_stats():
         "api_uptime": "N/A",  # En producción calcular uptime real
         "timestamp": datetime.now().isoformat()
     }
+
+# Funciones de exportación
+def create_csv_export(results_data: List[Dict], filename: str = None) -> str:
+    """
+    Crea un archivo CSV con los resultados de clasificación
+    
+    Args:
+        results_data: Lista con resultados de clasificación
+        filename: Nombre del archivo (opcional)
+        
+    Returns:
+        str: Ruta completa del archivo creado
+    """
+    ensure_export_structure()
+    
+    if not filename:
+        output_path = get_full_export_path("api_export", "csv")
+    else:
+        output_path = get_full_export_path(filename.replace('.csv', ''), "csv")
+    
+    with open(output_path, 'w', newline='', encoding='utf-8') as csvfile:
+        fieldnames = [
+            'product_id',
+            'product_description', 
+            'skos_category',
+            'skos_notation',
+            'skos_uri',
+            'confidence_score',
+            'classification_timestamp',
+            'status'
+        ]
+        
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        
+        for item in results_data:
+            if item.get('status') == 'success' and 'classification' in item:
+                classification = item['classification']
+                
+                # Manejar prefLabel que puede ser un diccionario
+                pref_label = classification.get('prefLabel', '')
+                if isinstance(pref_label, dict):
+                    pref_label = pref_label.get('es', pref_label.get('en', str(pref_label)))
+                
+                row = {
+                    'product_id': item.get('product_id', ''),
+                    'product_description': item.get('search_text', ''),
+                    'skos_category': pref_label,
+                    'skos_notation': classification.get('notation', ''),
+                    'skos_uri': classification.get('concept_uri', ''),
+                    'confidence_score': classification.get('confidence', 0),
+                    'classification_timestamp': item.get('timestamp', ''),
+                    'status': 'success'
+                }
+            else:
+                row = {
+                    'product_id': item.get('product_id', ''),
+                    'product_description': item.get('search_text', ''),
+                    'skos_category': f"ERROR: {item.get('error', 'Unknown error')}",
+                    'skos_notation': '',
+                    'skos_uri': '',
+                    'confidence_score': 0,
+                    'classification_timestamp': item.get('timestamp', ''),
+                    'status': 'error'
+                }
+            writer.writerow(row)
+    
+    return str(output_path)
+
+def create_excel_export(results_data: List[Dict], filename: str = None) -> str:
+    """
+    Crea un archivo Excel con los resultados de clasificación
+    
+    Args:
+        results_data: Lista con resultados de clasificación
+        filename: Nombre del archivo (opcional)
+        
+    Returns:
+        str: Ruta completa del archivo creado
+    """
+    try:
+        import openpyxl
+        from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+        from openpyxl.utils import get_column_letter
+    except ImportError:
+        raise HTTPException(
+            status_code=500, 
+            detail="openpyxl no está instalado. Ejecute: pip install openpyxl"
+        )
+    
+    ensure_export_structure()
+    
+    if not filename:
+        output_path = get_full_export_path("api_export", "excel")
+    else:
+        output_path = get_full_export_path(filename.replace('.xlsx', ''), "excel")
+    
+    # Crear workbook
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Productos Clasificados"
+    
+    # Estilos
+    header_font = Font(bold=True, color="FFFFFF")
+    header_fill = PatternFill(start_color="366092", end_color="366092", fill_type="solid")
+    header_alignment = Alignment(horizontal="center", vertical="center")
+    border = Border(
+        left=Side(style='thin'),
+        right=Side(style='thin'), 
+        top=Side(style='thin'),
+        bottom=Side(style='thin')
+    )
+    
+    # Headers
+    headers = [
+        "ID Producto",
+        "Descripción del Producto", 
+        "Categoría SKOS",
+        "Notación SKOS",
+        "URI Concepto",
+        "Nivel de Confianza",
+        "Timestamp Clasificación",
+        "Estado"
+    ]
+    
+    # Escribir headers
+    for col, header in enumerate(headers, 1):
+        cell = ws.cell(row=1, column=col, value=header)
+        cell.font = header_font
+        cell.fill = header_fill
+        cell.alignment = header_alignment
+        cell.border = border
+    
+    # Escribir datos
+    for row_idx, item in enumerate(results_data, 2):
+        if item.get('status') == 'success' and 'classification' in item:
+            classification = item['classification']
+            
+            # Manejar prefLabel que puede ser un diccionario
+            pref_label = classification.get('prefLabel', '')
+            if isinstance(pref_label, dict):
+                pref_label = pref_label.get('es', pref_label.get('en', str(pref_label)))
+            
+            data = [
+                item.get('product_id', ''),
+                item.get('search_text', ''),
+                pref_label,
+                classification.get('notation', ''),
+                classification.get('concept_uri', ''),
+                classification.get('confidence', 0),
+                item.get('timestamp', ''),
+                'success'
+            ]
+        else:
+            data = [
+                item.get('product_id', ''),
+                item.get('search_text', ''),
+                f"ERROR: {item.get('error', 'Unknown error')}",
+                '',
+                '',
+                0,
+                item.get('timestamp', ''),
+                'error'
+            ]
+        
+        for col, value in enumerate(data, 1):
+            cell = ws.cell(row=row_idx, column=col, value=value)
+            cell.border = border
+    
+    # Ajustar ancho de columnas
+    column_widths = [15, 40, 25, 15, 50, 15, 20, 10]
+    for col, width in enumerate(column_widths, 1):
+        ws.column_dimensions[get_column_letter(col)].width = width
+    
+    # Guardar archivo
+    wb.save(output_path)
+    
+    return str(output_path)
+
+# Endpoints de exportación
+@app.post("/export/csv", response_model=ExportResponse)
+def export_to_csv_endpoint(request: ExportRequest):
+    """Exportar productos clasificados a CSV y generar URL de descarga"""
+    try:
+        # Clasificar productos
+        results = []
+        successful = 0
+        failed = 0
+        
+        for idx, product in enumerate(request.products):
+            try:
+                result = classify(product.text, product.product_id)
+                
+                if 'error' not in result:
+                    results.append({
+                        "index": idx,
+                        "product_id": product.product_id,
+                        "search_text": product.text,
+                        "classification": result,
+                        "status": "success",
+                        "timestamp": datetime.now().isoformat()
+                    })
+                    successful += 1
+                else:
+                    results.append({
+                        "index": idx,
+                        "product_id": product.product_id,
+                        "search_text": product.text,
+                        "error": result['error'],
+                        "status": "failed",
+                        "timestamp": datetime.now().isoformat()
+                    })
+                    failed += 1
+                    
+            except Exception as e:
+                results.append({
+                    "index": idx,
+                    "product_id": product.product_id,
+                    "search_text": product.text,
+                    "error": str(e),
+                    "status": "failed",
+                    "timestamp": datetime.now().isoformat()
+                })
+                failed += 1
+        
+        # Crear archivo CSV
+        file_path = create_csv_export(results, request.filename)
+        filename = Path(file_path).name
+        
+        # Obtener tamaño del archivo
+        file_size = Path(file_path).stat().st_size
+        
+        return ExportResponse(
+            status="success",
+            filename=filename,
+            download_url=f"/download/{filename}",
+            total_products=len(request.products),
+            successful=successful,
+            failed=failed,
+            file_size_bytes=file_size,
+            timestamp=datetime.now().isoformat()
+        )
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/export/excel", response_model=ExportResponse)
+def export_to_excel_endpoint(request: ExportRequest):
+    """Exportar productos clasificados a Excel y generar URL de descarga"""
+    try:
+        # Clasificar productos
+        results = []
+        successful = 0
+        failed = 0
+        
+        for idx, product in enumerate(request.products):
+            try:
+                result = classify(product.text, product.product_id)
+                
+                if 'error' not in result:
+                    results.append({
+                        "index": idx,
+                        "product_id": product.product_id,
+                        "search_text": product.text,
+                        "classification": result,
+                        "status": "success",
+                        "timestamp": datetime.now().isoformat()
+                    })
+                    successful += 1
+                else:
+                    results.append({
+                        "index": idx,
+                        "product_id": product.product_id,
+                        "search_text": product.text,
+                        "error": result['error'],
+                        "status": "failed",
+                        "timestamp": datetime.now().isoformat()
+                    })
+                    failed += 1
+                    
+            except Exception as e:
+                results.append({
+                    "index": idx,
+                    "product_id": product.product_id,
+                    "search_text": product.text,
+                    "error": str(e),
+                    "status": "failed",
+                    "timestamp": datetime.now().isoformat()
+                })
+                failed += 1
+        
+        # Crear archivo Excel
+        file_path = create_excel_export(results, request.filename)
+        filename = Path(file_path).name
+        
+        # Obtener tamaño del archivo
+        file_size = Path(file_path).stat().st_size
+        
+        return ExportResponse(
+            status="success",
+            filename=filename,
+            download_url=f"/download/{filename}",
+            total_products=len(request.products),
+            successful=successful,
+            failed=failed,
+            file_size_bytes=file_size,
+            timestamp=datetime.now().isoformat()
+        )
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/download/{filename}")
+def download_file(filename: str):
+    """Descargar archivo exportado"""
+    # Buscar archivo en las subcarpetas de exports
+    file_found = None
+    
+    # Buscar en todas las subcarpetas de exports
+    for root, dirs, files in os.walk(EXPORTS_BASE_DIR):
+        if filename in files:
+            file_found = Path(root) / filename
+            break
+    
+    if not file_found or not file_found.exists():
+        raise HTTPException(status_code=404, detail="Archivo no encontrado")
+    
+    # Determinar content type
+    content_type = "application/octet-stream"
+    if filename.endswith('.csv'):
+        content_type = "text/csv"
+    elif filename.endswith('.xlsx'):
+        content_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    elif filename.endswith('.json'):
+        content_type = "application/json"
+    
+    return FileResponse(
+        path=str(file_found),
+        filename=filename,
+        media_type=content_type
+    )
 
 if __name__ == "__main__":
     import uvicorn

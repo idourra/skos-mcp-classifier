@@ -134,7 +134,11 @@ def example_csv_export():
     print("\n📊 EJEMPLO DE EXPORTACIÓN CSV")
     print("=" * 60)
     
+    from utils.export_config import get_full_export_path, ensure_export_structure
     import csv
+    
+    # Asegurar estructura de directorios
+    ensure_export_structure()
     
     products_data = [
         {"id": "ITEM-001", "description": "Galletas integrales avena y miel 200g"},
@@ -162,8 +166,10 @@ def example_csv_export():
         
         print(f"✅ {product['id']}: {result.get('prefLabel', 'N/A')}")
     
-    # Guardar CSV
-    filename = 'products_classified.csv'
+    # Generar ruta usando la nueva estructura
+    csv_path = get_full_export_path('products_classified', 'csv', include_timestamp=False)
+    filename = str(csv_path)
+    
     with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
         fieldnames = ['product_id', 'description', 'skos_category', 'skos_notation', 
                      'skos_uri', 'confidence', 'classification_timestamp']
@@ -174,6 +180,7 @@ def example_csv_export():
             writer.writerow(row)
     
     print(f"\n💾 Datos exportados a: {filename}")
+    print(f"📁 Ubicación: {csv_path.parent}")
     return csv_data
 
 def main():

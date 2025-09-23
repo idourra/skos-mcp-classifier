@@ -5,6 +5,7 @@ import sys
 import argparse
 from datetime import datetime
 from client.classify_standard_api import classify
+from utils.export_config import get_full_export_path, ensure_export_structure
 
 def export_products_to_csv(products_data, output_file=None, include_headers=True):
     """
@@ -18,15 +19,18 @@ def export_products_to_csv(products_data, output_file=None, include_headers=True
     Returns:
         tuple: (filename, results_list)
     """
+    # Asegurar que existe la estructura de directorios
+    ensure_export_structure()
     
-    # Generar nombre de archivo si no se proporciona
+    # Generar ruta completa si no se proporciona archivo
     if not output_file:
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        output_file = f"productos_clasificados_{timestamp}.csv"
+        output_path = get_full_export_path("productos_clasificados", "csv")
+        output_file = str(output_path)
     
     results = []
     
     print(f"📊 Clasificando {len(products_data)} productos para CSV...")
+    print(f"📁 Guardando en: {output_file}")
     
     # Abrir archivo CSV
     with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:

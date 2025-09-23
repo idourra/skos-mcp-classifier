@@ -3,6 +3,7 @@
 import json
 from datetime import datetime
 from client.classify_standard_api import classify
+from utils.export_config import get_full_export_path, ensure_export_structure
 
 def export_to_excel(products_data, filename=None):
     """
@@ -24,10 +25,13 @@ def export_to_excel(products_data, filename=None):
         print("💡 Instalar con: pip install openpyxl")
         return None
     
-    # Generar filename si no se proporciona
+    # Asegurar que existe la estructura de directorios
+    ensure_export_structure()
+    
+    # Generar ruta completa si no se proporciona
     if not filename:
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"productos_clasificados_{timestamp}.xlsx"
+        output_path = get_full_export_path("productos_clasificados", "excel")
+        filename = str(output_path)
     
     # Crear workbook y worksheet
     wb = openpyxl.Workbook()

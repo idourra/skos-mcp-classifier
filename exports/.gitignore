@@ -1,0 +1,4 @@
+# Exports folder - Exclude all generated files but keep structure
+*
+!.gitignore
+!README.md
