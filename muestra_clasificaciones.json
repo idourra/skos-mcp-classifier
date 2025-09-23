@@ -1,0 +1,425 @@
+{
+  "metadata": {
+    "description": "Muestra de clasificaciones del sistema SKOS-MCP",
+    "total_products_in_full_test": 200,
+    "successful_classifications": 183,
+    "failed_classifications": 17,
+    "success_rate_percentage": 91.5,
+    "processing_time_seconds": 950.693,
+    "average_time_per_product": 5.2
+  },
+  "sample_classifications": [
+    {
+      "index": 0,
+      "product_id": "1",
+      "search_text": "pollo",
+      "classification": {
+        "search_text": "pollo",
+        "concept_uri": "https://treew.io/taxonomy/concept/11010202",
+        "prefLabel": "Pollos Medios & Enteros",
+        "notation": "11010202",
+        "level": 1,
+        "confidence": 1,
+        "product_id": "1",
+        "openai_cost": {
+          "model": "gpt-4o-mini-2024-07-18",
+          "usage": {
+            "prompt_tokens": 3200,
+            "completion_tokens": 128,
+            "total_tokens": 3328
+          },
+          "cost_usd": {
+            "prompt": 0.00048,
+            "completion": 7.7e-05,
+            "total": 0.000557
+          },
+          "cost_breakdown": {
+            "base_model_for_pricing": "gpt-4o-mini",
+            "prompt_cost_per_1m_tokens": 0.15,
+            "completion_cost_per_1m_tokens": 0.6,
+            "calculation_timestamp": "2025-09-23T18:10:54.855903"
+          },
+          "api_calls": 3
+        }
+      },
+      "status": "success",
+      "timestamp": "2025-09-23T18:10:54.855938"
+    },
+    {
+      "index": 1,
+      "product_id": "2",
+      "search_text": "aceite",
+      "classification": {
+        "search_text": "aceite",
+        "concept_uri": "https://treew.io/taxonomy/concept/110701",
+        "prefLabel": "Aceite vegetal",
+        "notation": "110701",
+        "level": 1,
+        "confidence": 1.0,
+        "product_id": "2",
+        "openai_cost": {
+          "model": "gpt-4o-mini-2024-07-18",
+          "usage": {
+            "prompt_tokens": 1745,
+            "completion_tokens": 125,
+            "total_tokens": 1870
+          },
+          "cost_usd": {
+            "prompt": 0.000262,
+            "completion": 7.5e-05,
+            "total": 0.000337
+          },
+          "cost_breakdown": {
+            "base_model_for_pricing": "gpt-4o-mini",
+            "prompt_cost_per_1m_tokens": 0.15,
+            "completion_cost_per_1m_tokens": 0.6,
+            "calculation_timestamp": "2025-09-23T18:10:58.662301"
+          },
+          "api_calls": 3
+        }
+      },
+      "status": "success",
+      "timestamp": "2025-09-23T18:10:58.662333"
+    },
+    {
+      "index": 23,
+      "product_id": "24",
+      "search_text": "pan",
+      "classification": {
+        "search_text": "pan",
+        "concept_uri": "https://treew.io/taxonomy/concept/111001",
+        "prefLabel": "Panes",
+        "notation": "111001",
+        "level": 1,
+        "confidence": 1.0,
+        "product_id": "24",
+        "openai_cost": {
+          "model": "gpt-4o-mini-2024-07-18",
+          "usage": {
+            "prompt_tokens": 4512,
+            "completion_tokens": 122,
+            "total_tokens": 4634
+          },
+          "cost_usd": {
+            "prompt": 0.000677,
+            "completion": 7.3e-05,
+            "total": 0.00075
+          },
+          "cost_breakdown": {
+            "base_model_for_pricing": "gpt-4o-mini",
+            "prompt_cost_per_1m_tokens": 0.15,
+            "completion_cost_per_1m_tokens": 0.6,
+            "calculation_timestamp": "2025-09-23T18:12:32.262837"
+          },
+          "api_calls": 3
+        }
+      },
+      "status": "success",
+      "timestamp": "2025-09-23T18:12:32.262871"
+    },
+    {
+      "index": 27,
+      "product_id": "28",
+      "search_text": "cerveza",
+      "classification": {
+        "search_text": "cerveza",
+        "concept_uri": "https://treew.io/taxonomy/concept/240101",
+        "prefLabel": "Cervezas",
+        "notation": "240101",
+        "level": 1,
+        "confidence": 1.0,
+        "product_id": "28",
+        "openai_cost": {
+          "model": "gpt-4o-mini-2024-07-18",
+          "usage": {
+            "prompt_tokens": 1437,
+            "completion_tokens": 131,
+            "total_tokens": 1568
+          },
+          "cost_usd": {
+            "prompt": 0.000216,
+            "completion": 7.9e-05,
+            "total": 0.000294
+          },
+          "cost_breakdown": {
+            "base_model_for_pricing": "gpt-4o-mini",
+            "prompt_cost_per_1m_tokens": 0.15,
+            "completion_cost_per_1m_tokens": 0.6,
+            "calculation_timestamp": "2025-09-23T18:12:49.242977"
+          },
+          "api_calls": 3
+        }
+      },
+      "status": "success",
+      "timestamp": "2025-09-23T18:12:49.243013"
+    },
+    {
+      "index": 31,
+      "product_id": "32",
+      "search_text": "pescado",
+      "classification": {
+        "search_text": "pescado",
+        "concept_uri": "https://treew.io/taxonomy/concept/111601",
+        "prefLabel": "Pescados Sin preparar/sin procesar",
+        "notation": "111601",
+        "level": 1,
+        "confidence": 1.0,
+        "product_id": "32",
+        "openai_cost": {
+          "model": "gpt-4o-mini-2024-07-18",
+          "usage": {
+            "prompt_tokens": 2073,
+            "completion_tokens": 133,
+            "total_tokens": 2206
+          },
+          "cost_usd": {
+            "prompt": 0.000311,
+            "completion": 8e-05,
+            "total": 0.000391
+          },
+          "cost_breakdown": {
+            "base_model_for_pricing": "gpt-4o-mini",
+            "prompt_cost_per_1m_tokens": 0.15,
+            "completion_cost_per_1m_tokens": 0.6,
+            "calculation_timestamp": "2025-09-23T18:13:08.485549"
+          },
+          "api_calls": 3
+        }
+      },
+      "status": "success",
+      "timestamp": "2025-09-23T18:13:08.485584"
+    },
+    {
+      "index": 74,
+      "product_id": "75",
+      "search_text": "refrigerador",
+      "classification": {
+        "search_text": "refrigerador",
+        "concept_uri": "https://treew.io/taxonomy/concept/140101",
+        "prefLabel": "Refrigeradores",
+        "notation": "140101",
+        "level": 1,
+        "confidence": 1.0,
+        "product_id": "75",
+        "openai_cost": {
+          "model": "gpt-4o-mini-2024-07-18",
+          "usage": {
+            "prompt_tokens": 1943,
+            "completion_tokens": 127,
+            "total_tokens": 2070
+          },
+          "cost_usd": {
+            "prompt": 0.000291,
+            "completion": 7.6e-05,
+            "total": 0.000368
+          },
+          "cost_breakdown": {
+            "base_model_for_pricing": "gpt-4o-mini",
+            "prompt_cost_per_1m_tokens": 0.15,
+            "completion_cost_per_1m_tokens": 0.6,
+            "calculation_timestamp": "2025-09-23T18:16:25.641199"
+          },
+          "api_calls": 3
+        }
+      },
+      "status": "success",
+      "timestamp": "2025-09-23T18:16:25.641233"
+    },
+    {
+      "index": 104,
+      "product_id": "105",
+      "search_text": "lavadora",
+      "classification": {
+        "search_text": "lavadora",
+        "concept_uri": "https://treew.io/taxonomy/concept/1409",
+        "prefLabel": "Lavadoras y secadoras",
+        "notation": "1409",
+        "level": 1,
+        "confidence": 1.0,
+        "product_id": "105",
+        "openai_cost": {
+          "model": "gpt-4o-mini-2024-07-18",
+          "usage": {
+            "prompt_tokens": 1558,
+            "completion_tokens": 123,
+            "total_tokens": 1681
+          },
+          "cost_usd": {
+            "prompt": 0.000234,
+            "completion": 7.4e-05,
+            "total": 0.000307
+          },
+          "cost_breakdown": {
+            "base_model_for_pricing": "gpt-4o-mini",
+            "prompt_cost_per_1m_tokens": 0.15,
+            "completion_cost_per_1m_tokens": 0.6,
+            "calculation_timestamp": "2025-09-23T18:18:54.856010"
+          },
+          "api_calls": 3
+        }
+      },
+      "status": "success",
+      "timestamp": "2025-09-23T18:18:54.856046"
+    },
+    {
+      "index": 165,
+      "product_id": "166",
+      "search_text": "televisor",
+      "classification": {
+        "search_text": "televisor",
+        "concept_uri": "https://treew.io/taxonomy/concept/1402",
+        "prefLabel": "Televisores",
+        "notation": "1402",
+        "level": 1,
+        "confidence": 1.0,
+        "product_id": "166",
+        "openai_cost": {
+          "model": "gpt-4o-mini-2024-07-18",
+          "usage": {
+            "prompt_tokens": 1432,
+            "completion_tokens": 125,
+            "total_tokens": 1557
+          },
+          "cost_usd": {
+            "prompt": 0.000215,
+            "completion": 7.5e-05,
+            "total": 0.00029
+          },
+          "cost_breakdown": {
+            "base_model_for_pricing": "gpt-4o-mini",
+            "prompt_cost_per_1m_tokens": 0.15,
+            "completion_cost_per_1m_tokens": 0.6,
+            "calculation_timestamp": "2025-09-23T18:23:51.295707"
+          },
+          "api_calls": 3
+        }
+      },
+      "status": "success",
+      "timestamp": "2025-09-23T18:23:51.295742"
+    },
+    {
+      "index": 175,
+      "product_id": "176",
+      "search_text": "pinturas",
+      "classification": {
+        "search_text": "pinturas",
+        "concept_uri": "https://treew.io/taxonomy/concept/150702",
+        "prefLabel": "Pinturas",
+        "notation": "150702",
+        "level": 1,
+        "confidence": 1.0,
+        "product_id": "176",
+        "openai_cost": {
+          "model": "gpt-4o-mini-2024-07-18",
+          "usage": {
+            "prompt_tokens": 1853,
+            "completion_tokens": 127,
+            "total_tokens": 1980
+          },
+          "cost_usd": {
+            "prompt": 0.000278,
+            "completion": 7.6e-05,
+            "total": 0.000354
+          },
+          "cost_breakdown": {
+            "base_model_for_pricing": "gpt-4o-mini",
+            "prompt_cost_per_1m_tokens": 0.15,
+            "completion_cost_per_1m_tokens": 0.6,
+            "calculation_timestamp": "2025-09-23T18:24:42.507913"
+          },
+          "api_calls": 3
+        }
+      },
+      "status": "success",
+      "timestamp": "2025-09-23T18:24:42.507948"
+    },
+    {
+      "index": 176,
+      "product_id": "177",
+      "search_text": "pasta de dientes",
+      "error": "No JSON found in response",
+      "status": "failed",
+      "timestamp": "2025-09-23T18:24:44.811843"
+    },
+    {
+      "index": 188,
+      "product_id": "189",
+      "search_text": "jabon de baño",
+      "error": "No JSON found in response",
+      "status": "failed",
+      "timestamp": "2025-09-23T18:25:43.739308"
+    },
+    {
+      "index": 197,
+      "product_id": "198",
+      "search_text": "cafetera",
+      "classification": {
+        "search_text": "cafetera",
+        "concept_uri": "https://treew.io/taxonomy/concept/1413",
+        "prefLabel": "Cafeteras",
+        "notation": "1413",
+        "level": 1,
+        "confidence": 1.0,
+        "product_id": "198",
+        "openai_cost": {
+          "model": "gpt-4o-mini-2024-07-18",
+          "usage": {
+            "prompt_tokens": 1514,
+            "completion_tokens": 126,
+            "total_tokens": 1640
+          },
+          "cost_usd": {
+            "prompt": 0.000227,
+            "completion": 7.6e-05,
+            "total": 0.000303
+          },
+          "cost_breakdown": {
+            "base_model_for_pricing": "gpt-4o-mini",
+            "prompt_cost_per_1m_tokens": 0.15,
+            "completion_cost_per_1m_tokens": 0.6,
+            "calculation_timestamp": "2025-09-23T18:26:27.814344"
+          },
+          "api_calls": 3
+        }
+      },
+      "status": "success",
+      "timestamp": "2025-09-23T18:26:27.814377"
+    },
+    {
+      "index": 199,
+      "product_id": "200",
+      "search_text": "muebles",
+      "classification": {
+        "search_text": "muebles",
+        "product_id": "200",
+        "concept_uri": "https://treew.io/taxonomy/concept/1506",
+        "prefLabel": "Muebles",
+        "notation": "1506",
+        "level": 1,
+        "confidence": 1.0,
+        "openai_cost": {
+          "model": "gpt-4o-mini-2024-07-18",
+          "usage": {
+            "prompt_tokens": 1749,
+            "completion_tokens": 134,
+            "total_tokens": 1883
+          },
+          "cost_usd": {
+            "prompt": 0.000262,
+            "completion": 8e-05,
+            "total": 0.000343
+          },
+          "cost_breakdown": {
+            "base_model_for_pricing": "gpt-4o-mini",
+            "prompt_cost_per_1m_tokens": 0.15,
+            "completion_cost_per_1m_tokens": 0.6,
+            "calculation_timestamp": "2025-09-23T18:26:41.075243"
+          },
+          "api_calls": 3
+        }
+      },
+      "status": "success",
+      "timestamp": "2025-09-23T18:26:41.075277"
+    }
+  ]
+}

@@ -1,0 +1,804 @@
+{
+    "products": [
+        {
+            "product_id": "1",
+            "text": "pollo"
+        },
+        {
+            "product_id": "2",
+            "text": "aceite"
+        },
+        {
+            "product_id": "3",
+            "text": "arroz"
+        },
+        {
+            "product_id": "4",
+            "text": "leche"
+        },
+        {
+            "product_id": "5",
+            "text": "cafe"
+        },
+        {
+            "product_id": "6",
+            "text": "galletas"
+        },
+        {
+            "product_id": "7",
+            "text": "queso"
+        },
+        {
+            "product_id": "8",
+            "text": "yogurt"
+        },
+        {
+            "product_id": "9",
+            "text": "refresco"
+        },
+        {
+            "product_id": "10",
+            "text": "leche en polvo"
+        },
+        {
+            "product_id": "11",
+            "text": "detergente"
+        },
+        {
+            "product_id": "12",
+            "text": "frijoles"
+        },
+        {
+            "product_id": "13",
+            "text": "picadillo"
+        },
+        {
+            "product_id": "14",
+            "text": "huevos"
+        },
+        {
+            "product_id": "15",
+            "text": "jugos"
+        },
+        {
+            "product_id": "16",
+            "text": "cerdo"
+        },
+        {
+            "product_id": "17",
+            "text": "carne"
+        },
+        {
+            "product_id": "18",
+            "text": "huevo"
+        },
+        {
+            "product_id": "19",
+            "text": "mayonesa"
+        },
+        {
+            "product_id": "20",
+            "text": "azucar"
+        },
+        {
+            "product_id": "21",
+            "text": "helado"
+        },
+        {
+            "product_id": "22",
+            "text": "malta"
+        },
+        {
+            "product_id": "23",
+            "text": "carne de res"
+        },
+        {
+            "product_id": "24",
+            "text": "pan"
+        },
+        {
+            "product_id": "25",
+            "text": "jamon"
+        },
+        {
+            "product_id": "26",
+            "text": "café"
+        },
+        {
+            "product_id": "27",
+            "text": "chocolate"
+        },
+        {
+            "product_id": "28",
+            "text": "cerveza"
+        },
+        {
+            "product_id": "29",
+            "text": "salchichas"
+        },
+        {
+            "product_id": "30",
+            "text": "mantequilla"
+        },
+        {
+            "product_id": "31",
+            "text": "jabon"
+        },
+        {
+            "product_id": "32",
+            "text": "pescado"
+        },
+        {
+            "product_id": "33",
+            "text": "jugo"
+        },
+        {
+            "product_id": "34",
+            "text": "gelatina"
+        },
+        {
+            "product_id": "35",
+            "text": "agua"
+        },
+        {
+            "product_id": "36",
+            "text": "carnes"
+        },
+        {
+            "product_id": "37",
+            "text": "caja de pollo"
+        },
+        {
+            "product_id": "38",
+            "text": "salchicha"
+        },
+        {
+            "product_id": "39",
+            "text": "leche condensada"
+        },
+        {
+            "product_id": "40",
+            "text": "refrescos"
+        },
+        {
+            "product_id": "41",
+            "text": "carne de cerdo"
+        },
+        {
+            "product_id": "42",
+            "text": "cake"
+        },
+        {
+            "product_id": "43",
+            "text": "res"
+        },
+        {
+            "product_id": "44",
+            "text": "azúcar"
+        },
+        {
+            "product_id": "45",
+            "text": "sal"
+        },
+        {
+            "product_id": "46",
+            "text": "pasta de tomate"
+        },
+        {
+            "product_id": "47",
+            "text": "yogur"
+        },
+        {
+            "product_id": "48",
+            "text": "jabón"
+        },
+        {
+            "product_id": "49",
+            "text": "caramelos"
+        },
+        {
+            "product_id": "50",
+            "text": "queso crema"
+        },
+        {
+            "product_id": "51",
+            "text": "desodorante"
+        },
+        {
+            "product_id": "52",
+            "text": "galletas dulces"
+        },
+        {
+            "product_id": "53",
+            "text": "galleta"
+        },
+        {
+            "product_id": "54",
+            "text": "jamón"
+        },
+        {
+            "product_id": "55",
+            "text": "papas"
+        },
+        {
+            "product_id": "56",
+            "text": "chorizo"
+        },
+        {
+            "product_id": "57",
+            "text": "ventilador recargable"
+        },
+        {
+            "product_id": "58",
+            "text": "helados"
+        },
+        {
+            "product_id": "59",
+            "text": "atun"
+        },
+        {
+            "product_id": "60",
+            "text": "picadillo de res"
+        },
+        {
+            "product_id": "61",
+            "text": "pintura"
+        },
+        {
+            "product_id": "62",
+            "text": "ventilador"
+        },
+        {
+            "product_id": "63",
+            "text": "champu"
+        },
+        {
+            "product_id": "64",
+            "text": "pasta"
+        },
+        {
+            "product_id": "65",
+            "text": "dulces"
+        },
+        {
+            "product_id": "66",
+            "text": "espaguetis"
+        },
+        {
+            "product_id": "67",
+            "text": "queso gouda"
+        },
+        {
+            "product_id": "68",
+            "text": "cemento"
+        },
+        {
+            "product_id": "69",
+            "text": "pasta dental"
+        },
+        {
+            "product_id": "70",
+            "text": "frutas"
+        },
+        {
+            "product_id": "71",
+            "text": "hamburguesa"
+        },
+        {
+            "product_id": "72",
+            "text": "galletas de soda"
+        },
+        {
+            "product_id": "73",
+            "text": "chocolate en polvo"
+        },
+        {
+            "product_id": "74",
+            "text": "croquetas"
+        },
+        {
+            "product_id": "75",
+            "text": "refrigerador"
+        },
+        {
+            "product_id": "76",
+            "text": "viandas"
+        },
+        {
+            "product_id": "77",
+            "text": "combos"
+        },
+        {
+            "product_id": "78",
+            "text": "ajo"
+        },
+        {
+            "product_id": "79",
+            "text": "detergente en polvo"
+        },
+        {
+            "product_id": "80",
+            "text": "tomate"
+        },
+        {
+            "product_id": "81",
+            "text": "harina"
+        },
+        {
+            "product_id": "82",
+            "text": "ron"
+        },
+        {
+            "product_id": "83",
+            "text": "pechuga"
+        },
+        {
+            "product_id": "84",
+            "text": "frijoles negros"
+        },
+        {
+            "product_id": "85",
+            "text": "pastas"
+        },
+        {
+            "product_id": "86",
+            "text": "champú"
+        },
+        {
+            "product_id": "87",
+            "text": "medicamentos"
+        },
+        {
+            "product_id": "88",
+            "text": "cajas de pollo"
+        },
+        {
+            "product_id": "89",
+            "text": "pechuga de pollo"
+        },
+        {
+            "product_id": "90",
+            "text": "puerco"
+        },
+        {
+            "product_id": "91",
+            "text": "papel sanitario"
+        },
+        {
+            "product_id": "92",
+            "text": "maltas"
+        },
+        {
+            "product_id": "93",
+            "text": "fideos"
+        },
+        {
+            "product_id": "94",
+            "text": "leche entera"
+        },
+        {
+            "product_id": "95",
+            "text": "perfume"
+        },
+        {
+            "product_id": "96",
+            "text": "acondicionador"
+        },
+        {
+            "product_id": "97",
+            "text": "cervezas"
+        },
+        {
+            "product_id": "98",
+            "text": "farmacia"
+        },
+        {
+            "product_id": "99",
+            "text": "yeya"
+        },
+        {
+            "product_id": "100",
+            "text": "quesos"
+        },
+        {
+            "product_id": "101",
+            "text": "frijol"
+        },
+        {
+            "product_id": "102",
+            "text": "avena"
+        },
+        {
+            "product_id": "103",
+            "text": "picadillo de pollo"
+        },
+        {
+            "product_id": "104",
+            "text": "bodegones"
+        },
+        {
+            "product_id": "105",
+            "text": "lavadora"
+        },
+        {
+            "product_id": "106",
+            "text": "garbanzos"
+        },
+        {
+            "product_id": "107",
+            "text": "mortadella"
+        },
+        {
+            "product_id": "108",
+            "text": "jabón de baño"
+        },
+        {
+            "product_id": "109",
+            "text": "caramelo"
+        },
+        {
+            "product_id": "110",
+            "text": "alimentos"
+        },
+        {
+            "product_id": "111",
+            "text": "jabones"
+        },
+        {
+            "product_id": "112",
+            "text": "pure de tomate"
+        },
+        {
+            "product_id": "113",
+            "text": "aceite vegetal"
+        },
+        {
+            "product_id": "114",
+            "text": "hamburguesas"
+        },
+        {
+            "product_id": "115",
+            "text": "jugo_yeya"
+        },
+        {
+            "product_id": "116",
+            "text": "carne de puerco"
+        },
+        {
+            "product_id": "117",
+            "text": "lentejas"
+        },
+        {
+            "product_id": "118",
+            "text": "comino"
+        },
+        {
+            "product_id": "119",
+            "text": "vegetales"
+        },
+        {
+            "product_id": "120",
+            "text": "shampoo"
+        },
+        {
+            "product_id": "121",
+            "text": "losas"
+        },
+        {
+            "product_id": "122",
+            "text": "cebolla"
+        },
+        {
+            "product_id": "123",
+            "text": "colonia"
+        },
+        {
+            "product_id": "124",
+            "text": "maicena"
+        },
+        {
+            "product_id": "125",
+            "text": "lomo de cerdo"
+        },
+        {
+            "product_id": "126",
+            "text": "electrodomésticos"
+        },
+        {
+            "product_id": "127",
+            "text": "galletas_banner"
+        },
+        {
+            "product_id": "128",
+            "text": "banner_sazonyeya"
+        },
+        {
+            "product_id": "129",
+            "text": "ventiladores"
+        },
+        {
+            "product_id": "130",
+            "text": "yeya_mar"
+        },
+        {
+            "product_id": "131",
+            "text": "vinagre"
+        },
+        {
+            "product_id": "132",
+            "text": "espagueti"
+        },
+        {
+            "product_id": "133",
+            "text": "embutidos"
+        },
+        {
+            "product_id": "134",
+            "text": "pure"
+        },
+        {
+            "product_id": "135",
+            "text": "puré de tomate"
+        },
+        {
+            "product_id": "136",
+            "text": "galletas de sal"
+        },
+        {
+            "product_id": "137",
+            "text": "sazon"
+        },
+        {
+            "product_id": "138",
+            "text": "carne res"
+        },
+        {
+            "product_id": "139",
+            "text": "cocina"
+        },
+        {
+            "product_id": "140",
+            "text": "galletas saladas"
+        },
+        {
+            "product_id": "141",
+            "text": "leche evaporada"
+        },
+        {
+            "product_id": "142",
+            "text": "higado"
+        },
+        {
+            "product_id": "143",
+            "text": "kake"
+        },
+        {
+            "product_id": "144",
+            "text": "leche polvo"
+        },
+        {
+            "product_id": "145",
+            "text": "banner_harina"
+        },
+        {
+            "product_id": "146",
+            "text": "jamonada"
+        },
+        {
+            "product_id": "147",
+            "text": "coditos"
+        },
+        {
+            "product_id": "148",
+            "text": "chocolates"
+        },
+        {
+            "product_id": "149",
+            "text": "papa"
+        },
+        {
+            "product_id": "150",
+            "text": "chicharos"
+        },
+        {
+            "product_id": "151",
+            "text": "manzana"
+        },
+        {
+            "product_id": "152",
+            "text": "cereal"
+        },
+        {
+            "product_id": "153",
+            "text": "nevera"
+        },
+        {
+            "product_id": "154",
+            "text": "atún"
+        },
+        {
+            "product_id": "155",
+            "text": "ventiladores recargables"
+        },
+        {
+            "product_id": "156",
+            "text": "huevo blanco importado yeya (30 u)"
+        },
+        {
+            "product_id": "157",
+            "text": "vitaminas"
+        },
+        {
+            "product_id": "158",
+            "text": "guayaba"
+        },
+        {
+            "product_id": "159",
+            "text": "aceitunas"
+        },
+        {
+            "product_id": "160",
+            "text": "perrito"
+        },
+        {
+            "product_id": "161",
+            "text": "nutella"
+        },
+        {
+            "product_id": "162",
+            "text": "chicharo"
+        },
+        {
+            "product_id": "163",
+            "text": "combo"
+        },
+        {
+            "product_id": "164",
+            "text": "aceites"
+        },
+        {
+            "product_id": "165",
+            "text": "sardinas"
+        },
+        {
+            "product_id": "166",
+            "text": "televisor"
+        },
+        {
+            "product_id": "167",
+            "text": "perfumes"
+        },
+        {
+            "product_id": "168",
+            "text": "refresco en polvo"
+        },
+        {
+            "product_id": "169",
+            "text": "gel de baño"
+        },
+        {
+            "product_id": "170",
+            "text": "sopa"
+        },
+        {
+            "product_id": "171",
+            "text": "frijoles colorados"
+        },
+        {
+            "product_id": "172",
+            "text": "garbanzo"
+        },
+        {
+            "product_id": "173",
+            "text": "dulce"
+        },
+        {
+            "product_id": "174",
+            "text": "pierna de cerdo"
+        },
+        {
+            "product_id": "175",
+            "text": "carnicos"
+        },
+        {
+            "product_id": "176",
+            "text": "pinturas"
+        },
+        {
+            "product_id": "177",
+            "text": "pasta de dientes"
+        },
+        {
+            "product_id": "178",
+            "text": "galleta de soda"
+        },
+        {
+            "product_id": "179",
+            "text": "leche en polvo entera"
+        },
+        {
+            "product_id": "180",
+            "text": "lavadoras"
+        },
+        {
+            "product_id": "181",
+            "text": "pasta de bocadito"
+        },
+        {
+            "product_id": "182",
+            "text": "lomo"
+        },
+        {
+            "product_id": "183",
+            "text": "refresco instantáneo"
+        },
+        {
+            "product_id": "184",
+            "text": "spaghetti"
+        },
+        {
+            "product_id": "185",
+            "text": "neveras"
+        },
+        {
+            "product_id": "186",
+            "text": "panes"
+        },
+        {
+            "product_id": "187",
+            "text": "caja de cuartos traseros de pollo nat (10 kg / 22 lb)"
+        },
+        {
+            "product_id": "188",
+            "text": "leche entera en polvo"
+        },
+        {
+            "product_id": "189",
+            "text": "jabon de baño"
+        },
+        {
+            "product_id": "190",
+            "text": "salsa de tomate"
+        },
+        {
+            "product_id": "191",
+            "text": "limon"
+        },
+        {
+            "product_id": "192",
+            "text": "malanga"
+        },
+        {
+            "product_id": "193",
+            "text": "galletas dulce"
+        },
+        {
+            "product_id": "194",
+            "text": "natilla"
+        },
+        {
+            "product_id": "195",
+            "text": "condimentos"
+        },
+        {
+            "product_id": "196",
+            "text": "papel higiénico"
+        },
+        {
+            "product_id": "197",
+            "text": "mermelada"
+        },
+        {
+            "product_id": "198",
+            "text": "cafetera"
+        },
+        {
+            "product_id": "199",
+            "text": "molleja"
+        },
+        {
+            "product_id": "200",
+            "text": "muebles"
+        }
+    ]
+}
