@@ -51,23 +51,39 @@ deploy_local() {
 
 # Función para setup GitHub
 setup_github() {
-    echo "🐙 Configurando para GitHub..."
+    echo "🐙 Configurando para GitHub Codespaces..."
     
-    # Verificar archivos necesarios
-    echo "✅ Devcontainer configurado"
-    echo "✅ GitHub Actions configurado"
-    echo "✅ Docker files listos"
+    # Activar entorno virtual si existe
+    if [ -f ".venv/bin/activate" ]; then
+        echo "🐍 Activating virtual environment..."
+        source .venv/bin/activate
+    fi
     
+    # Instalar dependencias
+    echo "� Installing dependencies..."
+    python -m venv .venv
+    source .venv/bin/activate
+    pip install --upgrade pip
+    pip install -r server/requirements.txt
+    
+    # Inicializar base de datos
+    echo "�️  Setting up database..."
+    python server/skos_loader.py
+    cp skos.sqlite server/ 2>/dev/null || true
+    
+    # Configurar variables de entorno
+    if [ ! -f ".env" ]; then
+        echo "⚙️  Creating .env file..."
+        echo "OPENAI_API_KEY=${OPENAI_API_KEY:-your_openai_key_here}" > .env
+        echo "MCP_SERVER_URL=http://localhost:8080" >> .env
+        echo "PORT=8000" >> .env
+    fi
+    
+    echo "✅ GitHub Codespaces setup complete!"
     echo ""
-    echo "📋 Pasos siguientes:"
-    echo "1. git add ."
-    echo "2. git commit -m '🚀 Setup deployment configs'"
-    echo "3. git push origin main"
-    echo "4. Ir a GitHub > Settings > Codespaces"
-    echo "5. Crear nuevo Codespace"
-    echo ""
-    echo "🔑 Configurar secrets:"
-    echo "   - OPENAI_API_KEY en GitHub Secrets"
+    echo "� To start server:"
+    echo "   source .venv/bin/activate"
+    echo "   cd server && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
 }
 
 # Función para Railway
