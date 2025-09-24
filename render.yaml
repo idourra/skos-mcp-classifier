@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: skos-mcp-classifier-api
+    runtime: python
+    region: oregon
+    plan: starter
+    buildCommand: "pip install -r server/requirements.txt"
+    startCommand: "cd server && python main.py"
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHONPATH
+        value: /opt/render/project/src/server
+      - key: MCP_SERVER_URL  
+        value: http://localhost:8080
+      - key: PORT
+        value: 8000
+    
+  - type: web
+    name: skos-mcp-server
+    runtime: python
+    region: oregon
+    plan: starter
+    buildCommand: "pip install -r server/requirements.txt"
+    startCommand: "cd server && python main.py --mcp-only"
+    envVars:
+      - key: PYTHONPATH
+        value: /opt/render/project/src/server
+      - key: PORT
+        value: 8080

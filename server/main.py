@@ -121,3 +121,7 @@ def validate_notation(q: ValidateNotationQuery):
     pref={lang:lab for lang,lab in c.fetchall()}
     cn.close()
     return ValidateNotationResponse(exists=True, concept_uri=concept_uri, prefLabel=pref, level=level)
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

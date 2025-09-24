@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  # MCP Server
+  mcp-server:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - PYTHONPATH=/app
+    command: python server/main.py
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - skos-network
+
+  # API REST Server  
+  api-server:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app
+      - MCP_SERVER_URL=http://mcp-server:8080
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    command: python classification_api.py
+    depends_on:
+      - mcp-server
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - skos-network
+    volumes:
+      - ./exports:/app/exports
+
+networks:
+  skos-network:
+    driver: bridge
+
+volumes:
+  skos-data:
