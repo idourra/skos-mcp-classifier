@@ -31,9 +31,9 @@ docker-compose up -d
 ```
 
 **📱 URLs:**
-- API REST: http://localhost:8000
+- API REST: http://localhost:8002
 - MCP Server: http://localhost:8080  
-- Documentación: http://localhost:8000/docs
+- Documentación: http://localhost:8002/docs
 
 ### 3. **Railway** (Recomendado para producción)
 ```bash
