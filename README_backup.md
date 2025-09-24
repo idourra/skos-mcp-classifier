@@ -348,14 +348,395 @@ make test                  # Ejecutar tests
 make clean                 # Limpiar archivos temporales
 
 # Tests específicos
-## 🚀 Casos de Uso Reales
+# Tests específicos
+make test-async            # Tests sistema async
+make test-export           # Tests exportación
+make test-cost             # Tests cost tracking
+```
 
-### **E-commerce y Retail**
 
-- 🛒 **Clasificación automática** de catálogos de productos
-- 🔍 **Normalización de categorías** entre diferentes proveedores
-- 📈 **Mejora de búsquedas** y recomendaciones
-- 📊 **Analítica de productos** por categoría
+
+
+
+### 🚫 Puerto ocupado
+
+```bash
+
+# Verificar procesos
+
+lsof -i:8000# Clasificar un producto
+
+lsof -i:8080
+
+result = classify("Yogur griego natural sin azúcar")1. **Edita el archivo `.env`**:
+
+# Limpiar procesos
+
+./stop_system.shprint(f"Categoría: {result['category']}")```bash
+
+```
+
+print(f"Confianza: {result['confidence']}%")OPENAI_API_KEY=sk-tu-clave-aqui
+
+### 🗄️ Base de datos corrupta
+
+```bash```MCP_SERVER_URL=http://localhost:8080
+
+# Regenerar base de datos
+
+rm -f skos.sqlite```
+
+python server/skos_loader.py taxonomies/treew-skos/original.jsonld
+
+```### Clasificación con ID/SKU
+
+
+
+### 🔑 Error OpenAI2. **Inicia el servidor MCP**:
+
+```bash
+
+# Verificar API key```python
+
+echo $OPENAI_API_KEY# Clasificar producto con ID personalizado
+
+# O revisar archivo .envresult = classify("Aceite de oliva extra virgen", product_id="SKU-12345")
+
+```print(f"ID: {result['product_id']}")
+
+print(f"Categoría: {result['category']}")
+
+## 📚 Documentación Adicional```
+
+
+
+- 📖 [Guía de Uso Completa](USAGE_GUIDE.md)Para iniciar el servidor MCP:
+
+- 🔧 [Reporte de Estabilización](SYSTEM_STABILIZATION_REPORT.md)
+
+- 🛠️ [Reporte de Corrección de BD](DATABASE_FIX_REPORT.md)```bash
+
+uvicorn server.main:app --host 0.0.0.0 --port 8080
+
+## 🤝 Contribución```
+
+
+
+1. Fork el repositorio3. **¡Ya está listo para usar!**
+
+2. Crear rama: `git checkout -b feature/nueva-funcionalidad`
+
+3. Commit: `git commit -m 'Agregar nueva funcionalidad'`## 📋 Uso
+
+4. Push: `git push origin feature/nueva-funcionalidad`
+
+5. Crear Pull Request### Testing Interactivo
+
+
+
+## 📄 Licencia### 1. Clasificación Simple
+
+
+
+Este proyecto está bajo la Licencia MIT. Ver [LICENSE](LICENSE) para más detalles.```bash
+
+
+
+## 🏆 Estado del Proyectopython client/test_classifier.py```python
+
+
+
+- ✅ **Sistema estable** y completamente funcional```from client.classify_standard_api import classify
+
+- ✅ **API documentada** con Swagger/OpenAPI
+
+- ✅ **Tests validados** en múltiples categorías
+
+- ✅ **Producción ready** con scripts automatizados
+
+### Exportación de Resultados# Sin ID
+
+---
+
+resultado = classify("yogur natural griego")
+
+**Desarrollado con ❤️ usando SKOS, FastAPI y OpenAI**
+```python
+
+from client.csv_exporter import export_to_csv# Con ID/SKU
+
+from client.excel_exporter import export_to_excelresultado = classify("yogur natural griego", "SKU-12345")
+
+
+
+# Exportar a CSVprint(resultado)
+
+export_to_csv("resultados.csv", results)# {
+
+#   "search_text": "yogur natural griego",
+
+# Exportar a Excel con formato#   "product_id": "SKU-12345",
+
+export_to_excel("resultados.xlsx", results)#   "concept_uri": "https://treew.io/taxonomy/concept/111206",
+
+```#   "prefLabel": "Yogur y sustitutos",
+
+#   "notation": "111206",
+
+## API REST#   "confidence": 1.0
+
+# }
+
+El proyecto incluye un servidor API REST para integraciones externas:```
+
+
+
+```bash### 2. Línea de Comandos
+
+# Iniciar API REST
+
+python client/classification_api.py```bash
+
+```# Producto individual
+
+python test_classifier.py "queso manchego curado"
+
+La API estará disponible en `http://localhost:8001` con documentación automática en `/docs`.
+
+# Con ID
+
+### Endpoints Principalespython test_classifier.py "queso manchego|QUESO-001"
+
+
+
+#### `POST /classify`# Modo interactivo
+
+python test_classifier.py --interactive
+
+```json
+
+{# Lote sin IDs
+
+  "text": "Yogur griego natural",python test_classifier.py --batch
+
+  "product_id": "SKU-001"
+
+}# Lote con IDs
+
+```python test_classifier.py --batch-ids
+
+```
+
+Respuesta:
+
+### 3. Exportación a CSV
+
+```json
+
+{```python
+
+  "product_id": "SKU-001",from csv_exporter import export_to_csv
+
+  "text": "Yogur griego natural",
+
+  "category": "Productos lácteos fermentados",productos = [
+
+  "notation": "04.2.2.5",    {"text": "manzanas rojas", "id": "FRUTA-001"},
+
+  "confidence": 95,    {"text": "leche descremada", "id": "LACTEO-002"}
+
+  "timestamp": "2024-01-15T10:30:00Z"]
+
+}
+
+```export_to_csv(productos, "mi_catalogo.csv")
+
+```
+
+#### `POST /classify/batch`
+
+### 4. Exportación a Excel
+
+Clasificación por lotes (síncrona y asíncrona).
+
+```python
+
+#### `GET /health`from excel_exporter import export_to_excel
+
+
+
+Estado del sistema.export_to_excel(productos, "mi_catalogo.xlsx")
+
+```
+
+## Comandos Make Disponibles
+
+### 5. API REST
+
+```bash
+
+make install    # Instalar todas las dependencias```bash
+
+make server     # Iniciar servidor MCP# Iniciar API
+
+make api        # Iniciar API REST  python classification_api.py
+
+make test       # Ejecutar tests
+
+make classify   # Clasificar productos interactivamente# Usar API
+
+make export     # Exportar resultadoscurl -X POST "http://localhost:8001/classify" \
+
+make clean      # Limpiar archivos temporales     -H "Content-Type: application/json" \
+
+```     -d '{"text": "cerveza IPA", "product_id": "BEB-001"}'
+
+```
+
+## Ejemplos Avanzados
+
+## 📁 Estructura del Proyecto
+
+### Procesamiento por Lotes
+
+```python
+
+productos = [├── client/                          # Cliente de clasificación
+
+    {"text": "Yogur griego", "id": "P001"},│   ├── classify_standard_api.py     # Cliente principal
+
+    {"text": "Aceite oliva", "id": "P002"},│   ├── classify_agents_sdk.ts       # Cliente TypeScript
+
+    {"text": "Pan integral", "id": "P003"}│   └── classify_responses_api.py    # Cliente legacy
+
+]├── server/                          # Servidor MCP
+
+│   ├── main.py                      # FastAPI server
+
+for producto in productos:│   ├── db.py                        # Base de datos
+
+    result = classify(producto["text"], producto["id"])│   ├── skos_loader.py              # Cargador SKOS
+
+    print(f"{producto['id']}: {result['category']}")│   └── requirements.txt
+
+```├── data/
+
+│   └── taxonomy.jsonld             # Taxonomía SKOS
+
+### Comparación de Resultados├── test_classifier.py              # Script de pruebas
+
+├── csv_exporter.py                 # Exportador CSV
+
+```bash├── excel_exporter.py              # Exportador Excel
+
+python client/compare_classifications.py archivo1.json archivo2.json├── classification_api.py           # API REST
+
+```├── examples_with_ids.py            # Ejemplos completos
+
+├── compare_classifications.py      # Comparación
+
+## Servidor MCP├── skos.sqlite                    # Base de datos SQLite
+
+├── .env.example                   # Plantilla configuración
+
+El servidor MCP expone los siguientes endpoints:└── README.md                      # Esta documentación
+
+```
+
+- `POST /tools/search_concepts` - Buscar conceptos en la taxonomía
+
+- `POST /tools/get_context` - Obtener contexto de un concepto## 🔧 Scripts Disponibles
+
+- `POST /tools/validate_notation` - Validar notación SKOS
+
+| Script | Descripción | Ejemplo |
+
+## Contribuciones|--------|-------------|---------|
+
+| `test_classifier.py` | Pruebas interactivas | `python test_classifier.py --batch` |
+
+Las contribuciones son bienvenidas. Por favor:| `csv_exporter.py` | Exportar a CSV | `python csv_exporter.py` |
+
+| `excel_exporter.py` | Exportar a Excel | `python excel_exporter.py` |
+
+1. Haz fork del repositorio| `classification_api.py` | Servidor API REST | `python classification_api.py` |
+
+2. Crea una rama para tu feature (`git checkout -b feature/nueva-caracteristica`)| `examples_with_ids.py` | Ejemplos completos | `python examples_with_ids.py` |
+
+3. Commit tus cambios (`git commit -am 'Agrega nueva característica'`)
+
+4. Push a la rama (`git push origin feature/nueva-caracteristica`)## 🌐 API REST
+
+5. Abre un Pull Request
+
+### Endpoints
+
+## Licencia
+
+#### `POST /classify`
+
+Este proyecto está bajo la Licencia MIT. Ver `LICENSE` para más detalles.Clasifica un producto individual.
+
+
+
+## Soporte**Request:**
+
+```json
+
+Para reportar bugs o solicitar features, abre un issue en GitHub:{
+
+https://github.com/idourra/skos-mcp-classifier/issues  "text": "queso parmesano",
+
+  "product_id": "QUESO-001"
+
+---}
+
+```
+
+*Desarrollado con ❤️ para la clasificación inteligente de productos*
+**Response:**
+```json
+{
+  "success": true,
+  "result": {
+    "search_text": "queso parmesano",
+    "product_id": "QUESO-001",
+    "prefLabel": "Quesos",
+    "notation": "111203",
+    "confidence": 1.0
+  }
+}
+```
+
+#### `POST /classify/batch`
+Clasifica múltiples productos.
+
+#### `GET /health`
+Verificar estado de la API.
+
+#### `GET /docs`
+Documentación interactiva (Swagger UI).
+
+## 🧪 Testing
+
+### Ejemplos de Prueba
+```bash
+# Productos individuales
+python test_classifier.py "cerveza IPA|BEB-001"
+
+# Modo interactivo
+python test_classifier.py --interactive
+
+# Lote completo
+python test_classifier.py --batch-ids
+```
+
+## 🚀 Casos de Uso
+
+### E-commerce
+- Clasificación automática de catálogos
+- Normalización de categorías
+- Mejora de búsquedas
 
 ### **Inventarios y Logística**
 
@@ -378,7 +759,7 @@ make clean                 # Limpiar archivos temporales
 **Componentes Críticos Validados:**
 
 - ✅ Clasificación Individual: **100% funcional**
-- ✅ Clasificación Async: **100% funcional**
+- ✅ Clasificación Async: **100% funcional**  
 - ✅ Batch Processing: **100% funcional**
 - ✅ Cost Tracking: **100% preciso**
 - ✅ Multi-taxonomy: **100% operacional**
@@ -402,7 +783,7 @@ make clean                 # Limpiar archivos temporales
 ¡Las contribuciones son bienvenidas!
 
 1. **Fork** el repositorio
-2. **Crear rama**: `git checkout -b feature/nueva-funcionalidad`
+2. **Crear rama**: `git checkout -b feature/nueva-funcionalidad`  
 3. **Commit**: `git commit -m 'Agregar nueva funcionalidad'`
 4. **Push**: `git push origin feature/nueva-funcionalidad`
 5. **Pull Request**: Abrir PR con descripción detallada
@@ -432,7 +813,6 @@ Este proyecto está bajo la **Licencia MIT**. Ver [LICENSE](LICENSE) para más d
 
 ---
 
-## 🏆 Desarrollado con ❤️ para clasificación inteligente de productos
+**🏆 Desarrollado con ❤️ para clasificación inteligente de productos**
 
 > **Sistema validado con 89/120 tests exitosos** | **91.5% precision rate** | **Production Ready Sept 2025**
-
