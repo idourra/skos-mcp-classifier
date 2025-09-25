@@ -1,0 +1,54 @@
+{
+  "id": "treew-best",
+  "name": "Taxonomia enriquecida skos revisada por w3c",
+  "description": "",
+  "version": "1.0.0",
+  "provider": "Unknown",
+  "language": "en",
+  "domain": "general",
+  "created_at": "2025-09-24T16:10:36.808456",
+  "updated_at": "2025-09-24T16:10:36.808461",
+  "is_active": true,
+  "is_default": false,
+  "file_hash": "sha256:45d5d8d1a30144b00a434d6eb19b0ca8a9574adcf69bee20ef498ae5797a7735",
+  "file_size_mb": 0.77,
+  "schema_version": "1.0",
+  "validation": {
+    "quality_score": 1.0,
+    "compliance_level": "excellent",
+    "validated_at": "2025-09-24T16:10:36.809351",
+    "requirements_met": {
+      "skos_compliant": true,
+      "has_hierarchy": true,
+      "has_labels": true,
+      "quality_threshold": true
+    },
+    "enrichment_features": [
+      "✨ Definiciones: 100.0% de conceptos",
+      "🏷️ Etiquetas alternativas: 100.0% de conceptos",
+      "🔢 Notaciones: 100.0% de conceptos",
+      "🔗 Relaciones semánticas: 651 enlaces",
+      "📊 Jerarquía profunda: 4 niveles"
+    ]
+  },
+  "skos_statistics": {
+    "total_concepts": 282,
+    "total_schemes": 1,
+    "total_triples": 7087,
+    "hierarchical_relations": 518,
+    "semantic_relations": 651,
+    "concepts_with_definitions": 282,
+    "concepts_with_altlabels": 282,
+    "concepts_with_notations": 282,
+    "multilingual_concepts": 282,
+    "external_mappings": 0,
+    "max_hierarchy_depth": 4,
+    "root_concepts": 23,
+    "orphaned_concepts": 0
+  },
+  "concepts_count": 282,
+  "relationships_count": 1169,
+  "processing_time_seconds": 0.14,
+  "concepts_processed": 282,
+  "concepts_imported": 282
+}
