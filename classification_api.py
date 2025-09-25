@@ -55,6 +55,12 @@ class OpenAICostInfo(BaseModel):
     cost_breakdown: OpenAICostBreakdown = Field(..., description="Desglose detallado de costos")
     api_calls: int = Field(..., description="Número de llamadas a la API de OpenAI")
 
+# Modelo para información de taxonomía
+class TaxonomyInfo(BaseModel):
+    id: str = Field(..., description="ID de la taxonomía utilizada")
+    name: str = Field(..., description="Nombre de la taxonomía")
+    is_default: bool = Field(..., description="Si se usó la taxonomía por defecto")
+
 # Modelos para el endpoint unificado
 class UnifiedProductRequest(BaseModel):
     products: List[ProductRequest] = Field(..., description="Lista de productos a clasificar (1 o más)", min_items=1)
@@ -67,6 +73,7 @@ class UnifiedClassificationResponse(BaseModel):
     processing_time_seconds: Optional[float] = Field(None, description="Tiempo de procesamiento en segundos")
     timestamp: str = Field(..., description="Timestamp del procesamiento")
     openai_cost_info: Optional[OpenAICostInfo] = Field(None, description="Información de costos de OpenAI")
+    taxonomy_used: Optional[TaxonomyInfo] = Field(None, description="Información de la taxonomía utilizada")
 
 class ExportRequest(BaseModel):
     products: List[ProductRequest] = Field(..., description="Lista de productos para exportar")
@@ -82,6 +89,7 @@ class ClassificationResponse(BaseModel):
     level: Optional[int]
     confidence: float
     timestamp: str
+    taxonomy_used: Optional[TaxonomyInfo] = Field(None, description="Información de la taxonomía utilizada")
     
 class BatchClassificationResponse(BaseModel):
     total: int
@@ -268,17 +276,33 @@ def health_check():
             "timestamp": datetime.now().isoformat()
         }
 
-@app.post("/classify", response_model=ClassificationResponse, deprecated=True, include_in_schema=False)
-def classify_single_product(request: ProductRequest):
+@app.post("/classify", response_model=ClassificationResponse)
+def classify_single_product(
+    request: ProductRequest,
+    taxonomy: Optional[str] = Query(None, description="ID de taxonomía específica a usar (opcional, usa default si no se especifica)")
+):
     """
-    [DEPRECATED] Clasificar un producto individual
+    Clasificar un producto individual con soporte para múltiples taxonomías.
     
-    ⚠️ Este endpoint está deprecado. Use /classify/products en su lugar.
+    **Funcionalidad mejorada:**
+    - **taxonomy**: Parámetro opcional para especificar taxonomía específica
+    - Si no se especifica taxonomy, usa la taxonomía configurada como default
+    - Respuesta incluye información detallada de costos OpenAI
     
-    Mantenido por compatibilidad hacia atrás.
+    **Taxonomías disponibles:** Consulta `/taxonomies` para ver opciones disponibles.
+    
+    **Ejemplos de uso:**
+    - Sin taxonomía específica: usa la por defecto (treew-skos)
+    - Con taxonomía: `?taxonomy=electronics-taxonomy`
     """
     try:
-        result = classify(request.text, request.product_id)
+        # Validar y usar taxonomía (por defecto si no se especifica)
+        from utils.taxonomy_config import validate_taxonomy_id, get_taxonomy_info
+        
+        validated_taxonomy = validate_taxonomy_id(taxonomy)
+        taxonomy_info = get_taxonomy_info(validated_taxonomy)
+        
+        result = classify(request.text, request.product_id, validated_taxonomy)
         
         # Verificar que el resultado tenga los campos necesarios
         if 'error' in result:
@@ -286,6 +310,13 @@ def classify_single_product(request: ProductRequest):
                 status_code=422,
                 detail=f"Error en clasificación: {result.get('error', 'Error desconocido')}"
             )
+        
+        # Añadir información de la taxonomía utilizada
+        result['taxonomy_used'] = {
+            'id': validated_taxonomy,
+            'name': taxonomy_info.get('name', 'Unknown'),
+            'is_default': taxonomy is None  # True si usó la por defecto
+        }
         
         return ClassificationResponse(
             product_id=result.get('product_id'),
@@ -295,7 +326,12 @@ def classify_single_product(request: ProductRequest):
             notation=result.get('notation', ''),
             level=result.get('level'),
             confidence=result.get('confidence', 0.0),
-            timestamp=datetime.now().isoformat()
+            timestamp=datetime.now().isoformat(),
+            taxonomy_used=TaxonomyInfo(
+                id=validated_taxonomy,
+                name=taxonomy_info.get('name', 'Unknown'),
+                is_default=taxonomy is None
+            )
         )
         
     except Exception as e:
@@ -343,9 +379,15 @@ def classify_products_unified(
     model_used = None
     cost_info_sample = None
     
+    # Validar y configurar taxonomía (una vez para toda la operación)
+    from utils.taxonomy_config import validate_taxonomy_id, get_taxonomy_info
+    
+    validated_taxonomy = validate_taxonomy_id(taxonomy)
+    taxonomy_info = get_taxonomy_info(validated_taxonomy)
+    
     for idx, product in enumerate(request.products):
         try:
-            result = classify(product.text, product.product_id, taxonomy)
+            result = classify(product.text, product.product_id, validated_taxonomy)
             
             # Extraer información de costos si está disponible
             if 'openai_cost' in result:
@@ -437,7 +479,12 @@ def classify_products_unified(
         results=results,
         processing_time_seconds=round(processing_time, 3),
         timestamp=datetime.now().isoformat(),
-        openai_cost_info=openai_cost_info
+        openai_cost_info=openai_cost_info,
+        taxonomy_used=TaxonomyInfo(
+            id=validated_taxonomy,
+            name=taxonomy_info.get('name', 'Unknown'),
+            is_default=taxonomy is None
+        )
     )
 
 # === ENDPOINTS ASÍNCRONOS ===
