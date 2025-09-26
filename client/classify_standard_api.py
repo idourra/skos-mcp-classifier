@@ -123,8 +123,10 @@ def classify(text: str, product_id: str = None, taxonomy_id: str = None):
         {
             "role": "system",
             "content": (
-                "Eres un clasificador experto de productos que usa una taxonomía SKOS. "
-                "Tu tarea es clasificar productos alimentarios usando las funciones disponibles. "
+                "Eres un clasificador experto de productos que usa una taxonomía SKOS general. "
+                "La taxonomía contiene conceptos de múltiples dominios: Ropa, Alimentos, Electrodomésticos, "
+                "Productos de limpieza, Joyería, Textiles para el hogar, etc. "
+                "Tu tarea es clasificar productos usando las funciones disponibles. "
                 "Primero busca conceptos relevantes, luego obtén el contexto del mejor concepto, "
                 "y finalmente devuelve un JSON con: search_text, concept_uri, prefLabel, notation, level, confidence (0-1). "
                 "Si se proporciona un ID de producto, inclúyelo como 'product_id' en la respuesta."
@@ -216,11 +218,26 @@ def classify(text: str, product_id: str = None, taxonomy_id: str = None):
     
     # Try to extract JSON from the response
     try:
-        # Find JSON in the response
-        start_idx = final_content.find('{')
-        end_idx = final_content.rfind('}') + 1
-        if start_idx != -1 and end_idx != -1:
-            json_str = final_content[start_idx:end_idx]
+        # Handle different response formats
+        json_str = None
+        
+        # Check if response contains markdown code block
+        if '```json' in final_content:
+            start_marker = '```json'
+            end_marker = '```'
+            start_idx = final_content.find(start_marker) + len(start_marker)
+            end_idx = final_content.find(end_marker, start_idx)
+            if start_idx != -1 and end_idx != -1:
+                json_str = final_content[start_idx:end_idx].strip()
+        
+        # If no markdown, try to find JSON directly
+        if not json_str:
+            start_idx = final_content.find('{')
+            end_idx = final_content.rfind('}') + 1
+            if start_idx != -1 and end_idx != -1:
+                json_str = final_content[start_idx:end_idx]
+        
+        if json_str:
             result = json.loads(json_str)
             
             # Add product_id to result if provided

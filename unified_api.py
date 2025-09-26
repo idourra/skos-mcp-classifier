@@ -29,6 +29,13 @@ from core.processing_pipeline import (
     processing_pipeline, process_product_request, process_batch_request
 )
 
+# Imports para respuestas enriquecidas
+from core.enhanced_models import (
+    EnhancedClassificationResponse, BatchEnhancedResponse, 
+    DetailLevel, EnhancedErrorResponse
+)
+from core.enhanced_classifier import enhanced_classifier
+
 # Imports existentes para compatibilidad
 from server.taxonomy_endpoints import taxonomy_router
 
@@ -87,18 +94,23 @@ async def root():
     """Información de la API unificada"""
     return {
         "message": "🌟 Unified SKOS Classification API",
-        "version": "3.0.0",
-        "description": "API unificada con arquitectura centralizada",
+        "version": "3.1.0",
+        "description": "API unificada con arquitectura centralizada y respuestas enriquecidas",
         "features": [
             "Data Gateway único para entrada",
             "Processing Pipeline centralizado", 
             "Output Manager unificado",
+            "Respuestas enriquecidas con análisis detallado",
+            "Niveles configurables de detalle",
+            "Análisis de confianza granular",
+            "Alternativas y conceptos relacionados",
             "Compatibilidad completa con v2.x",
             "Métricas integradas",
             "Manejo robusto de errores"
         ],
         "endpoints": {
             "/classify": "Clasificar producto individual",
+            "/classify/enhanced": "Clasificación con respuesta enriquecida",
             "/classify/batch": "Clasificar lote de productos",
             "/classify/async": "Clasificación asíncrona", 
             "/stats": "Estadísticas del sistema",
@@ -409,6 +421,189 @@ async def _process_async_batch(
         
     except Exception as e:
         logger.error(f"❌ Error en procesamiento asíncrono {job_id}: {str(e)}")
+
+# === ENDPOINTS ENRIQUECIDOS ===
+
+@app.post("/classify/enhanced", response_model=EnhancedClassificationResponse)
+async def classify_enhanced_endpoint(
+    request: UnifiedProductRequest,
+    taxonomy: Optional[str] = Query(None, description="ID de taxonomía específica"),
+    detail_level: str = Query("standard", description="Nivel de detalle: basic, standard, full, debug"),
+    include_alternatives: bool = Query(True, description="Incluir conceptos alternativos"),
+    include_related: bool = Query(True, description="Incluir conceptos relacionados")
+):
+    """
+    🌟 Endpoint de clasificación enriquecida con análisis detallado
+    
+    **Nueva funcionalidad v3.1:**
+    - Análisis de confianza granular con desglose detallado
+    - Alternativas de clasificación con explicaciones
+    - Conceptos relacionados en la taxonomía
+    - Razonamiento del proceso de decisión
+    - Metadatos completos de procesamiento
+    - Información de calidad y recomendaciones
+    
+    **Niveles de detalle disponibles:**
+    - `basic`: Solo clasificación principal
+    - `standard`: Incluye alternativas y razonamiento básico
+    - `full`: Respuesta completa con todos los metadatos
+    - `debug`: Información técnica adicional para desarrollo
+    """
+    try:
+        # Validar nivel de detalle
+        try:
+            detail_enum = DetailLevel(detail_level)
+        except ValueError:
+            detail_enum = DetailLevel.STANDARD
+        
+        # Ejecutar clasificación enriquecida
+        result = enhanced_classifier.classify_enhanced(
+            text=request.text,
+            product_id=request.product_id,
+            taxonomy_id=taxonomy,
+            detail_level=detail_enum
+        )
+        
+        # Filtrar contenido según flags
+        if not include_alternatives:
+            result.classification.alternatives = []
+        if not include_related:
+            result.classification.related_concepts = []
+            
+        return result
+        
+    except Exception as e:
+        logger.error(f"❌ Error en clasificación enriquecida: {str(e)}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error en clasificación enriquecida: {str(e)}"
+        )
+
+@app.post("/classify/batch/enhanced", response_model=BatchEnhancedResponse)
+async def classify_batch_enhanced_endpoint(
+    request: UnifiedBatchRequest,
+    taxonomy: Optional[str] = Query(None, description="ID de taxonomía específica"),
+    detail_level: str = Query("standard", description="Nivel de detalle para todos los productos"),
+    max_concurrent: int = Query(5, description="Máximo procesamiento concurrente", ge=1, le=10)
+):
+    """
+    🚀 Clasificación enriquecida en lotes con procesamiento optimizado
+    
+    Procesa múltiples productos con respuestas enriquecidas, optimizado para
+    rendimiento con procesamiento concurrente controlado.
+    """
+    try:
+        import asyncio
+        from concurrent.futures import ThreadPoolExecutor
+        
+        # Validar nivel de detalle
+        try:
+            detail_enum = DetailLevel(detail_level)
+        except ValueError:
+            detail_enum = DetailLevel.STANDARD
+        
+        batch_id = f"batch_{int(time.time())}_{uuid.uuid4().hex[:8]}"
+        
+        # Función para procesar producto individual
+        def process_single_product(product_request):
+            try:
+                return enhanced_classifier.classify_enhanced(
+                    text=product_request.text,
+                    product_id=product_request.product_id,
+                    taxonomy_id=taxonomy,
+                    detail_level=detail_enum
+                )
+            except Exception as e:
+                logger.error(f"Error procesando {product_request.product_id}: {str(e)}")
+                return None
+        
+        # Procesamiento concurrente
+        start_time = time.time()
+        with ThreadPoolExecutor(max_workers=max_concurrent) as executor:
+            results = list(executor.map(process_single_product, request.products))
+        
+        # Filtrar resultados exitosos y fallidos
+        successful_results = [r for r in results if r is not None]
+        failed_count = len(results) - len(successful_results)
+        
+        # Agregar costos (simplificado)
+        total_cost = sum(r.processing.ai_interaction.cost_info.total_usd 
+                        for r in successful_results)
+        
+        processing_time = (time.time() - start_time) * 1000
+        
+        return BatchEnhancedResponse(
+            total=len(request.products),
+            successful=len(successful_results),
+            failed=failed_count,
+            results=successful_results,
+            batch_id=batch_id,
+            processing_summary={
+                "total_duration_ms": processing_time,
+                "concurrent_workers": max_concurrent,
+                "average_time_per_product": processing_time / len(request.products) if request.products else 0
+            },
+            aggregated_costs=CostInfo(
+                total_usd=total_cost,
+                breakdown=CostBreakdown(
+                    prompt_tokens=sum(r.processing.ai_interaction.cost_info.breakdown.prompt_tokens 
+                                    for r in successful_results),
+                    completion_tokens=sum(r.processing.ai_interaction.cost_info.breakdown.completion_tokens 
+                                        for r in successful_results),
+                    total_tokens=sum(r.processing.ai_interaction.cost_info.breakdown.total_tokens 
+                                   for r in successful_results)
+                ),
+                cost_per_token=CostPerToken(input=0.00000015, output=0.0000006)
+            ),
+            detail_level=detail_enum
+        )
+        
+    except Exception as e:
+        logger.error(f"❌ Error en clasificación en lotes enriquecida: {str(e)}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error en procesamiento de lotes: {str(e)}"
+        )
+
+@app.get("/classify/enhanced/formats")
+async def get_enhanced_formats():
+    """Obtener información sobre formatos de respuesta enriquecida disponibles"""
+    return {
+        "detail_levels": {
+            "basic": {
+                "description": "Solo clasificación principal y confianza",
+                "includes": ["concept_uri", "prefLabel", "confidence", "product_id"],
+                "response_size": "Mínimo"
+            },
+            "standard": {
+                "description": "Incluye alternativas y razonamiento básico",
+                "includes": ["clasificación principal", "alternativas", "razonamiento", "metadatos básicos"],
+                "response_size": "Medio"
+            },
+            "full": {
+                "description": "Respuesta completa con todos los metadatos",
+                "includes": ["todo lo anterior", "conceptos relacionados", "análisis de procesamiento", "métricas de calidad"],
+                "response_size": "Completo"
+            },
+            "debug": {
+                "description": "Información técnica adicional para desarrollo",
+                "includes": ["todo lo anterior", "detalles técnicos", "información de debugging"],
+                "response_size": "Máximo"
+            }
+        },
+        "compatibility": {
+            "legacy_format": "Disponible en campo 'legacy_format'",
+            "backward_compatible": "Mantiene compatibilidad total con v2.x"
+        },
+        "features": {
+            "confidence_analysis": "Análisis granular de confianza con factores explicativos",
+            "alternatives": "Hasta 3 conceptos alternativos con explicaciones",
+            "related_concepts": "Conceptos relacionados en jerarquía taxonómica",
+            "reasoning": "Razonamiento detallado del proceso de decisión",
+            "quality_metrics": "Métricas de calidad de entrada y procesamiento",
+            "recommendations": "Recomendaciones automáticas basadas en confianza"
+        }
+    }
 
 # === MANEJO DE ERRORES GLOBAL ===
 

@@ -11,6 +11,7 @@ import csv
 from pathlib import Path
 from datetime import datetime
 from client.classify_standard_api import classify
+from core.non_classifiable_handler import enhance_classification_error_handling
 from utils.export_config import get_full_export_path, ensure_export_structure, EXPORTS_BASE_DIR
 from server.taxonomy_endpoints import taxonomy_router
 
@@ -1279,6 +1280,215 @@ def download_file(filename: str):
         filename=filename,
         media_type=content_type
     )
+
+# === ENDPOINTS MEJORADOS PARA MANEJO DE NO CLASIFICABLES ===
+
+@app.post("/classify/enhanced", response_model=Dict[str, Any])
+def classify_single_product_enhanced(
+    request: ProductRequest,
+    taxonomy: Optional[str] = Query(None, description="ID de taxonomía específica a usar")
+):
+    """
+    🎯 Clasificación mejorada con manejo inteligente de productos no clasificables
+    
+    **Mejoras v3.1:**
+    - Detección automática de incompatibilidad dominio/taxonomía
+    - Respuestas estructuradas para productos no clasificables
+    - Sugerencias específicas para resolver problemas
+    - Análisis de calidad del input
+    
+    En lugar de devolver errores genéricos, proporciona información útil sobre:
+    - Por qué no se pudo clasificar el producto
+    - Qué dominio detectó para el producto
+    - Qué taxonomías serían más apropiadas
+    - Cómo mejorar la descripción del producto
+    """
+    try:
+        # Usar taxonomía por defecto si no se especifica
+        from utils.taxonomy_config import validate_taxonomy_id, get_taxonomy_info
+        
+        validated_taxonomy = validate_taxonomy_id(taxonomy)
+        taxonomy_info = get_taxonomy_info(validated_taxonomy)
+        
+        # Ejecutar clasificación base
+        result = classify(request.text, request.product_id, validated_taxonomy)
+        
+        # Si hay error, aplicar manejo mejorado
+        if 'error' in result:
+            enhanced_result = enhance_classification_error_handling(
+                original_result=result,
+                text=request.text,
+                product_id=request.product_id,
+                taxonomy_id=validated_taxonomy
+            )
+            
+            # Agregar información de taxonomía
+            enhanced_result['taxonomy_used'] = {
+                'id': validated_taxonomy,
+                'name': taxonomy_info.get('name', 'Unknown'),
+                'is_default': taxonomy is None
+            }
+            
+            return enhanced_result
+        
+        # Si clasificación exitosa, agregar info de taxonomía y devolver
+        result['taxonomy_used'] = {
+            'id': validated_taxonomy,
+            'name': taxonomy_info.get('name', 'Unknown'),
+            'is_default': taxonomy is None
+        }
+        
+        return {
+            "classification_result": "success",
+            "classification": result,
+            "taxonomy_used": result['taxonomy_used']
+        }
+        
+    except Exception as e:
+        return {
+            "classification_result": "error",
+            "error": {
+                "type": "system_error",
+                "message": str(e),
+                "timestamp": datetime.now().isoformat()
+            },
+            "product_id": request.product_id,
+            "original_text": request.text
+        }
+
+@app.post("/classify/products/enhanced", response_model=Dict[str, Any])
+def classify_products_enhanced(
+    request: UnifiedProductRequest,
+    taxonomy: Optional[str] = Query(None, description="ID de taxonomía específica a usar")
+):
+    """
+    🚀 Clasificación en lotes mejorada con análisis detallado de productos no clasificables
+    
+    Proporciona estadísticas detalladas sobre:
+    - Productos clasificados exitosamente
+    - Productos no clasificables con análisis de causa
+    - Incompatibilidades de dominio detectadas
+    - Sugerencias de mejora agregadas
+    """
+    import time
+    start_time = time.time()
+    
+    try:
+        from utils.taxonomy_config import validate_taxonomy_id, get_taxonomy_info
+        
+        validated_taxonomy = validate_taxonomy_id(taxonomy)
+        taxonomy_info = get_taxonomy_info(validated_taxonomy)
+        
+        results = []
+        successful = 0
+        failed = 0
+        not_classifiable = 0
+        domain_mismatches = 0
+        
+        for idx, product in enumerate(request.products):
+            # Ejecutar clasificación
+            result = classify(product.text, product.product_id, validated_taxonomy)
+            
+            if 'error' not in result:
+                # Clasificación exitosa
+                results.append({
+                    "index": idx,
+                    "product_id": product.product_id,
+                    "search_text": product.text,
+                    "classification": result,
+                    "status": "success",
+                    "timestamp": datetime.now().isoformat()
+                })
+                successful += 1
+            else:
+                # Aplicar manejo mejorado de errores
+                enhanced_result = enhance_classification_error_handling(
+                    original_result=result,
+                    text=product.text,
+                    product_id=product.product_id,
+                    taxonomy_id=validated_taxonomy
+                )
+                
+                # Determinar tipo de fallo
+                if enhanced_result.get('classification_result') == 'not_classifiable':
+                    not_classifiable += 1
+                    if enhanced_result.get('reason') == 'domain_mismatch':
+                        domain_mismatches += 1
+                else:
+                    failed += 1
+                
+                results.append({
+                    "index": idx,
+                    "product_id": product.product_id,
+                    "search_text": product.text,
+                    "enhanced_analysis": enhanced_result,
+                    "status": "not_classifiable" if enhanced_result.get('classification_result') == 'not_classifiable' else "error",
+                    "timestamp": datetime.now().isoformat()
+                })
+        
+        processing_time = time.time() - start_time
+        
+        # Estadísticas agregadas
+        total_processed = len(request.products)
+        
+        return {
+            "total": total_processed,
+            "successful": successful,
+            "not_classifiable": not_classifiable,
+            "failed": failed,
+            "domain_mismatches": domain_mismatches,
+            "results": results,
+            "processing_summary": {
+                "success_rate": (successful / total_processed) * 100 if total_processed > 0 else 0,
+                "not_classifiable_rate": (not_classifiable / total_processed) * 100 if total_processed > 0 else 0,
+                "domain_mismatch_rate": (domain_mismatches / total_processed) * 100 if total_processed > 0 else 0,
+                "processing_time_seconds": processing_time,
+                "average_time_per_product": processing_time / total_processed if total_processed > 0 else 0
+            },
+            "taxonomy_used": {
+                "id": validated_taxonomy,
+                "name": taxonomy_info.get('name', 'Unknown'),
+                "is_default": taxonomy is None
+            },
+            "recommendations": {
+                "overall": f"Tasa de éxito del {(successful / total_processed) * 100:.1f}%" if total_processed > 0 else "Sin productos procesados",
+                "suggested_actions": _generate_batch_recommendations(successful, not_classifiable, domain_mismatches, total_processed)
+            },
+            "timestamp": datetime.now().isoformat()
+        }
+        
+    except Exception as e:
+        return {
+            "error": {
+                "type": "batch_processing_error",
+                "message": str(e),
+                "timestamp": datetime.now().isoformat()
+            },
+            "total": len(request.products),
+            "processed": 0
+        }
+
+def _generate_batch_recommendations(successful: int, not_classifiable: int, domain_mismatches: int, total: int) -> List[str]:
+    """Generar recomendaciones para el lote procesado"""
+    recommendations = []
+    
+    success_rate = (successful / total) * 100 if total > 0 else 0
+    mismatch_rate = (domain_mismatches / total) * 100 if total > 0 else 0
+    
+    if success_rate > 80:
+        recommendations.append("Excelente tasa de éxito, taxonomía bien alineada")
+    elif success_rate > 50:
+        recommendations.append("Tasa de éxito moderada, revisar productos no clasificables")
+    else:
+        recommendations.append("Baja tasa de éxito, considerar cambio de taxonomía")
+    
+    if mismatch_rate > 30:
+        recommendations.append("Alto porcentaje de incompatibilidad de dominio, considerar taxonomía multi-dominio")
+    
+    if not_classifiable > successful:
+        recommendations.append("Más productos no clasificables que exitosos, revisar compatibilidad taxonomía-catálogo")
+    
+    return recommendations
 
 if __name__ == "__main__":
     import uvicorn
