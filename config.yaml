@@ -1,0 +1,73 @@
+# 🌟 SKOS MCP Classifier - Configuración Unificada
+# ================================================================
+
+# Información del Sistema
+system:
+  name: "SKOS MCP Classifier"
+  version: "3.0.0"
+  description: "Sistema de clasificación inteligente con arquitectura unificada"
+  
+# Configuración de API
+api:
+  host: "0.0.0.0"
+  port: 8000
+  debug: false
+  reload: false
+  
+# Configuración de MCP Server  
+mcp:
+  host: "0.0.0.0"
+  port: 8080
+  
+# Configuración de Base de Datos
+database:
+  path: "skos.sqlite"
+  backup_enabled: true
+  backup_interval_hours: 24
+  
+# Configuración de Taxonomías
+taxonomies:
+  default: "treew-skos"
+  available:
+    - id: "treew-skos"
+      name: "TreeW SKOS Food Taxonomy"
+      path: "taxonomies/treew-skos/original.jsonld"
+      is_default: true
+    - id: "treew-best"
+      name: "Taxonomia enriquecida skos revisada por w3c"
+      path: "taxonomies/treew-best/enhanced.jsonld"
+      is_default: false
+
+# Configuración de OpenAI
+openai:
+  model: "gpt-4o-mini-2024-07-18"
+  max_tokens: 4096
+  temperature: 0.1
+  cost_tracking_enabled: true
+  
+# Configuración de Archivos
+files:
+  base_path: "files"
+  max_file_size_mb: 100
+  auto_cleanup_days: 7
+  temp_retention_hours: 24
+  
+# Configuración de Logs
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file_enabled: true
+  console_enabled: true
+  
+# Configuración de Performance
+performance:
+  max_batch_size: 1000
+  parallel_processing_threshold: 5
+  request_timeout_seconds: 300
+  max_concurrent_requests: 50
+  
+# Configuración de Métricas
+metrics:
+  enabled: true
+  retention_days: 30
+  detailed_logging: true
