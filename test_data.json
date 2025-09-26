@@ -1,0 +1,22 @@
+{
+  "products": [
+    {
+      "id": "prod001",
+      "name": "Smartphone Samsung Galaxy A54",
+      "description": "Dispositivo móvil con pantalla AMOLED de 6.4 pulgadas, cámara de 50MP y batería de 5000mAh",
+      "price": 399.99
+    },
+    {
+      "id": "prod002", 
+      "name": "Auriculares Bluetooth Sony WH-1000XM4",
+      "description": "Auriculares inalámbricos con cancelación de ruido y 30 horas de batería",
+      "price": 299.99
+    },
+    {
+      "id": "prod003",
+      "name": "Laptop Dell XPS 13",
+      "description": "Portátil ultradelgado con procesador Intel Core i7, 16GB RAM y SSD de 512GB",
+      "price": 1299.99
+    }
+  ]
+}
