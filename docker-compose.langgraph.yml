@@ -54,8 +54,12 @@ services:
     networks:
       - langgraph-network
     volumes:
+      # Mount config if it exists, otherwise use default in container
       - ./langgraph_config.yaml:/app/langgraph_config.yaml:ro
       - classifier_cache:/app/.cache
+    # Add a note about config file requirement in comments
+    # Note: langgraph_config.yaml should exist in the current directory
+    # If missing, the container will use environment variables as fallback
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.langgraph.rule=Host(`localhost`)"

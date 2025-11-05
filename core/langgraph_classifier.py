@@ -104,33 +104,57 @@ class ClassifierConfig:
 # =============================================================================
 
 class EmbeddingService:
-    """Service for generating embeddings (placeholder for actual implementation)"""
+    """
+    Service for generating embeddings (placeholder for actual implementation)
+    
+    ⚠️ WARNING: This implementation uses RANDOM vectors for demonstration.
+    DO NOT USE IN PRODUCTION without implementing actual embedding models!
+    
+    To implement properly:
+    1. Install: pip install sentence-transformers
+    2. Uncomment the model initialization below
+    3. Replace random vectors with actual model.encode() calls
+    """
     
     def __init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2", dim: int = 768):
         self.model_name = model_name
         self.dim = dim
-        # TODO: Initialize actual model
+        # TODO: Implement actual model initialization
         # from sentence_transformers import SentenceTransformer
         # self.model = SentenceTransformer(model_name)
+        import warnings
+        warnings.warn(
+            "EmbeddingService is using random vectors. "
+            "Implement actual embedding models before production use!",
+            UserWarning
+        )
     
     def encode_lexical(self, text: str) -> List[float]:
-        """Generate lexical embedding focusing on exact terms"""
-        # TODO: Implement actual encoding
+        """
+        Generate lexical embedding focusing on exact terms
+        ⚠️ TODO: Replace with actual embedding model
+        """
         return list(np.random.rand(self.dim).astype(float))
     
     def encode_desc(self, text: str) -> List[float]:
-        """Generate description embedding for semantic matching"""
-        # TODO: Implement actual encoding
+        """
+        Generate description embedding for semantic matching
+        ⚠️ TODO: Replace with actual embedding model
+        """
         return list(np.random.rand(self.dim).astype(float))
     
     def encode_path(self, text: str) -> List[float]:
-        """Generate path/hierarchy-aware embedding"""
-        # TODO: Implement actual encoding
+        """
+        Generate path/hierarchy-aware embedding
+        ⚠️ TODO: Replace with actual embedding model
+        """
         return list(np.random.rand(self.dim).astype(float))
     
     def encode_comp(self, text: str) -> List[float]:
-        """Generate composite embedding combining multiple views"""
-        # TODO: Implement actual encoding
+        """
+        Generate composite embedding combining multiple views
+        ⚠️ TODO: Replace with actual embedding model
+        """
         return list(np.random.rand(self.dim).astype(float))
 
 
@@ -475,8 +499,8 @@ class MultiAgentClassifier:
         if len(text_norm.split()) <= 2:
             return "N3_LEXBOOST"
         
-        # Also trigger for queries that look like SKU/GTIN
-        if re.match(r'^[A-Z0-9\-]+$', text_norm):
+        # Also trigger for queries that look like SKU/GTIN (after normalization to lowercase)
+        if re.match(r'^[a-z0-9\-]+$', text_norm):
             return "N3_LEXBOOST"
         
         return "N4_MERGE"
@@ -484,8 +508,9 @@ class MultiAgentClassifier:
     def use_cross_encoder(self, state: ClassifierState) -> str:
         """Decide if cross-encoder reranking should be used"""
         if self.config.cross_encoder_enabled:
-            # Check latency budget
-            elapsed = state.get("metrics", {}).get("total_ms", 0)
+            # Check latency budget - calculate elapsed from individual node metrics
+            metrics = state.get("metrics", {})
+            elapsed = sum(v for k, v in metrics.items() if k.endswith("_ms"))
             if elapsed < 5000:  # Less than 5 seconds so far
                 return "N6_RERANK"
         
@@ -565,7 +590,9 @@ class MultiAgentClassifier:
         
         except Exception as e:
             # Log error and return empty list
-            print(f"Qdrant search error: {e}")
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.error(f"Qdrant search error: {e}", exc_info=True)
             return []
     
     def _calculate_confidence(

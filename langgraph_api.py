@@ -133,7 +133,10 @@ async def health_check():
             # Try to ping Qdrant
             collections = classifier.qdrant.get_collections()
             qdrant_ready = True
-        except:
+        except Exception as e:
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.warning(f"Qdrant health check failed: {e}")
             qdrant_ready = False
     
     return HealthResponse(

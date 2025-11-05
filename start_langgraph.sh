@@ -30,10 +30,19 @@ if [ ! -f .env ]; then
         echo -e "${GREEN}✅ .env file created${NC}"
         echo -e "${YELLOW}⚠️  Please edit .env and add your configuration${NC}"
     else
-        echo -e "${RED}❌ .env.example not found${NC}"
-        echo "Please create a .env file with required variables"
-        exit 1
+        echo -e "${YELLOW}⚠️  .env.example not found, creating minimal .env${NC}"
+        echo "# LangGraph Classifier Environment Variables" > .env
+        echo "QDRANT_URL=http://qdrant:6333" >> .env
+        echo "QDRANT_COLLECTION=concepts" >> .env
+        echo -e "${GREEN}✅ Minimal .env file created${NC}"
     fi
+fi
+
+# Check if config file exists, warn if missing (non-fatal)
+if [ ! -f langgraph_config.yaml ]; then
+    echo -e "${YELLOW}⚠️  langgraph_config.yaml not found${NC}"
+    echo "   Container will use default configuration and environment variables"
+    echo "   To customize, create langgraph_config.yaml in this directory"
 fi
 
 echo -e "${GREEN}🚀 Starting services...${NC}"
@@ -50,15 +59,19 @@ echo ""
 echo "Waiting for services to be healthy..."
 sleep 5
 
+# Get configured ports from environment or use defaults
+QDRANT_PORT="${QDRANT_PORT:-6333}"
+API_PORT="${API_PORT:-8001}"
+
 # Check Qdrant
-if curl -s http://localhost:6333/ > /dev/null; then
+if curl -s "http://localhost:${QDRANT_PORT}/" > /dev/null; then
     echo -e "${GREEN}✅ Qdrant is running${NC}"
 else
     echo -e "${YELLOW}⚠️  Qdrant is not responding yet...${NC}"
 fi
 
 # Check LangGraph Classifier
-if curl -s http://localhost:8001/health > /dev/null; then
+if curl -s "http://localhost:${API_PORT}/health" > /dev/null; then
     echo -e "${GREEN}✅ LangGraph Classifier is running${NC}"
 else
     echo -e "${YELLOW}⚠️  LangGraph Classifier is starting...${NC}"
@@ -70,19 +83,19 @@ echo "Services Available:"
 echo "=========================================="
 echo ""
 echo -e "🔵 Qdrant Vector DB:"
-echo "   URL: http://localhost:6333"
-echo "   Dashboard: http://localhost:6333/dashboard"
+echo "   URL: http://localhost:${QDRANT_PORT}"
+echo "   Dashboard: http://localhost:${QDRANT_PORT}/dashboard"
 echo ""
 echo -e "🤖 LangGraph Classifier API:"
-echo "   URL: http://localhost:8001"
-echo "   Docs: http://localhost:8001/docs"
-echo "   Health: http://localhost:8001/health"
+echo "   URL: http://localhost:${API_PORT}"
+echo "   Docs: http://localhost:${API_PORT}/docs"
+echo "   Health: http://localhost:${API_PORT}/health"
 echo ""
 echo "=========================================="
 echo "Quick Test:"
 echo "=========================================="
 echo ""
-echo "curl -X POST http://localhost:8001/classify \\"
+echo "curl -X POST http://localhost:${API_PORT}/classify \\"
 echo "  -H 'Content-Type: application/json' \\"
 echo "  -d '{"
 echo "    \"text\": \"yogur griego natural\","
