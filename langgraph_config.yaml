@@ -25,7 +25,7 @@ qdrant:
 embedding:
   # Embedding model configuration
   model_name: "sentence-transformers/all-MiniLM-L6-v2"
-  embedding_dim: 768
+  embedding_dim: 384
   device: "cpu"  # Use "cuda" for GPU acceleration
   batch_size: 32
   # Caching for performance

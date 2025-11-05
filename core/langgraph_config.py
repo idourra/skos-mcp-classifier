@@ -23,13 +23,13 @@ class QdrantConfig:
     
     # Quantization settings
     use_quantization: bool = False
-    quantization_vectors: list = field(default_factory=lambda: ["desc_vec", "path_vec"])
+    quantization_vectors: List[str] = field(default_factory=lambda: ["desc_vec", "path_vec"])
     
     # Storage settings
     on_disk_payload: bool = True
     
     # Vector names
-    vector_names: list = field(default_factory=lambda: [
+    vector_names: List[str] = field(default_factory=lambda: [
         "lexical_vec",
         "desc_vec", 
         "path_vec",
@@ -133,7 +133,7 @@ class PerformanceConfig:
 class TaxonomyConfig:
     """Taxonomy-specific configuration"""
     default_scheme_uri: str = "https://treew.io/taxonomy/"
-    supported_languages: list = field(default_factory=lambda: ["es", "en", "pt", "fr"])
+    supported_languages: List[str] = field(default_factory=lambda: ["es", "en", "pt", "fr"])
     default_language: str = "es"
     
     # Versioning

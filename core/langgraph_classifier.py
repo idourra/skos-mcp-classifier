@@ -116,7 +116,7 @@ class EmbeddingService:
     3. Replace random vectors with actual model.encode() calls
     """
     
-    def __init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2", dim: int = 768):
+    def __init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2", dim: int = 384):
         self.model_name = model_name
         self.dim = dim
         # TODO: Implement actual model initialization
@@ -511,8 +511,8 @@ class MultiAgentClassifier:
         if len(text_norm.split()) <= 2:
             return "N3_LEXBOOST"
         
-        # Also trigger for queries that look like SKU/GTIN (after normalization to lowercase)
-        if re.match(r'^[a-z0-9\-]+$', text_norm):
+        # Also trigger for queries that look like SKU, EAN, GTIN, or UPC codes (after normalization to lowercase)
+        if re.match(r'^(sku|ean|gtin|upc)[\-\s]?\d+$', text_norm):
             return "N3_LEXBOOST"
         
         return "N4_MERGE"

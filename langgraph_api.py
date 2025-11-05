@@ -57,8 +57,6 @@ async def lifespan(app: FastAPI):
     yield
     
     # Shutdown
-    import logging
-    logger = logging.getLogger(__name__)
     logger.info("🛑 Shutting down classifier")
 
 

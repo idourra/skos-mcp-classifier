@@ -64,10 +64,11 @@ QDRANT_PORT="${QDRANT_PORT:-6333}"
 API_PORT="${API_PORT:-8001}"
 
 # Check Qdrant with timeout and status code validation
-if curl -sf --max-time 5 "http://localhost:${QDRANT_PORT}/" > /dev/null 2>&1; then
+QDRANT_STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 "http://localhost:${QDRANT_PORT}/")
+if [ "$QDRANT_STATUS" -ge 200 ] && [ "$QDRANT_STATUS" -lt 400 ]; then
     echo -e "${GREEN}✅ Qdrant is running${NC}"
 else
-    echo -e "${YELLOW}⚠️  Qdrant is not responding yet...${NC}"
+    echo -e "${YELLOW}⚠️  Qdrant is not healthy (HTTP $QDRANT_STATUS)...${NC}"
 fi
 
 # Check LangGraph Classifier with timeout and health check validation
