@@ -63,16 +63,21 @@ sleep 5
 QDRANT_PORT="${QDRANT_PORT:-6333}"
 API_PORT="${API_PORT:-8001}"
 
-# Check Qdrant
-if curl -s "http://localhost:${QDRANT_PORT}/" > /dev/null; then
+# Check Qdrant with timeout and status code validation
+if curl -sf --max-time 5 "http://localhost:${QDRANT_PORT}/" > /dev/null 2>&1; then
     echo -e "${GREEN}✅ Qdrant is running${NC}"
 else
     echo -e "${YELLOW}⚠️  Qdrant is not responding yet...${NC}"
 fi
 
-# Check LangGraph Classifier
-if curl -s "http://localhost:${API_PORT}/health" > /dev/null; then
-    echo -e "${GREEN}✅ LangGraph Classifier is running${NC}"
+# Check LangGraph Classifier with timeout and health check validation
+if curl -sf --max-time 5 "http://localhost:${API_PORT}/health" > /dev/null 2>&1; then
+    HEALTH_STATUS=$(curl -s "http://localhost:${API_PORT}/health" | grep -o '"status":"[^"]*"' | cut -d'"' -f4)
+    if [ "$HEALTH_STATUS" = "healthy" ]; then
+        echo -e "${GREEN}✅ LangGraph Classifier is running and healthy${NC}"
+    else
+        echo -e "${YELLOW}⚠️  LangGraph Classifier status: ${HEALTH_STATUS}${NC}"
+    fi
 else
     echo -e "${YELLOW}⚠️  LangGraph Classifier is starting...${NC}"
 fi

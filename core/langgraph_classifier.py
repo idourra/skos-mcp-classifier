@@ -133,6 +133,9 @@ class EmbeddingService:
         """
         Generate lexical embedding focusing on exact terms
         ⚠️ TODO: Replace with actual embedding model
+        
+        Intended implementation:
+        # return self.model.encode(text, convert_to_tensor=False).tolist()
         """
         return list(np.random.rand(self.dim).astype(float))
     
@@ -140,6 +143,9 @@ class EmbeddingService:
         """
         Generate description embedding for semantic matching
         ⚠️ TODO: Replace with actual embedding model
+        
+        Intended implementation:
+        # return self.model.encode(text, convert_to_tensor=False).tolist()
         """
         return list(np.random.rand(self.dim).astype(float))
     
@@ -147,6 +153,9 @@ class EmbeddingService:
         """
         Generate path/hierarchy-aware embedding
         ⚠️ TODO: Replace with actual embedding model
+        
+        Intended implementation:
+        # return self.model.encode(text, convert_to_tensor=False).tolist()
         """
         return list(np.random.rand(self.dim).astype(float))
     
@@ -154,6 +163,9 @@ class EmbeddingService:
         """
         Generate composite embedding combining multiple views
         ⚠️ TODO: Replace with actual embedding model
+        
+        Intended implementation:
+        # return self.model.encode(text, convert_to_tensor=False).tolist()
         """
         return list(np.random.rand(self.dim).astype(float))
 

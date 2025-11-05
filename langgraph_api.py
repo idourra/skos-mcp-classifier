@@ -25,6 +25,9 @@ async def lifespan(app: FastAPI):
     global classifier
     
     # Startup: Initialize classifier
+    import logging
+    logger = logging.getLogger(__name__)
+    
     try:
         config = load_config(config_path="langgraph_config.yaml", use_env=True)
         
@@ -46,15 +49,17 @@ async def lifespan(app: FastAPI):
         )
         
         classifier = MultiAgentClassifier(classifier_config)
-        print("✅ LangGraph Multi-Agent Classifier initialized")
+        logger.info("✅ LangGraph Multi-Agent Classifier initialized")
     except Exception as e:
-        print(f"⚠️  Warning: Could not initialize classifier: {e}")
-        print("   Using fallback mode")
+        logger.warning(f"⚠️  Warning: Could not initialize classifier: {e}")
+        logger.info("   Using fallback mode")
     
     yield
     
     # Shutdown
-    print("🛑 Shutting down classifier")
+    import logging
+    logger = logging.getLogger(__name__)
+    logger.info("🛑 Shutting down classifier")
 
 
 app = FastAPI(

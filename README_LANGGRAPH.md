@@ -339,6 +339,49 @@ Response:
 
 ---
 
+## ⚠️ Current Limitations
+
+### Placeholder Embeddings
+
+**IMPORTANT**: The current implementation uses **random vectors** for embeddings as placeholders. This is for **demonstration purposes only** and will NOT provide meaningful classification results.
+
+Before using in production, you **must** implement actual embedding models:
+
+```python
+# In core/langgraph_classifier.py, EmbeddingService class
+
+# 1. Install sentence-transformers
+pip install sentence-transformers
+
+# 2. Initialize the model
+from sentence_transformers import SentenceTransformer
+self.model = SentenceTransformer(model_name)
+
+# 3. Replace random vectors with actual encoding
+def encode_comp(self, text: str) -> List[float]:
+    return self.model.encode(text, convert_to_tensor=False).tolist()
+```
+
+### What Works Now
+- ✅ Complete pipeline architecture
+- ✅ Conditional routing logic
+- ✅ SKOS graph reasoning
+- ✅ Qdrant integration
+- ✅ Configuration system
+- ✅ API endpoints
+- ✅ Health checks
+- ✅ Metrics collection
+
+### What Needs Implementation
+- ❌ Actual embedding models (currently random vectors)
+- ❌ Cross-encoder re-ranking (optional)
+- ❌ Confidence calibration (optional)
+- ❌ SKOS taxonomy indexer for Qdrant
+
+See [INTEGRATION_GUIDE.md](INTEGRATION_GUIDE.md) for implementation details.
+
+---
+
 ## 🚨 Troubleshooting
 
 ### Qdrant Connection Issues
