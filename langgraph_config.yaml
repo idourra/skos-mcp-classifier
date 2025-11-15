@@ -1,0 +1,105 @@
+# LangGraph Multi-Agent SKOS Classifier Configuration
+# Complete configuration for production deployment with Qdrant
+
+qdrant:
+  url: "http://localhost:6333"
+  collection_name: "concepts"
+  # HNSW index parameters for optimal ANN search
+  m: 32
+  ef_construct: 128
+  ef_search: 96
+  # Quantization for memory efficiency (optional)
+  use_quantization: false
+  quantization_vectors:
+    - "desc_vec"
+    - "path_vec"
+  # Storage optimization
+  on_disk_payload: true
+  # Named vectors for multivector search
+  vector_names:
+    - "lexical_vec"
+    - "desc_vec"
+    - "path_vec"
+    - "comp_vec"
+
+embedding:
+  # Embedding model configuration
+  model_name: "sentence-transformers/all-MiniLM-L6-v2"
+  embedding_dim: 384
+  device: "cpu"  # Use "cuda" for GPU acceleration
+  batch_size: 32
+  # Caching for performance
+  use_cache: true
+  cache_size: 10000
+  cache_ttl: 3600
+
+retrieval:
+  # Retrieval parameters
+  retrieval_limit: 50  # K candidates from ANN search
+  top_k_output: 5      # Final top-K to return
+  top_m_rerank: 20     # Candidates for cross-encoder reranking
+  # Fusion weights for multivector scoring
+  weight_comp: 1.0     # Composite vector (main signal)
+  weight_lex: 0.3      # Lexical vector (exact matching)
+  weight_path: 0.2     # Path vector (hierarchy context)
+  weight_graph: 0.02   # Graph reasoning boost
+
+thresholds:
+  # Decision thresholds
+  tau_low: 0.55        # Minimum confidence to accept classification
+  epsilon_tie: 0.03    # Score difference for tie detection
+  # Abstain policies
+  abstain_on_low_confidence: true
+  abstain_on_language_mismatch: false
+  # Tie-breaking strategy
+  prefer_broader_on_tie: true
+
+features:
+  # Feature flags for optional components
+  cross_encoder_enabled: false      # LLM-based reranking (expensive)
+  lexical_boost_enabled: true       # Extra lexical search for short queries
+  graph_reasoning_enabled: true     # SKOS hierarchy-aware scoring
+  calibration_enabled: false        # Platt/Isotonic calibration
+  # A/B testing
+  experiment_id: null
+
+observability:
+  # Monitoring and logging
+  enable_metrics: true
+  enable_tracing: true
+  log_level: "INFO"
+  log_format: "json"
+  # Metrics backend (prometheus, datadog, etc.)
+  metrics_backend: null
+  # Trace sampling
+  trace_sample_rate: 1.0
+
+performance:
+  # Resource limits
+  max_concurrent_requests: 100
+  request_timeout_ms: 30000
+  # Per-node timeouts (milliseconds)
+  node_timeout_ms:
+    n0_ingest: 1000
+    n1_queryvecs: 2000
+    n2_retrieval: 3000
+    n3_lexboost: 2000
+    n4_merge: 1000
+    n5_graph: 2000
+    n6_rerank: 5000
+    n7_decide: 1000
+    n8_validate: 500
+    n9_persist: 1000
+
+taxonomy:
+  # Taxonomy configuration
+  default_scheme_uri: "https://treew.io/taxonomy/"
+  supported_languages:
+    - "es"
+    - "en"
+    - "pt"
+    - "fr"
+  default_language: "es"
+  # Versioning support
+  enable_versioning: true
+  version_field: "scheme_version"
